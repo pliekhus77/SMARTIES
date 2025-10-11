@@ -25,7 +25,8 @@
           "cameraPermission": "Allow SMARTIES to access camera for barcode scanning."
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-font"
     ],
     "ios": {
       "supportsTablet": true,
