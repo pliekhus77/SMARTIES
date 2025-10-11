@@ -45,9 +45,22 @@ smarties/
 └── README.md                   # This file
 ```
 
+## Navigation Structure
+
+The app uses a bottom tab navigation pattern with four main screens:
+
+- **Scanner Tab**: Primary barcode scanning interface with camera integration
+- **Profile Tab**: User dietary profile management and restriction settings
+- **History Tab**: Scan history, statistics, and analytics dashboard
+- **Settings Tab**: App configuration, notifications, and support options
+
+Each screen is designed to be self-contained with proper navigation typing and consistent UI patterns.
+
 ## Technology Stack
 
 - **Framework**: React Native with Expo
+- **Navigation**: React Navigation v6 with bottom tabs
+- **UI Components**: React Native Paper with custom styling
 - **Language**: TypeScript
 - **Database**: MongoDB Atlas with Realm SDK
 - **AI Services**: OpenAI GPT-4, Anthropic Claude (fallback)

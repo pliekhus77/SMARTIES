@@ -1,61 +1,100 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Text } from 'react-native';
-import { ScanScreen } from './src/screens';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { ScanScreen, ProfileScreen, HistoryScreen, SettingsScreen } from './src/screens';
+
+const Tab = createBottomTabNavigator();
 
 /**
  * Main SMARTIES Application Component
  * 
- * This is the root component that will eventually include:
- * - Navigation setup
- * - Global state management
- * - Theme provider
- * - Error boundaries
+ * This is the root component that includes:
+ * - Navigation setup with bottom tabs
+ * - Safe area handling
+ * - Screen routing between Scanner, Profile, History, and Settings
  * 
- * For now, it displays the main scan screen as a placeholder
- * during the hackathon setup phase.
+ * The app uses a tab-based navigation pattern with the scanner as the primary screen.
  */
 export default function App() {
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>SMARTIES</Text>
-        <Text style={styles.headerSubtitle}>Scan-based Mobile Allergen Risk Tracking</Text>
-      </View>
-      
-      <View style={styles.content}>
-        <ScanScreen />
-      </View>
-      
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Tab.Navigator
+          initialRouteName="Scanner"
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName: keyof typeof Ionicons.glyphMap;
+
+              if (route.name === 'Scanner') {
+                iconName = focused ? 'scan' : 'scan-outline';
+              } else if (route.name === 'Profile') {
+                iconName = focused ? 'person' : 'person-outline';
+              } else if (route.name === 'History') {
+                iconName = focused ? 'time' : 'time-outline';
+              } else if (route.name === 'Settings') {
+                iconName = focused ? 'settings' : 'settings-outline';
+              } else {
+                iconName = 'help-outline';
+              }
+
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: '#1168bd',
+            tabBarInactiveTintColor: '#666',
+            tabBarStyle: {
+              backgroundColor: '#fff',
+              borderTopColor: '#e0e0e0',
+              borderTopWidth: 1,
+            },
+            headerStyle: {
+              backgroundColor: '#1168bd',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          })}
+        >
+          <Tab.Screen 
+            name="Scanner" 
+            component={ScanScreen}
+            options={{
+              title: 'Scan',
+              headerTitle: 'SMARTIES Scanner',
+            }}
+          />
+          <Tab.Screen 
+            name="Profile" 
+            component={ProfileScreen}
+            options={{
+              title: 'Profile',
+              headerTitle: 'My Profile',
+            }}
+          />
+          <Tab.Screen 
+            name="History" 
+            component={HistoryScreen}
+            options={{
+              title: 'History',
+              headerTitle: 'Scan History',
+            }}
+          />
+          <Tab.Screen 
+            name="Settings" 
+            component={SettingsScreen}
+            options={{
+              title: 'Settings',
+              headerTitle: 'App Settings',
+            }}
+          />
+        </Tab.Navigator>
+        <StatusBar style="light" />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  header: {
-    paddingTop: 50,
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    backgroundColor: '#1168bd',
-    alignItems: 'center',
-  },
-  headerTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 4,
-  },
-  headerSubtitle: {
-    fontSize: 14,
-    color: '#e3f2fd',
-    textAlign: 'center',
-  },
-  content: {
-    flex: 1,
-  },
-});
+// No custom styles needed - using React Navigation's built-in styling

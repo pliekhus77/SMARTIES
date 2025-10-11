@@ -30,6 +30,9 @@ export { checkReligiousCompliance as checkReligiousComplianceUtil } from './util
 // Export configuration
 export * from './config';
 
+// Export types
+export * from './types';
+
 // App metadata
 export const APP_INFO = {
   name: 'SMARTIES',
