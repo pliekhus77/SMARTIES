@@ -41,7 +41,7 @@ export interface Product {
 }
 
 export class ProductModel implements Product {
-  _id?: string;
+  _id: string;
   upc: string;
   name: string;
   brand: string;
@@ -52,12 +52,12 @@ export class ProductModel implements Product {
   source: string;
   last_updated: Date;
   confidence_score: number;
-  image_url?: string;
-  category?: string;
-  serving_size?: string;
+  image_url: string;
+  category: string;
+  serving_size: string;
 
   constructor(data: Product) {
-    this._id = data._id;
+    this._id = data._id ?? '';
     this.upc = data.upc;
     this.name = data.name;
     this.brand = data.brand;
@@ -68,9 +68,9 @@ export class ProductModel implements Product {
     this.source = data.source;
     this.last_updated = data.last_updated;
     this.confidence_score = data.confidence_score;
-    this.image_url = data.image_url;
-    this.category = data.category;
-    this.serving_size = data.serving_size;
+    this.image_url = data.image_url ?? '';
+    this.category = data.category ?? '';
+    this.serving_size = data.serving_size ?? '';
   }
 
   /**

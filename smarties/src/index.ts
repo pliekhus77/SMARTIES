@@ -5,22 +5,29 @@
  * exporting all major modules and providing a centralized import location.
  */
 
-// Export all screens
+// Export screens
 export * from './screens';
 
-// Export all components
+// Export components
 export * from './components';
 
-// Export all services
-export * from './services';
-
-// Export all models
+// Export models
 export * from './models';
 
-// Export all utilities
-export * from './utils';
+// Export services (specific exports to avoid conflicts)
+export { DatabaseService } from './services/atlas';
+export { OpenAIService, AnthropicService, DietaryAnalysisService } from './services/ai';
+export { BarcodeScanner, ProductLookupService } from './services/barcode';
+export { DietaryComplianceChecker } from './services/dietary';
 
-// Export all configuration
+// Export utilities (specific exports to avoid conflicts)
+export { validateUPC, validateEmail, validateDietaryRestriction } from './utils/validation';
+export { formatUPC, formatDate, formatNutritionalValue, truncateText, capitalizeWords } from './utils/formatting';
+export { detectAllergens, containsAllergen, getAllergenSeverity } from './utils/allergenDetection';
+export { checkMedicalCompliance, calculateNutritionalRisk } from './utils/medicalChecks';
+export { checkReligiousCompliance as checkReligiousComplianceUtil } from './utils/religiousCompliance';
+
+// Export configuration
 export * from './config';
 
 // App metadata

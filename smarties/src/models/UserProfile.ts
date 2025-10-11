@@ -30,7 +30,7 @@ export interface UserProfile {
 }
 
 export class UserProfileModel implements UserProfile {
-  _id?: string;
+  _id: string;
   user_id: string;
   dietary_restrictions: DietaryRestrictions;
   preferences: UserPreferences;
@@ -39,7 +39,7 @@ export class UserProfileModel implements UserProfile {
   profile_version?: number;
 
   constructor(data: UserProfile) {
-    this._id = data._id;
+    this._id = data._id ?? '';
     this.user_id = data.user_id;
     this.dietary_restrictions = data.dietary_restrictions;
     this.preferences = data.preferences;

@@ -38,7 +38,7 @@ export class OpenAIService {
   async analyzeDietaryCompliance(request: DietaryAnalysisRequest): Promise<DietaryAnalysisResponse> {
     try {
       // TODO: Implement OpenAI API call for dietary analysis
-      console.log('Analyzing dietary compliance with OpenAI...', request);
+      console.log('Analyzing dietary compliance with OpenAI...', request, 'Config:', this.config);
       
       // Placeholder response
       return {

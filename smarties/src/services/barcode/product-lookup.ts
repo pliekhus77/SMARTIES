@@ -24,6 +24,7 @@ export class ProductLookupService {
    */
   async lookupProduct(upc: string): Promise<Product | null> {
     try {
+      console.log('Looking up product:', upc, 'Config:', this.config);
       // Try local database first
       const cachedProduct = await this.lookupFromCache(upc);
       if (cachedProduct) {

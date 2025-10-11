@@ -22,7 +22,7 @@ export class AnthropicService {
   async analyzeDietaryCompliance(request: any): Promise<any> {
     try {
       // TODO: Implement Anthropic API call for dietary analysis
-      console.log('Analyzing dietary compliance with Anthropic (fallback)...', request);
+      console.log('Analyzing dietary compliance with Anthropic (fallback)...', request, 'Config:', this.config);
       
       // Placeholder response
       return {

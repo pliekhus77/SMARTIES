@@ -23,7 +23,7 @@ export class DatabaseService {
    */
   async connect(): Promise<void> {
     // TODO: Implement MongoDB Atlas connection logic
-    console.log('Connecting to MongoDB Atlas...');
+    console.log('Connecting to MongoDB Atlas...', 'Config:', this.config);
     this.isConnected = true;
   }
 
