@@ -18,7 +18,8 @@
     "test:coverage": "jest --coverage",
     "test:all": "npm run test:unit && npm run test:integration && npm run test:platform",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "build": "react-native bundle"
+    "build": "react-native bundle",
+    "ci:validate": "node scripts/validate-ci.js"
   },
   "dependencies": {
     "zod": "^3.22.0"

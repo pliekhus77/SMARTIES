@@ -5,6 +5,7 @@ on:
     branches: [ main, develop ]
   pull_request:
     branches: [ main, develop ]
+  workflow_dispatch: # Allow manual triggering for hackathon testing
 
 jobs:
   test:
@@ -41,6 +42,12 @@ jobs:
         cd smarties
         npm test -- --coverage --watchAll=false
     
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      with:
+        directory: ./smarties/coverage
+        fail_ci_if_error: false # Don't fail CI for coverage upload issues during hackathon
+    
     - name: Check TypeScript
       run: |
         cd smarties
@@ -74,6 +81,14 @@ jobs:
       run: |
         cd smarties
         npx expo export --platform android
+        # Alternative: npx expo build:android for full APK build
+    
+    - name: Upload Android build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-build
+        path: smarties/dist/
+        retention-days: 7 # Keep artifacts for a week during hackathon
     
   build-ios:
     runs-on: macos-latest
@@ -97,3 +112,26 @@ jobs:
       run: |
         cd smarties
         npx expo export --platform ios
+        # Alternative: npx expo build:ios for full IPA build
+    
+    - name: Upload iOS build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ios-build
+        path: smarties/dist/
+        retention-days: 7 # Keep artifacts for a week during hackathon
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: [test, build-android, build-ios]
+    if: always() # Run even if previous jobs fail
+    
+    steps:
+    - name: Notify build completion
+      run: |
+        if [[ "${{ needs.test.result }}" == "success" && "${{ needs.build-android.result }}" == "success" && "${{ needs.build-ios.result }}" == "success" ]]; then
+          echo "✅ All builds completed successfully!"
+        else
+          echo "❌ Some builds failed. Check the logs above."
+          exit 1
+        fi

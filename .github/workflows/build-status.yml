@@ -1,0 +1,24 @@
+name: Build Status
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+jobs:
+  update-badge:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Update build status
+      run: |
+        if [[ "${{ github.event.workflow_run.conclusion }}" == "success" ]]; then
+          echo "Build Status: ✅ Passing"
+        else
+          echo "Build Status: ❌ Failing"
+        fi
+        
+        echo "Last build: $(date)"
+        echo "Commit: ${{ github.event.workflow_run.head_sha }}"
+        echo "Branch: ${{ github.event.workflow_run.head_branch }}"

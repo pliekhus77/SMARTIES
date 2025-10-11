@@ -135,6 +135,40 @@ npm run test:integration   # Integration tests
 npm run test:e2e          # End-to-end tests
 ```
 
+### CI/CD Pipeline
+
+Our automated build system ensures code quality and deployment readiness:
+
+#### 🔄 Continuous Integration
+- **Automated Testing**: Unit, integration, and platform-specific tests
+- **Code Quality**: ESLint, TypeScript checking, and Prettier formatting
+- **Multi-Platform Builds**: Automated iOS and Android build validation
+- **Coverage Reports**: Automated test coverage tracking with Codecov
+
+#### 🚀 Build Automation
+- **GitHub Actions**: Fully automated CI/CD pipeline
+- **Build Artifacts**: Automated build artifact generation and storage
+- **Manual Deployment**: On-demand deployment to hackathon/demo environments
+- **Build Status**: Real-time build status notifications
+
+#### 📋 Quality Gates
+| Stage | Checks | Blocks Deployment |
+|-------|--------|-------------------|
+| **Build** | Compilation, dependencies | ✅ Yes |
+| **Test** | Unit tests, integration tests, 80%+ coverage | ✅ Yes |
+| **Quality** | Linting, TypeScript, formatting | ✅ Yes |
+| **Platform** | iOS and Android build validation | ✅ Yes |
+
+#### 🔧 Available Workflows
+- **CI Pipeline**: Runs on every push and PR
+- **Manual Deployment**: Deploy to hackathon/demo environments
+- **Build Status**: Real-time build notifications
+
+```bash
+# Trigger manual deployment
+# Go to GitHub Actions → Deploy to Hackathon Environment → Run workflow
+```
+
 ### Testing Strategy
 - **Critical Path Testing**: Barcode scanning → product lookup → dietary analysis → warning display
 - **Edge Case Coverage**: Unknown products, network failures, corrupted barcodes

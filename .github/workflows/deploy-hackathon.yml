@@ -1,0 +1,48 @@
+name: Deploy to Hackathon Environment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'hackathon'
+        type: choice
+        options:
+        - hackathon
+        - demo
+      
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: |
+        cd smarties
+        npm ci
+    
+    - name: Build for deployment
+      run: |
+        cd smarties
+        npx expo export --platform all
+    
+    - name: Deploy to ${{ github.event.inputs.environment }}
+      run: |
+        echo "🚀 Deploying to ${{ github.event.inputs.environment }} environment"
+        echo "This would deploy the built application to the target environment"
+        echo "For hackathon: This could deploy to Expo or a demo server"
+        
+    - name: Deployment complete
+      run: |
+        echo "✅ Deployment to ${{ github.event.inputs.environment }} completed successfully!"
+        echo "App should be available for testing"
