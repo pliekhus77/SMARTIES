@@ -196,11 +196,33 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
+## 🆘 Support & Documentation
 
-- **Documentation**: Check the `/docs` folder for detailed guides
-- **Issues**: Report bugs and feature requests via GitHub Issues
-- **Discussions**: Join our GitHub Discussions for questions and ideas
+### 📚 Complete Documentation Suite
+- **[Development Setup Guide](DEVELOPMENT_SETUP.md)** - Complete environment setup instructions
+- **[Troubleshooting Guide](TROUBLESHOOTING.md)** - Common issues and solutions
+- **[Team Onboarding Guide](TEAM_ONBOARDING.md)** - New team member guide
+- **[Project Documentation](/docs)** - Additional technical documentation
+
+### 🔧 Quick Setup
+```bash
+# 1. Install dependencies
+npm install && cd smarties && npm install
+
+# 2. Configure environment
+cp .env.example .env
+# Edit .env with your credentials
+
+# 3. Start development
+npm start
+```
+
+### 🆘 Getting Help
+- **Setup Issues**: Check [DEVELOPMENT_SETUP.md](DEVELOPMENT_SETUP.md)
+- **Runtime Problems**: Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
+- **New Team Members**: Start with [TEAM_ONBOARDING.md](TEAM_ONBOARDING.md)
+- **Bug Reports**: Create GitHub Issues
+- **Questions**: Use GitHub Discussions
 
 ## 🙏 Acknowledgments
 

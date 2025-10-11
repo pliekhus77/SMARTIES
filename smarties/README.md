@@ -203,9 +203,11 @@ smarties/
 
 ### Getting Help
 
-- Check the [Expo documentation](https://docs.expo.dev/)
-- Review [React Native documentation](https://reactnative.dev/docs/getting-started)
-- Check project issues and discussions
+- **Complete Setup Guide**: See [../DEVELOPMENT_SETUP.md](../DEVELOPMENT_SETUP.md)
+- **Troubleshooting**: See [../TROUBLESHOOTING.md](../TROUBLESHOOTING.md)
+- **Quick Reference**: See [../QUICK_REFERENCE.md](../QUICK_REFERENCE.md)
+- **Team Onboarding**: See [../TEAM_ONBOARDING.md](../TEAM_ONBOARDING.md)
+- **External Docs**: [Expo](https://docs.expo.dev/) | [React Native](https://reactnative.dev/docs/getting-started)
 
 ## License
 
