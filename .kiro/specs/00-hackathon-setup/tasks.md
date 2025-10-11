@@ -25,7 +25,7 @@ This implementation plan covers the foundational setup phase for the SMARTIES ha
   - Test both iOS and Android development environments
   - _Requirements: 2.3_
 
-- [ ] 1.4 Install barcode scanning dependencies
+- [x] 1.4 Install barcode scanning dependencies
   - Add expo-barcode-scanner to project dependencies
   - Configure camera permissions for iOS and Android
   - Test barcode scanning functionality on both platforms
