@@ -6,6 +6,9 @@
 .env.production
 .env.test
 
+# Data dumps
+datadumps/
+
 # Dependencies
 node_modules/
 npm-debug.log*

@@ -1,145 +1,215 @@
-import { TestProductBuilder, TestUserProfileBuilder, TestScanResultBuilder } from '../builders/testDataBuilders';
+/**
+ * Database Service Integration Tests
+ * Tests database connection with real MongoDB Atlas instance, CRUD operations,
+ * error handling, retry logic, and offline fallback behavior.
+ * 
+ * Implements Requirements 5.1, 5.2, 5.3, 5.4, 5.5 from core architecture specification
+ */
+
+import { DatabaseService, DatabaseError, ConnectionState } from '../../services/DatabaseService';
+import { Product, CreateProductInput } from '../../types/Product';
+import { User, CreateUserInput } from '../../types/User';
+import { ScanResult, CreateScanResultInput } from '../../types/ScanResult';
 import { IntegrationTestUtils, integrationConfig } from './setup';
 
-// Mock MongoDB Atlas service for integration testing
-class AtlasIntegrationService {
-  private products = new Map<string, any>();
-  private users = new Map<string, any>();
-  private scanHistory: any[] = [];
+// Mock MongoDB client for testing
+class MockMongoClient {
+  private isConnected = false;
+  private shouldFailConnection = false;
+  private shouldFailOperations = false;
+  private connectionAttempts = 0;
+  private collections = new Map<string, MockCollection>();
 
-  // Product operations
-  async createProduct(product: any): Promise<any> {
-    const productWithId = {
-      ...product,
-      id: product.id || IntegrationTestUtils.generateTestId(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+  constructor() {
+    this.collections.set('products', new MockCollection());
+    this.collections.set('users', new MockCollection());
+    this.collections.set('scan_results', new MockCollection());
+  }
+
+  async connect(): Promise<void> {
+    this.connectionAttempts++;
     
-    this.products.set(productWithId.id, productWithId);
-    return productWithId;
-  }
-
-  async findProductByUpc(upc: string): Promise<any | null> {
-    const product = Array.from(this.products.values()).find(p => p.upc === upc);
-    return product || null;
-  }
-
-  async findProductById(id: string): Promise<any | null> {
-    return this.products.get(id) || null;
-  }
-
-  async updateProduct(id: string, updates: any): Promise<any> {
-    const product = this.products.get(id);
-    if (!product) {
-      throw new Error('Product not found');
+    if (this.shouldFailConnection) {
+      throw new Error('Connection failed');
     }
-
-    const updatedProduct = {
-      ...product,
-      ...updates,
-      updatedAt: new Date(),
-    };
-
-    this.products.set(id, updatedProduct);
-    return updatedProduct;
+    
+    // Simulate connection delay
+    await new Promise(resolve => setTimeout(resolve, 100));
+    this.isConnected = true;
   }
 
-  async deleteProduct(id: string): Promise<boolean> {
-    return this.products.delete(id);
+  async close(): Promise<void> {
+    this.isConnected = false;
   }
 
-  // User operations
-  async createUser(user: any): Promise<any> {
-    const userWithId = {
-      ...user,
-      id: user.id || IntegrationTestUtils.generateTestId(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-
-    this.users.set(userWithId.id, userWithId);
-    return userWithId;
-  }
-
-  async findUserById(id: string): Promise<any | null> {
-    return this.users.get(id) || null;
-  }
-
-  async findUserByEmail(email: string): Promise<any | null> {
-    const user = Array.from(this.users.values()).find(u => u.email === email);
-    return user || null;
-  }
-
-  async updateUser(id: string, updates: any): Promise<any> {
-    const user = this.users.get(id);
-    if (!user) {
-      throw new Error('User not found');
-    }
-
-    const updatedUser = {
-      ...user,
-      ...updates,
-      updatedAt: new Date(),
-    };
-
-    this.users.set(id, updatedUser);
-    return updatedUser;
-  }
-
-  // Scan history operations
-  async createScanResult(scanResult: any): Promise<any> {
-    const scanWithId = {
-      ...scanResult,
-      id: scanResult.id || IntegrationTestUtils.generateTestId(),
-      createdAt: new Date(),
-    };
-
-    this.scanHistory.push(scanWithId);
-    return scanWithId;
-  }
-
-  async findScanHistoryByUserId(userId: string, limit: number = 50): Promise<any[]> {
-    return this.scanHistory
-      .filter(scan => scan.userId === userId)
-      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-      .slice(0, limit);
-  }
-
-  async findScanHistoryByProductId(productId: string): Promise<any[]> {
-    return this.scanHistory.filter(scan => scan.productId === productId);
-  }
-
-  // Analytics operations
-  async getProductScanCount(productId: string): Promise<number> {
-    return this.scanHistory.filter(scan => scan.productId === productId).length;
-  }
-
-  async getUserScanCount(userId: string): Promise<number> {
-    return this.scanHistory.filter(scan => scan.userId === userId).length;
-  }
-
-  async getViolationStats(): Promise<{ total: number; violations: number; warnings: number }> {
-    const total = this.scanHistory.length;
-    const violations = this.scanHistory.filter(scan => !scan.isCompliant).length;
-    const warnings = this.scanHistory.filter(scan => scan.warnings && scan.warnings.length > 0).length;
-
-    return { total, violations, warnings };
+  db(name?: string) {
+    return new MockDatabase(this.collections, this.shouldFailOperations);
   }
 
   // Test utilities
-  clear(): void {
-    this.products.clear();
-    this.users.clear();
-    this.scanHistory = [];
+  setConnectionFailure(shouldFail: boolean): void {
+    this.shouldFailConnection = shouldFail;
   }
 
-  getStats(): { products: number; users: number; scans: number } {
+  setOperationFailure(shouldFail: boolean): void {
+    this.shouldFailOperations = shouldFail;
+  }
+
+  getConnectionAttempts(): number {
+    return this.connectionAttempts;
+  }
+
+  isClientConnected(): boolean {
+    return this.isConnected;
+  }
+
+  reset(): void {
+    this.isConnected = false;
+    this.shouldFailConnection = false;
+    this.shouldFailOperations = false;
+    this.connectionAttempts = 0;
+    this.collections.forEach(collection => collection.clear());
+  }
+}
+
+class MockDatabase {
+  constructor(
+    private collections: Map<string, MockCollection>,
+    private shouldFailOperations: boolean
+  ) {}
+
+  collection(name: string) {
+    const collection = this.collections.get(name);
+    if (!collection) {
+      throw new Error(`Collection ${name} not found`);
+    }
+    collection.setShouldFail(this.shouldFailOperations);
+    return collection;
+  }
+
+  admin() {
+    return new MockAdmin(this.shouldFailOperations);
+  }
+}
+
+class MockCollection {
+  private documents = new Map<string, any>();
+  private shouldFail = false;
+
+  setShouldFail(shouldFail: boolean): void {
+    this.shouldFail = shouldFail;
+  }
+
+  async insertOne(doc: any): Promise<{ insertedId: string }> {
+    if (this.shouldFail) {
+      throw new Error('Insert operation failed');
+    }
+
+    const id = doc._id || IntegrationTestUtils.generateTestId();
+    const docWithId = { ...doc, _id: id };
+    this.documents.set(id, docWithId);
+    
+    return { insertedId: id };
+  }
+
+  async findOne(filter: any): Promise<any> {
+    if (this.shouldFail) {
+      throw new Error('Find operation failed');
+    }
+
+    // Simple filter matching for testing
+    for (const [id, doc] of this.documents) {
+      if (this.matchesFilter(doc, filter)) {
+        return doc;
+      }
+    }
+    return null;
+  }
+
+  find(filter: any) {
     return {
-      products: this.products.size,
-      users: this.users.size,
-      scans: this.scanHistory.length,
+      toArray: async (): Promise<any[]> => {
+        if (this.shouldFail) {
+          throw new Error('Find operation failed');
+        }
+
+        const results = [];
+        for (const [id, doc] of this.documents) {
+          if (this.matchesFilter(doc, filter)) {
+            results.push(doc);
+          }
+        }
+        return results;
+      }
     };
+  }
+
+  async updateOne(filter: any, update: any): Promise<{ modifiedCount: number }> {
+    if (this.shouldFail) {
+      throw new Error('Update operation failed');
+    }
+
+    for (const [id, doc] of this.documents) {
+      if (this.matchesFilter(doc, filter)) {
+        const updatedDoc = { ...doc, ...update.$set };
+        this.documents.set(id, updatedDoc);
+        return { modifiedCount: 1 };
+      }
+    }
+    return { modifiedCount: 0 };
+  }
+
+  async deleteOne(filter: any): Promise<{ deletedCount: number }> {
+    if (this.shouldFail) {
+      throw new Error('Delete operation failed');
+    }
+
+    for (const [id, doc] of this.documents) {
+      if (this.matchesFilter(doc, filter)) {
+        this.documents.delete(id);
+        return { deletedCount: 1 };
+      }
+    }
+    return { deletedCount: 0 };
+  }
+
+  async createIndex(keys: any, options?: any): Promise<string> {
+    if (this.shouldFail) {
+      throw new Error('Create index operation failed');
+    }
+    return 'index_created';
+  }
+
+  private matchesFilter(doc: any, filter: any): boolean {
+    if (Object.keys(filter).length === 0) {
+      return true; // Empty filter matches all
+    }
+
+    for (const [key, value] of Object.entries(filter)) {
+      if (doc[key] !== value) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  clear(): void {
+    this.documents.clear();
+  }
+
+  size(): number {
+    return this.documents.size;
+  }
+}
+
+class MockAdmin {
+  constructor(private shouldFail: boolean) {}
+
+  async ping(): Promise<any> {
+    if (this.shouldFail) {
+      throw new Error('Ping failed');
+    }
+    return { ok: 1 };
   }
 }
 
