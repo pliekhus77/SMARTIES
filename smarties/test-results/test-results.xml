@@ -1,91 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="43" failures="0" errors="0" time="1.581">
-  <testsuite name="src\models\__tests__\Product.test.ts" errors="0" failures="0" skipped="0" timestamp="2025-10-11T22:01:58" time="1.418" tests="43">
-    <testcase classname="Product Model Validation › validateUPC" name="should validate correct UPC codes" time="0.005">
+<testsuites name="jest tests" tests="2" failures="0" errors="0" time="130.283">
+  <testsuite name="__tests__/App.test.tsx" errors="0" failures="0" skipped="0" timestamp="2025-10-11T23:09:12" time="125.855" tests="2">
+    <testcase classname="App" name="should render without crashing" time="13.61">
     </testcase>
-    <testcase classname="Product Model Validation › validateUPC" name="should handle UPC codes with spaces and dashes" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateUPC" name="should reject invalid UPC codes" time="0">
-    </testcase>
-    <testcase classname="Product Model Validation › validateUPC" name="should reject non-string UPC codes" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateProductName" name="should validate correct product names" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateProductName" name="should reject invalid product names" time="0">
-    </testcase>
-    <testcase classname="Product Model Validation › validateProductName" name="should reject non-string product names" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateIngredients" name="should validate correct ingredients arrays" time="0">
-    </testcase>
-    <testcase classname="Product Model Validation › validateIngredients" name="should reject invalid ingredients arrays" time="0">
-    </testcase>
-    <testcase classname="Product Model Validation › validateIngredients" name="should reject non-array ingredients" time="0">
-    </testcase>
-    <testcase classname="Product Model Validation › validateAllergens" name="should validate correct allergens arrays" time="0.003">
-    </testcase>
-    <testcase classname="Product Model Validation › validateAllergens" name="should reject invalid allergens arrays" time="0">
-    </testcase>
-    <testcase classname="Product Model Validation › validateAllergens" name="should reject non-array allergens" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateConfidence" name="should validate correct confidence scores" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateConfidence" name="should reject invalid confidence scores" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateConfidence" name="should reject non-number confidence scores" time="0">
-    </testcase>
-    <testcase classname="Product Model Validation › validateProductSource" name="should validate correct product sources" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateProductSource" name="should reject invalid product sources" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateProductSource" name="should reject non-string product sources" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateDietaryFlags" name="should validate correct dietary flags" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateDietaryFlags" name="should reject invalid dietary flags" time="0">
-    </testcase>
-    <testcase classname="Product Model Validation › validateDietaryFlags" name="should reject non-object dietary flags" time="0">
-    </testcase>
-    <testcase classname="Product Model Validation › validateNutritionalInfo" name="should validate correct nutritional info" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateNutritionalInfo" name="should reject invalid nutritional info" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateNutritionalInfo" name="should reject non-object nutritional info" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateProduct" name="should validate a complete valid product" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateProduct" name="should validate a minimal valid product" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateProduct" name="should reject product with missing required fields" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateProduct" name="should reject product with invalid field values" time="0">
-    </testcase>
-    <testcase classname="Product Model Validation › validateCreateProductInput" name="should validate correct create product input" time="0">
-    </testcase>
-    <testcase classname="Product Model Validation › validateCreateProductInput" name="should reject invalid create product input" time="0">
-    </testcase>
-    <testcase classname="Product Model Validation › validateUpdateProductInput" name="should validate correct update product input" time="0">
-    </testcase>
-    <testcase classname="Product Model Validation › validateUpdateProductInput" name="should validate empty update product input" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › validateUpdateProductInput" name="should reject invalid update product input" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › ProductModel" name="should create a ProductModel instance" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › ProductModel" name="should check if product contains allergen" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › ProductModel" name="should format ingredients list" time="0">
-    </testcase>
-    <testcase classname="Product Model Validation › ProductModel" name="should check dietary requirements" time="0">
-    </testcase>
-    <testcase classname="Product Model Validation › ProductModel" name="should calculate data age" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › ProductModel" name="should check if data is stale" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › ProductModel" name="should validate product instance" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › Constants" name="should export common allergens" time="0.001">
-    </testcase>
-    <testcase classname="Product Model Validation › Constants" name="should export product sources" time="0.001">
+    <testcase classname="App" name="should render navigation container" time="0.012">
     </testcase>
   </testsuite>
 </testsuites>
