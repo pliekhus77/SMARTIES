@@ -2,12 +2,7 @@ module.exports = {
   preset: 'react-native',
   setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
   testMatch: [
-    '**/__tests__/**/*.(ts|tsx|js)',
-    '**/*.(test|spec).(ts|tsx|js)'
-  ],
-  testPathIgnorePatterns: [
-    '/node_modules/',
-    '/integration/' // Separate integration tests
+    '**/integration/**/*.(test|spec).(ts|tsx|js)'
   ],
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
@@ -16,19 +11,13 @@ module.exports = {
     '!src/**/index.ts',
     '!src/**/*.types.ts'
   ],
-  // coverageThreshold: {
-  //   global: {
-  //     branches: 80,
-  //     functions: 80,
-  //     lines: 80,
-  //     statements: 80
-  //   }
-  // },
+  coverageDirectory: './integration-coverage',
   testEnvironment: 'node',
+  testTimeout: 30000, // Longer timeout for integration tests
   transformIgnorePatterns: [
     'node_modules/(?!(react-native|@react-native|expo|@expo|expo-status-bar|@react-navigation|realm)/)'
   ],
-  moduleNameMapper: {
+  moduleNameMapping: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
     '^@/screens/(.*)$': '<rootDir>/src/screens/$1',
@@ -37,16 +26,11 @@ module.exports = {
     '^@/types/(.*)$': '<rootDir>/src/types/$1',
     '^@/config/(.*)$': '<rootDir>/src/config/$1'
   },
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.json'
-    }
-  },
   reporters: [
     'default',
     ['jest-junit', {
-      outputDirectory: './test-results',
-      outputName: 'test-results.xml',
+      outputDirectory: './integration-test-results',
+      outputName: 'integration-test-results.xml',
       ancestorSeparator: ' › ',
       uniqueOutputName: 'false',
       suiteNameTemplate: '{filepath}',

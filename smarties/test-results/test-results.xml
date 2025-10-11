@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="9" failures="0" errors="0" time="2.045">
+  <testsuite name="__tests__\setup\ci-setup.test.ts" errors="0" failures="0" skipped="0" timestamp="2025-10-11T21:03:14" time="1.926" tests="9">
+    <testcase classname="CI/CD Setup Verification › Test Environment" name="should have CI environment variable set in CI" time="0.003">
+    </testcase>
+    <testcase classname="CI/CD Setup Verification › Test Environment" name="should have Node.js version 18 or higher" time="0.001">
+    </testcase>
+    <testcase classname="CI/CD Setup Verification › Test Environment" name="should have required test dependencies available" time="0">
+    </testcase>
+    <testcase classname="CI/CD Setup Verification › Test Configuration" name="should have proper test timeout configured" time="0">
+    </testcase>
+    <testcase classname="CI/CD Setup Verification › Test Configuration" name="should support TypeScript" time="0">
+    </testcase>
+    <testcase classname="CI/CD Setup Verification › Test Configuration" name="should have test environment configured correctly" time="0.001">
+    </testcase>
+    <testcase classname="CI/CD Setup Verification › Coverage Configuration" name="should be configured to collect coverage" time="0">
+    </testcase>
+    <testcase classname="CI/CD Setup Verification › Reporting Configuration" name="should support JUnit XML reporting" time="0.069">
+    </testcase>
+    <testcase classname="CI/CD Setup Verification › Mock Environment Variables" name="should handle missing environment variables gracefully" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>
