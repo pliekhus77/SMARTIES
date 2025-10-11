@@ -8,11 +8,15 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "test": "jest",
-    "test:unit": "jest --testPathIgnorePatterns=integration",
+    "test:unit": "jest --testPathIgnorePatterns=integration --testPathIgnorePatterns=platform",
     "test:integration": "jest --testPathPattern=integration --runInBand",
+    "test:platform": "jest --testPathPattern=platform --runInBand",
+    "test:platform:ios": "TEST_PLATFORM=ios jest --testPathPattern=ios.platform.test.ts",
+    "test:platform:android": "TEST_PLATFORM=android jest --testPathPattern=android.platform.test.ts",
+    "test:platform:cross": "jest --testPathPattern=crossPlatform.test.ts --runInBand",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "test:all": "npm run test:unit && npm run test:integration",
+    "test:all": "npm run test:unit && npm run test:integration && npm run test:platform",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "build": "react-native bundle"
   },
@@ -31,7 +35,7 @@
     "setupFilesAfterEnv": ["<rootDir>/src/test/setup.ts"],
     "testEnvironment": "node",
     "roots": ["<rootDir>/src"],
-    "testMatch": ["**/__tests__/**/*.test.ts", "**/__tests__/**/*.test.tsx", "**/integration/**/*.test.ts"],
+    "testMatch": ["**/__tests__/**/*.test.ts", "**/__tests__/**/*.test.tsx", "**/integration/**/*.test.ts", "**/platform/**/*.test.ts"],
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
     },

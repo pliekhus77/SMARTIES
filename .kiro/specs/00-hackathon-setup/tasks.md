@@ -130,7 +130,7 @@ This implementation plan covers the foundational setup phase for the SMARTIES ha
   - Add service switching logic and rate limit handling
   - _Requirements: 4.1, 4.3, 4.5_
 
-- [ ] 5.5 Set up basic barcode scanning functionality
+- [x] 5.5 Set up basic barcode scanning functionality
   - Integrate expo-barcode-scanner into scanner screen
   - Implement barcode detection and UPC extraction
   - Add error handling for scanning failures and camera issues
@@ -150,7 +150,7 @@ This implementation plan covers the foundational setup phase for the SMARTIES ha
   - Validate AI service calls and response handling
   - _Requirements: 1.2, 4.3_
 
-- [ ] 6.3 Validate cross-platform functionality
+- [x] 6.3 Validate cross-platform functionality
   - Test application functionality on iOS simulator/device
   - Test application functionality on Android emulator/device
   - Validate barcode scanning on both platforms

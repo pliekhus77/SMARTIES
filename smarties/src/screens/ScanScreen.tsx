@@ -1,16 +1,74 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { BarcodeScanner } from '../components/scanner';
+import { BarcodeScanner as BarcodeScannerService } from '../services/barcode';
 
 /**
  * Primary barcode scanning interface
- * This screen will contain the main barcode scanning functionality
+ * This screen contains the main barcode scanning functionality
  */
 export const ScanScreen: React.FC = () => {
+  const [isScanning, setIsScanning] = useState(false);
+  const [lastScannedBarcode, setLastScannedBarcode] = useState<string | null>(null);
+  
+  const barcodeService = new BarcodeScannerService();
+
   const handleScanPress = () => {
-    // TODO: Implement barcode scanning functionality
-    console.log('Scan button pressed');
+    setIsScanning(true);
   };
+
+  const handleBarcodeScanned = (barcode: string) => {
+    try {
+      // Process the scanned barcode
+      const processedBarcode = barcodeService.processScanResult({
+        type: 'upc',
+        data: barcode
+      });
+
+      if (processedBarcode) {
+        setLastScannedBarcode(processedBarcode);
+        setIsScanning(false);
+        
+        // Show success message with scanned barcode
+        Alert.alert(
+          'Barcode Scanned Successfully!',
+          `UPC: ${processedBarcode}\n\nNext: Product lookup and dietary analysis will be implemented in the next phase.`,
+          [
+            { text: 'Scan Another', onPress: () => setIsScanning(true) },
+            { text: 'OK', style: 'default' }
+          ]
+        );
+      } else {
+        handleScanError('Invalid barcode format');
+      }
+    } catch (error) {
+      console.error('Error processing scanned barcode:', error);
+      handleScanError('Failed to process barcode');
+    }
+  };
+
+  const handleScanError = (error: string) => {
+    console.error('Scan error:', error);
+    Alert.alert('Scan Error', error, [
+      { text: 'Try Again', onPress: () => setIsScanning(true) },
+      { text: 'Cancel', onPress: () => setIsScanning(false) }
+    ]);
+  };
+
+  const handleCloseScanner = () => {
+    setIsScanning(false);
+  };
+
+  if (isScanning) {
+    return (
+      <BarcodeScanner
+        onBarcodeScanned={handleBarcodeScanned}
+        onError={handleScanError}
+        onClose={handleCloseScanner}
+      />
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -20,6 +78,13 @@ export const ScanScreen: React.FC = () => {
           <Text style={styles.subtitle}>
             Point your camera at a product barcode to check for dietary restrictions
           </Text>
+          
+          {lastScannedBarcode && (
+            <View style={styles.lastScanContainer}>
+              <Text style={styles.lastScanLabel}>Last scanned:</Text>
+              <Text style={styles.lastScanBarcode}>{lastScannedBarcode}</Text>
+            </View>
+          )}
           
           <TouchableOpacity style={styles.scanButton} onPress={handleScanPress}>
             <Text style={styles.scanButtonText}>Start Scanning</Text>
@@ -73,6 +138,25 @@ const styles = StyleSheet.create({
     color: '#666',
     marginBottom: 30,
     lineHeight: 22,
+  },
+  lastScanContainer: {
+    backgroundColor: '#f0f8ff',
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 20,
+    borderLeftWidth: 4,
+    borderLeftColor: '#1168bd',
+  },
+  lastScanLabel: {
+    fontSize: 12,
+    color: '#666',
+    marginBottom: 4,
+  },
+  lastScanBarcode: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#1168bd',
+    fontFamily: 'monospace',
   },
   scanButton: {
     backgroundColor: '#1168bd',
