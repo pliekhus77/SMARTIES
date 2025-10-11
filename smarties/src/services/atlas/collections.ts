@@ -1,69 +1,12 @@
 /**
  * MongoDB Atlas collections interface
- * Defines data models and collection operations
+ * Defines collection operations using proper data models
  */
 
-// Product data model
-export interface Product {
-  _id?: string;
-  upc: string;
-  name: string;
-  brand: string;
-  ingredients: string[];
-  allergens: string[];
-  nutritional_info: {
-    calories?: number;
-    sodium?: number;
-    sugar?: number;
-    [key: string]: number | undefined;
-  };
-  dietary_flags: {
-    vegan?: boolean;
-    kosher?: boolean;
-    halal?: boolean;
-    gluten_free?: boolean;
-  };
-  source: string;
-  last_updated: Date;
-  confidence_score: number;
-}
-
-// User profile data model
-export interface UserProfile {
-  _id?: string;
-  user_id: string;
-  dietary_restrictions: {
-    allergies: string[];
-    medical: string[];
-    religious: string[];
-    lifestyle: string[];
-  };
-  preferences: {
-    strict_mode: boolean;
-    notification_level: string;
-    language: string;
-  };
-  created_at: Date;
-  last_active: Date;
-}
-
-// Scan history data model
-export interface ScanHistory {
-  _id?: string;
-  user_id: string;
-  product_upc: string;
-  scan_timestamp: Date;
-  compliance_result: {
-    safe: boolean;
-    violations: string[];
-    warnings: string[];
-    confidence: number;
-  };
-  location?: {
-    latitude: number;
-    longitude: number;
-  };
-}
+import { DatabaseService } from './database';
+import { Product } from '../../models/Product';
+import { UserProfile } from '../../models/UserProfile';
+import { ScanHistory } from '../../models/ScanHistory';
 
 // Collection service interfaces
 export interface ProductService {
@@ -79,6 +22,75 @@ export interface UserService {
 }
 
 export interface ScanHistoryService {
-  findByUserId(userId: string): Promise<ScanHistory[]>;
+  findByUserId(userId: string, limit?: number): Promise<ScanHistory[]>;
   create(scanResult: ScanHistory): Promise<ScanHistory>;
+}
+
+// Concrete implementations using DatabaseService
+
+export class ProductRepository implements ProductService {
+  constructor(private dbService: DatabaseService) {}
+
+  async findByUPC(upc: string): Promise<Product | null> {
+    return await this.dbService.findProductByUPC(upc);
+  }
+
+  async create(_product: Product): Promise<Product> {
+    // For now, we'll implement this as a simple save operation
+    // In a full implementation, this would use insertOne
+    throw new Error('Product creation not implemented - use external APIs for product data');
+  }
+
+  async update(_upc: string, _product: Partial<Product>): Promise<Product | null> {
+    // For now, we'll implement this as a simple save operation
+    // In a full implementation, this would use updateOne
+    throw new Error('Product updates not implemented - products are read-only from external sources');
+  }
+}
+
+export class UserRepository implements UserService {
+  constructor(private dbService: DatabaseService) {}
+
+  async findByUserId(userId: string): Promise<UserProfile | null> {
+    return await this.dbService.getUserProfile(userId);
+  }
+
+  async create(profile: UserProfile): Promise<UserProfile> {
+    return await this.dbService.saveUserProfile(profile);
+  }
+
+  async update(userId: string, profile: Partial<UserProfile>): Promise<UserProfile | null> {
+    // Get existing profile first
+    const existingProfile = await this.findByUserId(userId);
+    if (!existingProfile) {
+      return null;
+    }
+
+    // Merge updates with existing profile
+    const updatedProfile: UserProfile = {
+      ...existingProfile,
+      ...profile,
+      user_id: userId, // Ensure user_id doesn't change
+      last_active: new Date(),
+      // Ensure preferences are properly typed
+      preferences: {
+        ...existingProfile.preferences,
+        ...profile.preferences
+      }
+    };
+
+    return await this.dbService.saveUserProfile(updatedProfile);
+  }
+}
+
+export class ScanHistoryRepository implements ScanHistoryService {
+  constructor(private dbService: DatabaseService) {}
+
+  async findByUserId(userId: string, limit: number = 50): Promise<ScanHistory[]> {
+    return await this.dbService.getScanHistory(userId, limit);
+  }
+
+  async create(scanResult: ScanHistory): Promise<ScanHistory> {
+    return await this.dbService.saveScanHistory(scanResult);
+  }
 }
