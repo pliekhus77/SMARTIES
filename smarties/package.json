@@ -51,7 +51,13 @@
     "deps:update": "npm update",
     "deps:validate": "node scripts/validate-deps.js",
     "security:audit": "npm audit",
-    "security:fix": "npm audit fix"
+    "security:fix": "npm audit fix",
+    "deploy:health-check": "node scripts/health-check.js",
+    "deploy:rollback": "node scripts/rollback.js",
+    "deploy:monitor": "node scripts/deployment-monitor.js",
+    "deploy:report": "node scripts/deployment-monitor.js report",
+    "deploy:status": "node scripts/deployment-status.js",
+    "deploy:watch": "node scripts/deployment-status.js watch"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.9.1",
