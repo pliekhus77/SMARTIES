@@ -1,110 +1,176 @@
-# Technology Stack & Architecture
+---
+inclusion: always
+---
 
-## Core Tech Stack
+# SMARTIES Technology Stack & Development Guidelines
 
-### Database & Backend
-- **Primary Database**: MongoDB Atlas (operational + vector database)
-- **Backend Runtime**: Node.js
-- **Database SDK**: MongoDB Realm SDK for real-time sync
-- **Vector Search**: Atlas Vector Search for ingredient similarity matching
-- **Text Search**: Atlas Text Search for product discovery and fuzzy matching
+## Required Technology Stack
 
-### Mobile Application
-- **Framework**: React Native (cross-platform iOS/Android)
-- **Barcode Scanning**: expo-barcode-scanner for UPC scanning
-- **Camera Integration**: React Native camera APIs
-- **Offline Support**: MongoDB Realm for local caching
+### Core Technologies (Non-Negotiable)
+- **Mobile Framework**: React Native with TypeScript
+- **Database**: MongoDB Atlas with Realm SDK for offline sync
+- **AI/ML**: OpenAI/Anthropic APIs for dietary analysis
+- **Barcode Scanning**: expo-barcode-scanner
+- **Vector Search**: MongoDB Atlas Vector Search
 
-### AI & Machine Learning
-- **GenAI Provider**: OpenAI/Anthropic API for RAG responses
-- **Embeddings**: Sentence transformers for ingredient vectors
-- **RAG Pipeline**: Retrieval-Augmented Generation for personalized advice
-- **Vector Embeddings**: For ingredient similarity and product recommendations
+### Data Sources Integration
+- **Primary**: Open Food Facts API for product data
+- **Secondary**: USDA Food Data Central for nutritional info
+- **Fallback**: Manual user submissions with moderation
 
-### Data Sources
-- **Open Food Facts**: 2+ million food products with allergen information
-- **USDA Food Data Central**: 600,000+ food items with nutritional data
-- **Recipe1M+**: 1+ million recipes for ingredient analysis
-- **Nutrition5k**: High-quality training data with accurate nutritional info
+## Development Patterns & Conventions
 
-## Architecture Patterns
+### Code Organization Rules
+```
+src/
+├── components/          # Reusable UI components
+├── screens/            # Screen-level components
+├── services/           # Business logic and API calls
+├── models/             # Data models and types
+├── utils/              # Helper functions
+└── config/             # Configuration files
+```
 
-### RAG (Retrieval-Augmented Generation) Pipeline
-1. **UPC Scan** → Retrieve product from Atlas
-2. **Vector Search** → Find similar products using Atlas Vector Search
-3. **Context Retrieval** → Gather user history + similar product patterns
-4. **LLM Generation** → Generate personalized dietary advice
-5. **Agentic Response** → Proactive recommendations and warnings
+### Naming Conventions
+- **Files**: PascalCase for components (`ScannerScreen.tsx`), camelCase for utilities (`allergenDetection.ts`)
+- **Components**: PascalCase (`ProductCard`, `DietaryAlert`)
+- **Functions**: camelCase (`checkAllergens`, `processBarcode`)
+- **Constants**: UPPER_SNAKE_CASE (`DIETARY_RESTRICTIONS`, `API_ENDPOINTS`)
 
-### MongoDB Atlas Integration Patterns
-- **Flexible Document Model**: Store UPC, ingredients, allergens, nutritional data
-- **Aggregation Pipelines**: Complex dietary rule evaluation and risk scoring
-- **Real-time Sync**: Offline-first with Atlas sync capabilities
-- **Multi-collection Queries**: Products, user profiles, scan history
+### TypeScript Requirements
+- Always use TypeScript, never plain JavaScript
+- Define interfaces for all data models
+- Use strict null checks and proper error handling
+- Export types alongside implementations
 
-### Agentic AI Features
-- **Learning Agent**: Continuously improves recommendations based on user feedback
-- **Proactive Alerts**: Warn about potential issues based on similar product patterns
-- **Smart Recommendations**: Suggest safe alternatives based on scan history
-- **Contextual Insights**: Identify patterns in user dietary choices
+### React Native Patterns
+```typescript
+// Use functional components with hooks
+const ScannerScreen: React.FC = () => {
+  const [scanning, setScanning] = useState(false);
+  
+  // Always handle loading and error states
+  const { data, loading, error } = useProductLookup(barcode);
+  
+  if (loading) return <LoadingSpinner />;
+  if (error) return <ErrorMessage error={error} />;
+  
+  return <ProductDisplay product={data} />;
+};
+```
 
-## Common Commands
+### MongoDB Integration Patterns
+```typescript
+// Use aggregation pipelines for complex queries
+const dietaryAnalysis = await db.collection('products').aggregate([
+  { $match: { upc: barcode } },
+  { $lookup: { from: 'allergens', localField: 'ingredients', foreignField: 'name' } },
+  { $addFields: { riskScore: { $sum: '$allergens.severity' } } }
+]);
 
-### Development Setup
+// Always use proper error handling
+try {
+  const result = await realm.write(() => {
+    return realm.create('Product', productData);
+  });
+} catch (error) {
+  console.error('Database write failed:', error);
+  throw new DatabaseError('Failed to save product');
+}
+```
+
+### AI/RAG Implementation Guidelines
+```typescript
+// Structure AI requests with proper context
+const dietaryAdvice = await openai.chat.completions.create({
+  model: "gpt-4",
+  messages: [
+    { role: "system", content: "You are a dietary safety assistant..." },
+    { role: "user", content: `Analyze product: ${productData}` }
+  ],
+  temperature: 0.1 // Low temperature for safety-critical responses
+});
+
+// Always validate AI responses
+const validatedResponse = validateDietaryAdvice(dietaryAdvice);
+if (!validatedResponse.isValid) {
+  throw new AIValidationError('Invalid dietary advice generated');
+}
+```
+
+### Error Handling Standards
+```typescript
+// Use custom error classes
+export class ProductNotFoundError extends Error {
+  constructor(barcode: string) {
+    super(`Product not found: ${barcode}`);
+    this.name = 'ProductNotFoundError';
+  }
+}
+
+// Always provide user-friendly error messages
+const handleScanError = (error: Error) => {
+  if (error instanceof ProductNotFoundError) {
+    showUserMessage('Product not found. Try manual entry.');
+  } else {
+    showUserMessage('Scanning failed. Please try again.');
+    logError(error); // Log technical details separately
+  }
+};
+```
+
+### Performance Requirements
+- Barcode scan to result: <3 seconds
+- App startup: <2 seconds to scanner ready
+- Offline functionality: Core features must work without network
+- Memory usage: <100MB during normal operation
+
+### Security Guidelines
+- Never store API keys in code - use environment variables
+- Encrypt sensitive user data using device keychain
+- Validate all user inputs before processing
+- Use HTTPS for all API communications
+- Implement proper authentication for user data sync
+
+### Testing Requirements
+```typescript
+// Test critical paths thoroughly
+describe('Dietary Analysis', () => {
+  it('should detect allergens correctly', async () => {
+    const product = mockProductWithAllergens(['milk', 'eggs']);
+    const userProfile = mockUserProfile(['dairy allergy']);
+    
+    const result = await analyzeDietaryCompliance(product, userProfile);
+    
+    expect(result.hasViolations).toBe(true);
+    expect(result.violations).toContain('dairy');
+  });
+});
+```
+
+### Development Commands
 ```bash
-# Install dependencies
+# Setup
 npm install
-
-# Start React Native development server
 npx react-native start
 
-# Run on iOS simulator
-npx react-native run-ios
+# Testing
+npm test                    # Unit tests
+npm run test:integration   # Integration tests
+npm run test:e2e          # End-to-end tests
 
-# Run on Android emulator
-npx react-native run-android
+# Platform-specific
+npx react-native run-ios     # iOS development
+npx react-native run-android # Android development
+
+# Production builds
+npm run build:ios
+npm run build:android
 ```
 
-### Database Operations
-```bash
-# Connect to MongoDB Atlas
-mongosh "mongodb+srv://cluster.mongodb.net/smarties"
-
-# Import product data
-mongoimport --uri="mongodb+srv://cluster.mongodb.net/smarties" --collection=products --file=products.json
-
-# Create vector search index
-# (Done via Atlas UI or MongoDB Compass)
-```
-
-### Testing
-```bash
-# Run unit tests
-npm test
-
-# Run integration tests
-npm run test:integration
-
-# Run barcode scanning tests
-npm run test:barcode
-```
-
-### Build & Deployment
-```bash
-# Build for production
-npm run build
-
-# Generate Android APK
-cd android && ./gradlew assembleRelease
-
-# Generate iOS build
-cd ios && xcodebuild -workspace Smarties.xcworkspace -scheme Smarties archive
-```
-
-## Code Style & Conventions
-- **JavaScript/TypeScript**: ES6+ with async/await patterns
-- **React Native**: Functional components with hooks
-- **MongoDB**: Aggregation pipelines for complex queries
-- **Error Handling**: Comprehensive try/catch with user-friendly messages
-- **Offline-First**: Design for intermittent connectivity
-- **Security**: Never store sensitive data in plain text, use Atlas encryption
+### Code Quality Standards
+- Use ESLint and Prettier for consistent formatting
+- Maintain >80% test coverage for critical paths
+- Use meaningful commit messages following conventional commits
+- All components must be accessible (screen reader compatible)
+- Handle all async operations with proper loading states
