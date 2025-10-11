@@ -8,8 +8,11 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "test": "jest",
+    "test:unit": "jest --testPathIgnorePatterns=integration",
+    "test:integration": "jest --testPathPattern=integration --runInBand",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:all": "npm run test:unit && npm run test:integration",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "build": "react-native bundle"
   },
@@ -28,7 +31,7 @@
     "setupFilesAfterEnv": ["<rootDir>/src/test/setup.ts"],
     "testEnvironment": "node",
     "roots": ["<rootDir>/src"],
-    "testMatch": ["**/__tests__/**/*.test.ts", "**/__tests__/**/*.test.tsx"],
+    "testMatch": ["**/__tests__/**/*.test.ts", "**/__tests__/**/*.test.tsx", "**/integration/**/*.test.ts"],
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
     },

@@ -170,6 +170,15 @@ export class TestUserProfileBuilder {
       .withMedicalConditions(['diabetes'])
       .build();
   }
+
+  static safeUser(): TestUserProfile {
+    return TestUserProfileBuilder.create()
+      .withEmail('safe@example.com')
+      .withAllergens([])
+      .withDietaryRestrictions([])
+      .withMedicalConditions([])
+      .build();
+  }
 }
 
 export class TestScanResultBuilder {

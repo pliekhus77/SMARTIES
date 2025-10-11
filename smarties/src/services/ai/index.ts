@@ -4,3 +4,4 @@
 export * from './openai';
 export * from './anthropic';
 export * from './dietary-analysis';
+export * from './ai-service-factory';
