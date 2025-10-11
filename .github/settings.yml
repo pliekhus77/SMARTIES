@@ -1,0 +1,117 @@
+# Repository settings for SMARTIES hackathon project
+# This file can be used with the Probot Settings app to configure repository settings
+
+repository:
+  name: SMARTIES
+  description: "Scan-based Mobile Allergen Risk Tracking & Intelligence Suite - A React Native app for dietary compliance checking"
+  homepage: ""
+  topics: 
+    - react-native
+    - mobile-app
+    - hackathon
+    - allergen-detection
+    - dietary-restrictions
+    - mongodb
+    - ai
+    - barcode-scanner
+  private: false
+  has_issues: true
+  has_projects: true
+  has_wiki: false
+  has_downloads: true
+  default_branch: main
+  allow_squash_merge: true
+  allow_merge_commit: false
+  allow_rebase_merge: false
+  delete_branch_on_merge: true
+
+# Branch protection rules
+branches:
+  - name: main
+    protection:
+      required_status_checks:
+        strict: true
+        contexts:
+          - "test"
+      enforce_admins: false
+      required_pull_request_reviews:
+        required_approving_review_count: 1
+        dismiss_stale_reviews: true
+        require_code_owner_reviews: false
+      restrictions: null
+      allow_force_pushes: false
+      allow_deletions: false
+
+# Labels for issues and pull requests
+labels:
+  - name: bug
+    color: d73a4a
+    description: Something isn't working
+  
+  - name: enhancement
+    color: a2eeef
+    description: New feature or request
+  
+  - name: documentation
+    color: 0075ca
+    description: Improvements or additions to documentation
+  
+  - name: hackathon
+    color: 7057ff
+    description: Hackathon related tasks
+  
+  - name: task
+    color: 1d76db
+    description: Development task
+  
+  - name: priority-high
+    color: b60205
+    description: High priority issue
+  
+  - name: priority-medium
+    color: fbca04
+    description: Medium priority issue
+  
+  - name: priority-low
+    color: 0e8a16
+    description: Low priority issue
+  
+  - name: mobile-ios
+    color: 5319e7
+    description: iOS specific issue
+  
+  - name: mobile-android
+    color: 3ddb85
+    description: Android specific issue
+  
+  - name: backend
+    color: f9d0c4
+    description: Backend/API related
+  
+  - name: frontend
+    color: c5def5
+    description: Frontend/UI related
+  
+  - name: ai-ml
+    color: ff6347
+    description: AI/ML related functionality
+  
+  - name: database
+    color: 8b4513
+    description: Database related
+  
+  - name: security
+    color: ff1744
+    description: Security related issue
+  
+  - name: performance
+    color: ff9800
+    description: Performance related
+  
+  - name: testing
+    color: 795548
+    description: Testing related
+  
+  - name: good-first-issue
+    color: 7057ff
+    description: Good for newcomers

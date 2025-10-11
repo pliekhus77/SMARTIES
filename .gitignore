@@ -111,3 +111,46 @@ tmp/
 dist/
 build/
 out/
+
+# React Native specific
+*.hprof
+*.jsbundle
+*.map
+
+# Expo
+.expo/
+web-build/
+expo-env.d.ts
+
+# Metro bundler
+.metro-health-check*
+
+# React Native debugger
+.flipper/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Bundle artifacts
+*.jsbundle
+
+# CocoaPods (iOS)
+ios/Pods/
+ios/Podfile.lock
+
+# Android
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+android/app/release/
+*.keystore
+!debug.keystore
+
+# Generated files
+ios/SMARTIES.xcworkspace/
+ios/SMARTIES.xcodeproj/project.xcworkspace/
+ios/SMARTIES.xcodeproj/xcuserdata/

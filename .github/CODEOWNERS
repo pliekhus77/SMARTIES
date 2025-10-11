@@ -1,0 +1,42 @@
+# CODEOWNERS file for SMARTIES hackathon project
+# This file defines who should review specific parts of the codebase
+
+# Global owners - hackathon team leads
+* @hackathon-team-lead
+
+# React Native mobile app
+/smarties/ @mobile-dev-team
+
+# Backend services and APIs
+/src/services/ @backend-dev-team
+
+# Database and data models
+/src/models/ @backend-dev-team
+/setup-database.js @backend-dev-team
+/playground-*.mongodb.js @backend-dev-team
+
+# AI and machine learning components
+/src/services/ai/ @ai-dev-team
+/src/utils/allergenDetection.ts @ai-dev-team
+
+# Infrastructure and deployment
+/.github/ @devops-team
+/infrastructure/ @devops-team
+*.yml @devops-team
+*.yaml @devops-team
+
+# Documentation
+/docs/ @documentation-team
+README.md @documentation-team
+*.md @documentation-team
+
+# Configuration files
+.env.example @devops-team
+package.json @hackathon-team-lead
+tsconfig.json @mobile-dev-team
+
+# Security sensitive files
+.env @security-team
+/secrets/ @security-team
+*.key @security-team
+*.pem @security-team
