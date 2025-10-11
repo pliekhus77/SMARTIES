@@ -32,6 +32,18 @@ yarn-error.*
 
 # local env files
 .env*.local
+.env
+.env.development
+.env.production
+
+# MongoDB and database files
+*.db
+*.sqlite
+*.sqlite3
+
+# API keys and secrets
+secrets/
+config/secrets.json
 
 # typescript
 *.tsbuildinfo
