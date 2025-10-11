@@ -8,6 +8,9 @@ import { Product } from '../../models/Product';
 import { UserProfile } from '../../models/UserProfile';
 import { ScanHistory } from '../../models/ScanHistory';
 
+// Re-export model types for convenience
+export type { Product, UserProfile, ScanHistory };
+
 // Collection service interfaces
 export interface ProductService {
   findByUPC(upc: string): Promise<Product | null>;

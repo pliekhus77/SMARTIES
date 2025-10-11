@@ -16,7 +16,7 @@ describe('CI/CD Setup Verification', () => {
 
     it('should have Node.js version 18 or higher', () => {
       const nodeVersion = process.version;
-      const majorVersion = parseInt(nodeVersion.slice(1).split('.')[0]);
+      const majorVersion = parseInt(nodeVersion.slice(1).split('.')[0] || '0');
       expect(majorVersion).toBeGreaterThanOrEqual(18);
     });
 

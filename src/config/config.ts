@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { SecretsManager } from './secrets';
 
 // Configuration schema with validation
 const configSchema = z.object({
@@ -15,7 +16,7 @@ const configSchema = z.object({
     usdaApiKey: z.string().optional(),
   }),
   app: z.object({
-    nodeEnv: z.enum(['development', 'production', 'test']).default('development'),
+    nodeEnv: z.enum(['development', 'staging', 'production', 'test']).default('development'),
     logLevel: z.enum(['error', 'warn', 'info', 'debug']).default('info'),
   }),
 });
@@ -29,24 +30,27 @@ class ConfigurationError extends Error {
   }
 }
 
-// Load and validate configuration
+// Load and validate configuration with secure secrets management
 function loadConfig(): Config {
   try {
+    const secretsManager = SecretsManager.getInstance();
+    const secrets = secretsManager.getSecrets();
+
     const rawConfig = {
       mongodb: {
-        uri: process.env.MONGODB_URI || '',
+        uri: secrets.mongodb.uri,
         database: process.env.MONGODB_DATABASE || 'smarties',
       },
       ai: {
-        openaiApiKey: process.env.OPENAI_API_KEY || '',
-        anthropicApiKey: process.env.ANTHROPIC_API_KEY || '',
+        openaiApiKey: secrets.ai.openaiApiKey,
+        anthropicApiKey: secrets.ai.anthropicApiKey,
       },
       apis: {
         openFoodFactsUrl: process.env.OPEN_FOOD_FACTS_API_URL || 'https://world.openfoodfacts.org/api/v0',
-        usdaApiKey: process.env.USDA_API_KEY,
+        usdaApiKey: secrets.apis.usdaApiKey,
       },
       app: {
-        nodeEnv: (process.env.NODE_ENV as 'development' | 'production' | 'test') || 'development',
+        nodeEnv: (process.env.NODE_ENV as 'development' | 'staging' | 'production' | 'test') || 'development',
         logLevel: (process.env.LOG_LEVEL as 'error' | 'warn' | 'info' | 'debug') || 'info',
       },
     };

@@ -77,14 +77,14 @@ export class DietaryComplianceChecker {
     
     allergies.forEach(allergy => {
       // Check explicit allergen list
-      if (product.allergens.some(allergen => 
+      if (product.allergens.some((allergen: string) => 
         allergen.toLowerCase().includes(allergy.toLowerCase())
       )) {
         violations.push(`Contains ${allergy}`);
       }
 
       // Check ingredients for allergen presence
-      if (product.ingredients.some(ingredient => 
+      if (product.ingredients.some((ingredient: string) => 
         ingredient.toLowerCase().includes(allergy.toLowerCase())
       )) {
         violations.push(`Contains ${allergy} in ingredients`);
@@ -103,17 +103,17 @@ export class DietaryComplianceChecker {
     medicalRestrictions.forEach(restriction => {
       switch (restriction.toLowerCase()) {
         case 'diabetes':
-          if (product.nutritional_info.sugar && product.nutritional_info.sugar > 15) {
+          if (product.nutritionalInfo?.sugar && product.nutritionalInfo.sugar > 15) {
             violations.push('High sugar content (diabetes restriction)');
           }
           break;
         case 'hypertension':
-          if (product.nutritional_info.sodium && product.nutritional_info.sodium > 400) {
+          if (product.nutritionalInfo?.sodium && product.nutritionalInfo.sodium > 400) {
             violations.push('High sodium content (hypertension restriction)');
           }
           break;
         case 'celiac':
-          if (product.ingredients.some(ingredient => 
+          if (product.ingredients.some((ingredient: string) => 
             ingredient.toLowerCase().includes('gluten') || 
             ingredient.toLowerCase().includes('wheat')
           )) {
@@ -135,12 +135,12 @@ export class DietaryComplianceChecker {
     religiousRestrictions.forEach(restriction => {
       switch (restriction.toLowerCase()) {
         case 'halal':
-          if (!product.dietary_flags.halal && this.containsPork(product)) {
+          if (!product.dietaryFlags.halal && this.containsPork(product)) {
             violations.push('May not be Halal certified');
           }
           break;
         case 'kosher':
-          if (!product.dietary_flags.kosher) {
+          if (!product.dietaryFlags.kosher) {
             violations.push('Not Kosher certified');
           }
           break;
@@ -164,7 +164,7 @@ export class DietaryComplianceChecker {
     lifestylePreferences.forEach(preference => {
       switch (preference.toLowerCase()) {
         case 'vegan':
-          if (!product.dietary_flags.vegan && this.containsAnimalProducts(product)) {
+          if (!product.dietaryFlags.vegan && this.containsAnimalProducts(product)) {
             violations.push('Contains animal products (vegan preference)');
           }
           break;
@@ -174,7 +174,7 @@ export class DietaryComplianceChecker {
           }
           break;
         case 'gluten-free':
-          if (!product.dietary_flags.gluten_free && this.containsGluten(product)) {
+          if (!product.dietaryFlags.glutenFree && this.containsGluten(product)) {
             violations.push('Contains gluten (gluten-free preference)');
           }
           break;
@@ -189,28 +189,28 @@ export class DietaryComplianceChecker {
    */
   private containsPork(product: Product): boolean {
     const porkKeywords = ['pork', 'ham', 'bacon', 'lard', 'gelatin'];
-    return product.ingredients.some(ingredient =>
+    return product.ingredients.some((ingredient: string) =>
       porkKeywords.some(keyword => ingredient.toLowerCase().includes(keyword))
     );
   }
 
   private containsMeat(product: Product): boolean {
     const meatKeywords = ['beef', 'pork', 'chicken', 'turkey', 'lamb', 'meat'];
-    return product.ingredients.some(ingredient =>
+    return product.ingredients.some((ingredient: string) =>
       meatKeywords.some(keyword => ingredient.toLowerCase().includes(keyword))
     );
   }
 
   private containsAnimalProducts(product: Product): boolean {
     const animalKeywords = ['milk', 'cheese', 'butter', 'egg', 'honey', 'gelatin', 'whey'];
-    return product.ingredients.some(ingredient =>
+    return product.ingredients.some((ingredient: string) =>
       animalKeywords.some(keyword => ingredient.toLowerCase().includes(keyword))
     ) || this.containsMeat(product);
   }
 
   private containsGluten(product: Product): boolean {
     const glutenKeywords = ['wheat', 'barley', 'rye', 'gluten', 'malt'];
-    return product.ingredients.some(ingredient =>
+    return product.ingredients.some((ingredient: string) =>
       glutenKeywords.some(keyword => ingredient.toLowerCase().includes(keyword))
     );
   }
@@ -219,7 +219,7 @@ export class DietaryComplianceChecker {
    * Calculate confidence score based on data quality and analysis complexity
    */
   private calculateConfidence(product: Product, issueCount: number): number {
-    let confidence = product.confidence_score || 0.8;
+    let confidence = product.confidence || 0.8;
     
     // Reduce confidence for each issue found
     confidence -= (issueCount * 0.05);

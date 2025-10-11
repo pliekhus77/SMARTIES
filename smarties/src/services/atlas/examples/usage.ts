@@ -5,8 +5,7 @@
 
 import { getDatabaseService, initializeDatabase } from '../index';
 import { ProductRepository, UserRepository, ScanHistoryRepository } from '../collections';
-import { UserProfile } from '../../models/UserProfile';
-import { ScanHistory } from '../../models/ScanHistory';
+import { UserProfile, ScanHistory } from '@/models';
 
 /**
  * Example: Initialize database and perform basic operations
@@ -85,7 +84,7 @@ export async function exampleDatabaseUsage(): Promise<void> {
       scan_duration: 1500
     };
 
-    const savedScan = await scanHistoryRepo.create(scanResult);
+    await scanHistoryRepo.create(scanResult);
     console.log('✅ Scan history saved');
 
     // Example 5: Retrieve scan history
@@ -98,9 +97,9 @@ export async function exampleDatabaseUsage(): Promise<void> {
     console.error('❌ Database operation failed:', error);
     
     // Handle specific error types
-    if (error.isNetworkError) {
+    if (error && typeof error === 'object' && 'isNetworkError' in error && error.isNetworkError) {
       console.log('💡 Suggestion: Check internet connection and MongoDB Atlas status');
-    } else if (error.isAuthError) {
+    } else if (error && typeof error === 'object' && 'isAuthError' in error && error.isAuthError) {
       console.log('💡 Suggestion: Verify MongoDB Data API key and permissions');
     } else {
       console.log('💡 Suggestion: Check MongoDB Atlas configuration and logs');
@@ -151,11 +150,11 @@ export async function exampleErrorHandling(): Promise<void> {
 
   try {
     // This might fail due to network issues
-    const product = await productRepo.findByUPC('123456789012');
+    await productRepo.findByUPC('123456789012');
     console.log('✅ Product lookup successful');
     
   } catch (error) {
-    console.error('❌ Product lookup failed:', error.message);
+    console.error('❌ Product lookup failed:', error instanceof Error ? error.message : String(error));
     
     // Implement custom retry logic if needed
     console.log('🔄 Retrying with exponential backoff...');
@@ -163,11 +162,11 @@ export async function exampleErrorHandling(): Promise<void> {
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
         await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
-        const product = await productRepo.findByUPC('123456789012');
+        await productRepo.findByUPC('123456789012');
         console.log(`✅ Product lookup successful on attempt ${attempt}`);
         break;
       } catch (retryError) {
-        console.error(`❌ Retry attempt ${attempt} failed:`, retryError.message);
+        console.error(`❌ Retry attempt ${attempt} failed:`, retryError instanceof Error ? retryError.message : String(retryError));
         
         if (attempt === 3) {
           console.log('💡 All retry attempts exhausted - using fallback strategy');

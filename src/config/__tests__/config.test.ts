@@ -1,9 +1,13 @@
+import { SecretsManager } from '../secrets';
+
 // Mock environment variables for testing
 const originalEnv = process.env;
 
 beforeEach(() => {
   jest.resetModules();
   process.env = { ...originalEnv };
+  // Reset singleton instance
+  (SecretsManager as any).instance = undefined;
 });
 
 afterAll(() => {
@@ -47,5 +51,28 @@ describe('Configuration', () => {
     expect(config.mongodb.database).toBe('smarties');
     expect(config.app.nodeEnv).toBe('development');
     expect(config.app.logLevel).toBe('info');
+  });
+
+  it('should support staging environment', () => {
+    process.env.MONGODB_URI = 'mongodb://localhost:27017/test';
+    process.env.OPENAI_API_KEY = 'sk-test-key';
+    process.env.ANTHROPIC_API_KEY = 'sk-ant-test-key';
+    process.env.NODE_ENV = 'staging';
+
+    const { config } = require('../config');
+    
+    expect(config.app.nodeEnv).toBe('staging');
+  });
+
+  it('should validate URL format for external APIs', () => {
+    process.env.MONGODB_URI = 'mongodb://localhost:27017/test';
+    process.env.OPENAI_API_KEY = 'sk-test-key';
+    process.env.ANTHROPIC_API_KEY = 'sk-ant-test-key';
+    process.env.OPEN_FOOD_FACTS_API_URL = 'invalid-url';
+
+    expect(() => {
+      jest.resetModules();
+      require('../config');
+    }).toThrow('Configuration Error');
   });
 });

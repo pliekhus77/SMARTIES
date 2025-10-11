@@ -1,7 +1,10 @@
-# Environment variables
+# Environment variables - secure all environment files
 .env
 .env.local
+.env.development
+.env.staging
 .env.production
+.env.test
 
 # Dependencies
 node_modules/

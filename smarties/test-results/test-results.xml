@@ -1,251 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="50" failures="5" errors="0" time="24.389">
-  <testsuite name="__tests__\setup\ci-setup.test.ts" errors="0" failures="0" skipped="0" timestamp="2025-10-11T21:17:27" time="2.389" tests="9">
-    <testcase classname="CI/CD Setup Verification › Test Environment" name="should have CI environment variable set in CI" time="0.013">
+<testsuites name="jest tests" tests="43" failures="0" errors="0" time="1.581">
+  <testsuite name="src\models\__tests__\Product.test.ts" errors="0" failures="0" skipped="0" timestamp="2025-10-11T22:01:58" time="1.418" tests="43">
+    <testcase classname="Product Model Validation › validateUPC" name="should validate correct UPC codes" time="0.005">
     </testcase>
-    <testcase classname="CI/CD Setup Verification › Test Environment" name="should have Node.js version 18 or higher" time="0.001">
+    <testcase classname="Product Model Validation › validateUPC" name="should handle UPC codes with spaces and dashes" time="0.001">
     </testcase>
-    <testcase classname="CI/CD Setup Verification › Test Environment" name="should have required test dependencies available" time="0.001">
+    <testcase classname="Product Model Validation › validateUPC" name="should reject invalid UPC codes" time="0">
     </testcase>
-    <testcase classname="CI/CD Setup Verification › Test Configuration" name="should have proper test timeout configured" time="0">
+    <testcase classname="Product Model Validation › validateUPC" name="should reject non-string UPC codes" time="0.001">
     </testcase>
-    <testcase classname="CI/CD Setup Verification › Test Configuration" name="should support TypeScript" time="0">
+    <testcase classname="Product Model Validation › validateProductName" name="should validate correct product names" time="0.001">
     </testcase>
-    <testcase classname="CI/CD Setup Verification › Test Configuration" name="should have test environment configured correctly" time="0.001">
+    <testcase classname="Product Model Validation › validateProductName" name="should reject invalid product names" time="0">
     </testcase>
-    <testcase classname="CI/CD Setup Verification › Coverage Configuration" name="should be configured to collect coverage" time="0.001">
+    <testcase classname="Product Model Validation › validateProductName" name="should reject non-string product names" time="0.001">
     </testcase>
-    <testcase classname="CI/CD Setup Verification › Reporting Configuration" name="should support JUnit XML reporting" time="0.121">
+    <testcase classname="Product Model Validation › validateIngredients" name="should validate correct ingredients arrays" time="0">
     </testcase>
-    <testcase classname="CI/CD Setup Verification › Mock Environment Variables" name="should handle missing environment variables gracefully" time="0.001">
+    <testcase classname="Product Model Validation › validateIngredients" name="should reject invalid ingredients arrays" time="0">
     </testcase>
-  </testsuite>
-  <testsuite name="src\services\barcode\__tests__\scanner.test.ts" errors="0" failures="0" skipped="0" timestamp="2025-10-11T21:17:27" time="3.427" tests="8">
-    <testcase classname="BarcodeScanner Service › processScanResult" name="should process valid UPC-A barcode (12 digits)" time="0.015">
+    <testcase classname="Product Model Validation › validateIngredients" name="should reject non-array ingredients" time="0">
     </testcase>
-    <testcase classname="BarcodeScanner Service › processScanResult" name="should process valid UPC-E barcode (8 digits)" time="0">
+    <testcase classname="Product Model Validation › validateAllergens" name="should validate correct allergens arrays" time="0.003">
     </testcase>
-    <testcase classname="BarcodeScanner Service › processScanResult" name="should process valid EAN-13 barcode (13 digits)" time="0.001">
+    <testcase classname="Product Model Validation › validateAllergens" name="should reject invalid allergens arrays" time="0">
     </testcase>
-    <testcase classname="BarcodeScanner Service › processScanResult" name="should reject invalid barcode formats" time="0.011">
+    <testcase classname="Product Model Validation › validateAllergens" name="should reject non-array allergens" time="0.001">
     </testcase>
-    <testcase classname="BarcodeScanner Service › processScanResult" name="should handle scan result processing errors gracefully" time="0.003">
+    <testcase classname="Product Model Validation › validateConfidence" name="should validate correct confidence scores" time="0.001">
     </testcase>
-    <testcase classname="BarcodeScanner Service › configuration" name="should have default configuration" time="0.002">
+    <testcase classname="Product Model Validation › validateConfidence" name="should reject invalid confidence scores" time="0.001">
     </testcase>
-    <testcase classname="BarcodeScanner Service › configuration" name="should allow configuration updates" time="0.001">
+    <testcase classname="Product Model Validation › validateConfidence" name="should reject non-number confidence scores" time="0">
     </testcase>
-    <testcase classname="BarcodeScanner Service › configuration" name="should create scanner with custom configuration" time="0.001">
+    <testcase classname="Product Model Validation › validateProductSource" name="should validate correct product sources" time="0.001">
     </testcase>
-  </testsuite>
-  <testsuite name="src\services\atlas\__tests__\database.test.ts" errors="0" failures="0" skipped="0" timestamp="2025-10-11T21:17:27" time="3.953" tests="8">
-    <testcase classname="DatabaseService › connect" name="should connect successfully on first attempt" time="0.027">
+    <testcase classname="Product Model Validation › validateProductSource" name="should reject invalid product sources" time="0.001">
     </testcase>
-    <testcase classname="DatabaseService › connect" name="should retry on connection failure and eventually succeed" time="0.133">
+    <testcase classname="Product Model Validation › validateProductSource" name="should reject non-string product sources" time="0.001">
     </testcase>
-    <testcase classname="DatabaseService › connect" name="should throw error after max retry attempts" time="0.106">
+    <testcase classname="Product Model Validation › validateDietaryFlags" name="should validate correct dietary flags" time="0.001">
     </testcase>
-    <testcase classname="DatabaseService › findProductByUPC" name="should find product by UPC" time="0.004">
+    <testcase classname="Product Model Validation › validateDietaryFlags" name="should reject invalid dietary flags" time="0">
     </testcase>
-    <testcase classname="DatabaseService › findProductByUPC" name="should return null when product not found" time="0.002">
+    <testcase classname="Product Model Validation › validateDietaryFlags" name="should reject non-object dietary flags" time="0">
     </testcase>
-    <testcase classname="DatabaseService › saveUserProfile" name="should save user profile successfully" time="0.002">
+    <testcase classname="Product Model Validation › validateNutritionalInfo" name="should validate correct nutritional info" time="0.001">
     </testcase>
-    <testcase classname="DatabaseService › saveScanHistory" name="should save scan history successfully" time="0.003">
+    <testcase classname="Product Model Validation › validateNutritionalInfo" name="should reject invalid nutritional info" time="0.001">
     </testcase>
-    <testcase classname="DatabaseService › disconnect" name="should disconnect successfully" time="0.001">
+    <testcase classname="Product Model Validation › validateNutritionalInfo" name="should reject non-object nutritional info" time="0.001">
     </testcase>
-  </testsuite>
-  <testsuite name="src\services\ai\__tests__\ai-service-integration.test.ts" errors="0" failures="0" skipped="0" timestamp="2025-10-11T21:17:27" time="4.374" tests="9">
-    <testcase classname="AI Service Integration › Service Factory" name="should create dietary analysis service" time="0.015">
+    <testcase classname="Product Model Validation › validateProduct" name="should validate a complete valid product" time="0.001">
     </testcase>
-    <testcase classname="AI Service Integration › Service Factory" name="should handle missing API keys gracefully" time="0.002">
+    <testcase classname="Product Model Validation › validateProduct" name="should validate a minimal valid product" time="0.001">
     </testcase>
-    <testcase classname="AI Service Integration › Dietary Analysis Service" name="should provide fallback analysis when AI services fail" time="0.026">
+    <testcase classname="Product Model Validation › validateProduct" name="should reject product with missing required fields" time="0.001">
     </testcase>
-    <testcase classname="AI Service Integration › Dietary Analysis Service" name="should detect violations in fallback mode" time="0.007">
+    <testcase classname="Product Model Validation › validateProduct" name="should reject product with invalid field values" time="0">
     </testcase>
-    <testcase classname="AI Service Integration › Dietary Analysis Service" name="should return safe for products without violations" time="0.011">
+    <testcase classname="Product Model Validation › validateCreateProductInput" name="should validate correct create product input" time="0">
     </testcase>
-    <testcase classname="AI Service Integration › Dietary Analysis Service" name="should handle empty ingredients gracefully" time="0.009">
+    <testcase classname="Product Model Validation › validateCreateProductInput" name="should reject invalid create product input" time="0">
     </testcase>
-    <testcase classname="AI Service Integration › Dietary Analysis Service" name="should handle empty restrictions gracefully" time="0.008">
+    <testcase classname="Product Model Validation › validateUpdateProductInput" name="should validate correct update product input" time="0">
     </testcase>
-    <testcase classname="AI Service Integration › Service Status" name="should track service status" time="0.004">
+    <testcase classname="Product Model Validation › validateUpdateProductInput" name="should validate empty update product input" time="0.001">
     </testcase>
-    <testcase classname="AI Service Integration › Service Status" name="should get current service status" time="0.001">
+    <testcase classname="Product Model Validation › validateUpdateProductInput" name="should reject invalid update product input" time="0.001">
     </testcase>
-  </testsuite>
-  <testsuite name="src\screens\__tests__\ScanScreen.test.tsx" errors="0" failures="0" skipped="0" timestamp="2025-10-11T21:17:27" time="5.095" tests="6">
-    <testcase classname="ScanScreen" name="renders initial state correctly" time="0.975">
+    <testcase classname="Product Model Validation › ProductModel" name="should create a ProductModel instance" time="0.001">
     </testcase>
-    <testcase classname="ScanScreen" name="shows scanner when scan button is pressed" time="0.005">
+    <testcase classname="Product Model Validation › ProductModel" name="should check if product contains allergen" time="0.001">
     </testcase>
-    <testcase classname="ScanScreen" name="processes valid barcode scan correctly" time="0.01">
+    <testcase classname="Product Model Validation › ProductModel" name="should format ingredients list" time="0">
     </testcase>
-    <testcase classname="ScanScreen" name="handles scan errors correctly" time="0.011">
+    <testcase classname="Product Model Validation › ProductModel" name="should check dietary requirements" time="0">
     </testcase>
-    <testcase classname="ScanScreen" name="closes scanner when close button is pressed" time="0.007">
+    <testcase classname="Product Model Validation › ProductModel" name="should calculate data age" time="0.001">
     </testcase>
-    <testcase classname="ScanScreen" name="displays last scanned barcode" time="0.007">
+    <testcase classname="Product Model Validation › ProductModel" name="should check if data is stale" time="0.001">
     </testcase>
-  </testsuite>
-  <testsuite name="src\components\scanner\__tests__\BarcodeScanner.test.tsx" errors="0" failures="5" skipped="0" timestamp="2025-10-11T21:17:27" time="10.073" tests="10">
-    <testcase classname="BarcodeScanner" name="renders correctly when permission is granted" time="1.954">
-      <failure>Error: Unable to find an element with text: Point camera at barcode
-
-&lt;View&gt;
-  &lt;Text&gt;
-    Requesting camera permission...
-  &lt;/Text&gt;
-&lt;/View&gt;
-    at Object.&lt;anonymous&gt; (C:\git\SMARTIES\smarties\src\components\scanner\__tests__\BarcodeScanner.test.tsx:59:18)
-    at Generator.next (&lt;anonymous&gt;)
-    at asyncGeneratorStep (C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:3:17)
-    at _next (C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:17:9)
-    at C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:22:7
-    at new Promise (&lt;anonymous&gt;)
-    at Object.&lt;anonymous&gt; (C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:14:12)
-    at Promise.then.completed (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\utils.js:231:10)
-    at _callCircusTest (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:316:40)
-    at processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at _runTest (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:252:3)
-    at _runTestsForDescribeBlock (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:126:9)
-    at _runTestsForDescribeBlock (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:121:9)
-    at run (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:71:3)
-    at runAndTransformResultsToJestFormat (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-    at jestAdapter (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-    at runTestInternal (C:\git\SMARTIES\smarties\node_modules\jest-runner\build\runTest.js:367:16)
-    at runTest (C:\git\SMARTIES\smarties\node_modules\jest-runner\build\runTest.js:444:34)
-    at Object.worker (C:\git\SMARTIES\smarties\node_modules\jest-runner\build\testWorker.js:106:12)</failure>
+    <testcase classname="Product Model Validation › ProductModel" name="should validate product instance" time="0.001">
     </testcase>
-    <testcase classname="BarcodeScanner" name="shows permission request when permission is null" time="0.004">
+    <testcase classname="Product Model Validation › Constants" name="should export common allergens" time="0.001">
     </testcase>
-    <testcase classname="BarcodeScanner" name="shows permission denied message when permission is denied" time="1.003">
-      <failure>Error: Unable to find an element with text: No access to camera
-
-&lt;View&gt;
-  &lt;Text&gt;
-    Requesting camera permission...
-  &lt;/Text&gt;
-&lt;/View&gt;
-    at Object.&lt;anonymous&gt; (C:\git\SMARTIES\smarties\src\components\scanner\__tests__\BarcodeScanner.test.tsx:93:18)
-    at Generator.next (&lt;anonymous&gt;)
-    at asyncGeneratorStep (C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:3:17)
-    at _next (C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:17:9)
-    at C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:22:7
-    at new Promise (&lt;anonymous&gt;)
-    at Object.&lt;anonymous&gt; (C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:14:12)
-    at Promise.then.completed (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\utils.js:231:10)
-    at _callCircusTest (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:316:40)
-    at _runTest (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:252:3)
-    at _runTestsForDescribeBlock (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:126:9)
-    at _runTestsForDescribeBlock (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:121:9)
-    at run (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:71:3)
-    at runAndTransformResultsToJestFormat (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-    at jestAdapter (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-    at runTestInternal (C:\git\SMARTIES\smarties\node_modules\jest-runner\build\runTest.js:367:16)
-    at runTest (C:\git\SMARTIES\smarties\node_modules\jest-runner\build\runTest.js:444:34)
-    at Object.worker (C:\git\SMARTIES\smarties\node_modules\jest-runner\build\testWorker.js:106:12)</failure>
-    </testcase>
-    <testcase classname="BarcodeScanner" name="handles valid UPC barcode correctly" time="1.004">
-      <failure>Error: Unable to find an element with text: Point camera at barcode
-
-&lt;View&gt;
-  &lt;Text&gt;
-    Requesting camera permission...
-  &lt;/Text&gt;
-&lt;/View&gt;
-    at Object.&lt;anonymous&gt; (C:\git\SMARTIES\smarties\src\components\scanner\__tests__\BarcodeScanner.test.tsx:107:18)
-    at Generator.next (&lt;anonymous&gt;)
-    at asyncGeneratorStep (C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:3:17)
-    at _next (C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:17:9)
-    at C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:22:7
-    at new Promise (&lt;anonymous&gt;)
-    at Object.&lt;anonymous&gt; (C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:14:12)
-    at Promise.then.completed (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\utils.js:231:10)
-    at _callCircusTest (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:316:40)
-    at _runTest (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:252:3)
-    at _runTestsForDescribeBlock (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:126:9)
-    at _runTestsForDescribeBlock (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:121:9)
-    at run (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:71:3)
-    at runAndTransformResultsToJestFormat (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-    at jestAdapter (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-    at runTestInternal (C:\git\SMARTIES\smarties\node_modules\jest-runner\build\runTest.js:367:16)
-    at runTest (C:\git\SMARTIES\smarties\node_modules\jest-runner\build\runTest.js:444:34)
-    at Object.worker (C:\git\SMARTIES\smarties\node_modules\jest-runner\build\testWorker.js:106:12)</failure>
-    </testcase>
-    <testcase classname="BarcodeScanner" name="toggles torch correctly" time="1.003">
-      <failure>Error: Unable to find an element with text: Flash On
-
-&lt;View&gt;
-  &lt;Text&gt;
-    Requesting camera permission...
-  &lt;/Text&gt;
-&lt;/View&gt;
-    at Object.&lt;anonymous&gt; (C:\git\SMARTIES\smarties\src\components\scanner\__tests__\BarcodeScanner.test.tsx:124:18)
-    at Generator.next (&lt;anonymous&gt;)
-    at asyncGeneratorStep (C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:3:17)
-    at _next (C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:17:9)
-    at C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:22:7
-    at new Promise (&lt;anonymous&gt;)
-    at Object.&lt;anonymous&gt; (C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:14:12)
-    at Promise.then.completed (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\utils.js:231:10)
-    at _callCircusTest (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:316:40)
-    at _runTest (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:252:3)
-    at _runTestsForDescribeBlock (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:126:9)
-    at _runTestsForDescribeBlock (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:121:9)
-    at run (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:71:3)
-    at runAndTransformResultsToJestFormat (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-    at jestAdapter (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-    at runTestInternal (C:\git\SMARTIES\smarties\node_modules\jest-runner\build\runTest.js:367:16)
-    at runTest (C:\git\SMARTIES\smarties\node_modules\jest-runner\build\runTest.js:444:34)
-    at Object.worker (C:\git\SMARTIES\smarties\node_modules\jest-runner\build\testWorker.js:106:12)</failure>
-    </testcase>
-    <testcase classname="BarcodeScanner" name="calls onClose when close button is pressed" time="1.003">
-      <failure>Error: Unable to find an element with text: Close
-
-&lt;View&gt;
-  &lt;Text&gt;
-    Requesting camera permission...
-  &lt;/Text&gt;
-&lt;/View&gt;
-    at Object.&lt;anonymous&gt; (C:\git\SMARTIES\smarties\src\components\scanner\__tests__\BarcodeScanner.test.tsx:142:18)
-    at Generator.next (&lt;anonymous&gt;)
-    at asyncGeneratorStep (C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:3:17)
-    at _next (C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:17:9)
-    at C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:22:7
-    at new Promise (&lt;anonymous&gt;)
-    at Object.&lt;anonymous&gt; (C:\git\SMARTIES\smarties\node_modules\@babel\runtime\helpers\asyncToGenerator.js:14:12)
-    at Promise.then.completed (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\utils.js:298:28)
-    at new Promise (&lt;anonymous&gt;)
-    at callAsyncCircusFn (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\utils.js:231:10)
-    at _callCircusTest (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:316:40)
-    at _runTest (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:252:3)
-    at _runTestsForDescribeBlock (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:126:9)
-    at _runTestsForDescribeBlock (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:121:9)
-    at run (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\run.js:71:3)
-    at runAndTransformResultsToJestFormat (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapterInit.js:122:21)
-    at jestAdapter (C:\git\SMARTIES\smarties\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:79:19)
-    at runTestInternal (C:\git\SMARTIES\smarties\node_modules\jest-runner\build\runTest.js:367:16)
-    at runTest (C:\git\SMARTIES\smarties\node_modules\jest-runner\build\runTest.js:444:34)
-    at Object.worker (C:\git\SMARTIES\smarties\node_modules\jest-runner\build\testWorker.js:106:12)</failure>
-    </testcase>
-    <testcase classname="UPC Validation" name="validates UPC-A (12 digits) correctly" time="0.001">
-    </testcase>
-    <testcase classname="UPC Validation" name="validates UPC-E (8 digits) correctly" time="0.002">
-    </testcase>
-    <testcase classname="UPC Validation" name="validates EAN-13 (13 digits) correctly" time="0.001">
-    </testcase>
-    <testcase classname="UPC Validation" name="rejects invalid formats" time="0.001">
+    <testcase classname="Product Model Validation › Constants" name="should export product sources" time="0.001">
     </testcase>
   </testsuite>
 </testsuites>

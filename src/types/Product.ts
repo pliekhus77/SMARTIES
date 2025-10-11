@@ -106,8 +106,8 @@ export const COMMON_ALLERGENS = [
  * Valid product sources
  */
 export const PRODUCT_SOURCES: ProductSource[] = ['manual', 'openfoodfacts', 'usda'];
-
 /**
+
  * Validates UPC code format and requirements
  * @param upc - UPC code to validate
  * @returns ValidationResult with validation status and errors
@@ -491,86 +491,4 @@ export function validateUpdateProductInput(input: UpdateProductInput): Validatio
     isValid: errors.length === 0,
     errors
   };
-}
-
-/**
- * Product model class with utility methods
- * Implements the Product interface with additional helper methods
- */
-export class ProductModel implements Product {
-  _id?: string;
-  upc: string;
-  name: string;
-  brand?: string;
-  ingredients: string[];
-  allergens: string[];
-  dietaryFlags: DietaryFlags;
-  nutritionalInfo?: NutritionalInfo;
-  imageUrl?: string;
-  source: ProductSource;
-  lastUpdated: Date;
-  confidence: number;
-
-  constructor(data: Product) {
-    this._id = data._id;
-    this.upc = data.upc;
-    this.name = data.name;
-    this.brand = data.brand;
-    this.ingredients = data.ingredients;
-    this.allergens = data.allergens;
-    this.dietaryFlags = data.dietaryFlags;
-    this.nutritionalInfo = data.nutritionalInfo;
-    this.imageUrl = data.imageUrl;
-    this.source = data.source;
-    this.lastUpdated = data.lastUpdated;
-    this.confidence = data.confidence;
-  }
-
-  /**
-   * Check if product contains specific allergen
-   */
-  containsAllergen(allergen: string): boolean {
-    return this.allergens.some(a => 
-      a.toLowerCase().includes(allergen.toLowerCase())
-    ) || this.ingredients.some(ingredient => 
-      ingredient.toLowerCase().includes(allergen.toLowerCase())
-    );
-  }
-
-  /**
-   * Get formatted ingredient list
-   */
-  getFormattedIngredients(): string {
-    return this.ingredients.join(', ');
-  }
-
-  /**
-   * Check if product meets dietary flag requirement
-   */
-  meetsDietaryRequirement(requirement: keyof DietaryFlags): boolean {
-    return this.dietaryFlags[requirement] === true;
-  }
-
-  /**
-   * Get product age in days
-   */
-  getDataAge(): number {
-    const now = new Date();
-    const diffTime = Math.abs(now.getTime() - this.lastUpdated.getTime());
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  }
-
-  /**
-   * Check if product data is stale (older than 30 days)
-   */
-  isDataStale(): boolean {
-    return this.getDataAge() > 30;
-  }
-
-  /**
-   * Validate this product instance
-   */
-  validate(): ValidationResult {
-    return validateProduct(this);
-  }
 }

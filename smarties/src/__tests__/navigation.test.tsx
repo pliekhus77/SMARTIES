@@ -6,7 +6,6 @@
 
 import React from 'react';
 import { render } from '@testing-library/react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { ScanScreen, ProfileScreen, HistoryScreen, SettingsScreen } from '../screens';
 
 // Mock the navigation container for testing

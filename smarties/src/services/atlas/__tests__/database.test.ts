@@ -96,11 +96,11 @@ describe('DatabaseService', () => {
         brand: 'Test Brand',
         ingredients: ['ingredient1', 'ingredient2'],
         allergens: ['milk'],
-        nutritional_info: { calories: 100 },
-        dietary_flags: { vegan: false },
-        source: 'test',
-        last_updated: new Date(),
-        confidence_score: 0.9,
+        nutritionalInfo: { calories: 100 },
+        dietaryFlags: { vegan: false },
+        source: 'manual',
+        lastUpdated: new Date(),
+        confidence: 0.9,
       };
 
       (global.fetch as jest.Mock).mockResolvedValueOnce({

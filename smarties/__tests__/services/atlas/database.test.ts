@@ -7,8 +7,10 @@ describe('DatabaseService', () => {
     const config = {
       connectionString: 'mongodb://test',
       databaseName: 'test_db',
+      dataApiKey: 'test-api-key',
       retryAttempts: 3,
       retryDelay: 1000,
+      timeout: 5000,
     };
     databaseService = new DatabaseService(config);
   });
