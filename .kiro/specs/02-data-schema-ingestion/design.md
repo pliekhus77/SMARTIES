@@ -2,9 +2,9 @@
 
 ## Overview
 
-This design document outlines the technical approach for implementing the data schema and ingestion phase of the SMARTIES project. The solution establishes a robust product data foundation using MongoDB Atlas with Vector Search capabilities, enabling AI-powered semantic analysis of food products from the OpenFoodFacts database.
+This design document outlines the technical approach for implementing the data schema and ingestion phase of the SMARTIES project. The solution establishes a curated product data foundation using MongoDB Atlas deployed on AWS with Vector Search capabilities, enabling AI-powered semantic analysis of food products from the OpenFoodFacts database.
 
-The design focuses on creating a scalable, performant system that supports both fast UPC barcode lookups (<100ms) and intelligent semantic search capabilities for dietary compliance analysis. The architecture leverages MongoDB Atlas Vector Search with OpenAI/Anthropic embeddings to enable advanced features like ingredient similarity detection, allergen risk analysis, and personalized product recommendations.
+The design focuses on creating a performant system that supports both fast UPC barcode lookups (<100ms) and intelligent semantic search capabilities for dietary compliance analysis. The architecture leverages MongoDB Atlas Vector Search deployed on AWS with IP whitelisting for hackathon venue access, using Hugging Face Transformers for free, high-quality embeddings to enable advanced features like ingredient similarity detection, allergen risk analysis, and personalized product recommendations.
 
 ## Architecture
 
@@ -13,34 +13,38 @@ The design focuses on creating a scalable, performant system that supports both 
 ```mermaid
 graph TB
     subgraph "Data Sources"
-        OFF[OpenFoodFacts Dump<br/>69GB MongoDB Export]
-        API[OpenFoodFacts API<br/>Real-time Updates]
+        OFF[OpenFoodFacts API<br/>Curated Product Selection]
+        SAMPLE[Sample Dataset<br/>~15K Popular Products]
     end
     
     subgraph "Processing Layer"
         ETL[Data Processing Pipeline]
-        EMB[Vector Embedding Service<br/>OpenAI/Anthropic]
+        EMB[Vector Embedding Service<br/>Hugging Face Transformers]
         VAL[Data Validation & Quality]
+        FILTER[Product Filter<br/>Popular US Products]
     end
     
-    subgraph "Storage Layer"
-        ATLAS[(MongoDB Atlas<br/>Vector Search Enabled)]
-        IDX[Vector Indexes<br/>Cosine Similarity]
+    subgraph "AWS Cloud Storage"
+        ATLAS[(MongoDB Atlas on AWS<br/>M10+ Tier with Vector Search)]
+        VECTOR[Vector Search Indexes<br/>Cosine Similarity]
+        NETWORK[IP Whitelisting<br/>Hackathon Venue Access]
     end
     
     subgraph "Application Layer"
         HYBRID[Hybrid Search Service]
         DIET[Dietary Analysis Service]
-        CACHE[Redis Cache Layer]
+        CACHE[Local Cache Layer]
     end
     
-    OFF --> ETL
-    API --> ETL
+    OFF --> FILTER
+    SAMPLE --> ETL
+    FILTER --> ETL
     ETL --> EMB
     ETL --> VAL
     EMB --> ATLAS
     VAL --> ATLAS
-    ATLAS --> IDX
+    ATLAS --> VECTOR
+    NETWORK --> ATLAS
     ATLAS --> HYBRID
     HYBRID --> DIET
     HYBRID --> CACHE
@@ -48,9 +52,10 @@ graph TB
 
 ### Data Flow Architecture
 
-1. **Ingestion Phase**: OpenFoodFacts data → Processing Pipeline → Vector Generation → MongoDB Atlas
-2. **Query Phase**: UPC/Semantic Query → Hybrid Search → Vector Similarity → Dietary Analysis → Results
-3. **Update Phase**: Real-time API updates → Incremental processing → Index updates
+1. **Ingestion Phase**: OpenFoodFacts API → Product Filtering → Processing Pipeline → Vector Generation → MongoDB Atlas on AWS (unified storage)
+2. **Query Phase**: UPC/Semantic Query → MongoDB Atlas Vector Search → Hybrid Results → Dietary Analysis → Results  
+3. **Update Phase**: Incremental API updates → Processing → MongoDB Atlas updates with IP whitelisting for hackathon venue access
+4. **Network Security**: IP whitelisting configured for hackathon building access to MongoDB Atlas cluster on AWS
 
 ## Components and Interfaces
 
@@ -76,13 +81,20 @@ interface DataProcessingPipeline {
 
 ### 2. Vector Embedding Service
 
-**Purpose**: Generate high-quality embeddings for semantic search
+**Purpose**: Generate high-quality embeddings for semantic search using free Hugging Face models
 
 **Key Components**:
-- **EmbeddingClient**: Interface to OpenAI/Anthropic APIs
+- **HuggingFaceEmbedder**: Local Sentence Transformers model (all-MiniLM-L6-v2)
 - **BatchProcessor**: Efficient batch processing of embeddings
 - **EmbeddingCache**: Cache frequently generated embeddings
-- **QualityValidator**: Ensures embedding quality and consistency
+- **ModelManager**: Handles model loading and memory management
+
+**Model Specifications**:
+- **Model**: `sentence-transformers/all-MiniLM-L6-v2`
+- **Dimensions**: 384 (smaller than OpenAI but still effective)
+- **Performance**: ~14K sentences/second on CPU
+- **Size**: ~90MB download
+- **Quality**: Excellent for semantic similarity tasks
 
 **Interface**:
 ```typescript
@@ -91,7 +103,24 @@ interface VectorEmbeddingService {
   generateProductNameEmbedding(text: string): Promise<number[]>;
   generateAllergenEmbedding(allergens: string[]): Promise<number[]>;
   batchGenerate(requests: EmbeddingRequest[]): Promise<EmbeddingResponse[]>;
+  initializeModel(): Promise<void>;
 }
+```
+
+**Implementation Example**:
+```python
+from sentence_transformers import SentenceTransformer
+import numpy as np
+
+class HuggingFaceEmbedder:
+    def __init__(self):
+        self.model = SentenceTransformer('all-MiniLM-L6-v2')
+    
+    def generate_embedding(self, text: str) -> np.ndarray:
+        return self.model.encode(text, normalize_embeddings=True)
+    
+    def batch_generate(self, texts: list[str]) -> np.ndarray:
+        return self.model.encode(texts, normalize_embeddings=True, batch_size=32)
 ```
 
 ### 3. Hybrid Search Service
@@ -162,7 +191,7 @@ interface Product {
   // Dietary labels and certifications
   labels_tags: string[];
   
-  // Vector embeddings (1536 dimensions each)
+  // Vector embeddings (384 dimensions each - Sentence Transformers)
   ingredients_embedding: number[];
   product_name_embedding: number[];
   allergens_embedding: number[];
@@ -368,7 +397,7 @@ describe('Performance Tests', () => {
     {
       "type": "vector",
       "path": "ingredients_embedding",
-      "numDimensions": 1536,
+      "numDimensions": 384,
       "similarity": "cosine"
     },
     {
@@ -422,7 +451,7 @@ db.products.aggregate([
     $vectorSearch: {
       index: "ingredients_vector_index",
       path: "ingredients_embedding",
-      queryVector: [0.1, 0.2, ...], // 1536-dimensional vector
+      queryVector: [0.1, 0.2, ...], // 384-dimensional vector
       numCandidates: 1000,
       limit: 50,
       filter: {
@@ -446,18 +475,21 @@ db.products.aggregate([
 
 ## Deployment and Scaling Considerations
 
-### MongoDB Atlas Configuration
+### MongoDB Atlas on AWS Configuration
 
 **Cluster Specifications**:
-- **Tier**: M30 or higher (for Vector Search support)
-- **Storage**: 100GB initial, auto-scaling enabled
-- **Regions**: Multi-region deployment for global access
-- **Backup**: Continuous backup with point-in-time recovery
+- **Tier**: M10 minimum (for Vector Search support) - $0.08/hour = ~$58/month
+- **Cloud Provider**: AWS (us-east-1 or preferred region)
+- **Storage**: 10GB initial (sufficient for curated dataset)
+- **Network Security**: IP whitelisting for hackathon venue
+- **Backup**: Standard backup with point-in-time recovery
 
-**Vector Search Limits**:
+**Vector Search Configuration**:
 - Maximum 10 vector indexes per collection
-- Maximum 2048 dimensions per vector field
+- Maximum 2048 dimensions per vector field (using 384 for Sentence Transformers)
 - Query timeout: 60 seconds maximum
+- **IP Whitelisting**: Configure hackathon venue IP address for database access
+- **AWS Region**: Deploy in same region as application for low latency
 
 ### Performance Monitoring
 

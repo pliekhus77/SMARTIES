@@ -177,11 +177,22 @@ class OpenFoodFactsUploader {
     await localClient.connect();
     const sourceCollection = localClient.db('off').collection('products');
     
-    // Step 3: Process products in batches
+    // Step 3: Get top products by popularity
+    console.log('Filtering top products by popularity...');
     const cursor = sourceCollection.find({
       code: { $exists: true, $ne: '' },
-      product_name: { $exists: true, $ne: '' }
-    }).limit(config.maxProducts);
+      product_name: { $exists: true, $ne: '' },
+      $or: [
+        { unique_scans_n: { $exists: true, $gt: 0 } },
+        { popularity_key: { $exists: true } }
+      ]
+    })
+    .sort({ 
+      unique_scans_n: -1,      // Primary: scan count (popularity)
+      popularity_key: -1,      // Secondary: popularity ranking
+      last_modified_t: -1      // Tertiary: recent updates
+    })
+    .limit(config.maxProducts);
     
     let batch = [];
     
@@ -195,8 +206,8 @@ class OpenFoodFactsUploader {
       }
       
       this.processedCount++;
-      if (this.processedCount % 1000 === 0) {
-        console.log(`Processed ${this.processedCount} products...`);
+      if (this.processedCount % 100 === 0) {
+        console.log(`Processed ${this.processedCount} products (popularity: ${product.unique_scans_n || 'N/A'})...`);
       }
     }
     
@@ -206,7 +217,7 @@ class OpenFoodFactsUploader {
     }
     
     await localClient.close();
-    console.log(`Upload complete! Processed ${this.processedCount} products.`);
+    console.log(`Upload complete! Processed ${this.processedCount} most popular products.`);
   }
 
   async restoreDump() {

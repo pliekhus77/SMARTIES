@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This specification covers the data schema and ingestion phase (steps 2.1 - 2.5) of the SMARTIES hackathon project. The goal is to establish a robust product data foundation using the OpenFoodFacts database dump (69GB of real product data) with proper schema design and data ingestion that will enable immediate testing and development of the dietary compliance features. This phase focuses on importing and structuring real-world product data with comprehensive UPC-to-product mapping and allergen information with MongoDB Atlas Vector Search capabilities for AI-powered semantic analysis.
+This specification covers the data schema and ingestion phase (steps 2.1 - 2.5) of the SMARTIES hackathon project. The goal is to establish a curated product data foundation using a subset of OpenFoodFacts data optimized for MongoDB Atlas M0 (free tier) with 512MB storage limit. This phase focuses on importing and structuring a carefully selected dataset of ~10,000-15,000 popular products with comprehensive UPC-to-product mapping and allergen information, enabling immediate testing and development of the dietary compliance features for hackathon demonstration purposes.
 
 ## Requirements
 

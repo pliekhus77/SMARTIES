@@ -23,6 +23,7 @@
     "build": "react-native bundle",
     "ci:validate": "node scripts/validate-ci.js",
     "upload:openfoodfacts": "node scripts/upload-openfoodfacts-vector.js",
+    "upload:top10k": "MAX_PRODUCTS=10000 node scripts/upload-openfoodfacts-vector.js",
     "upload:test": "MAX_PRODUCTS=1000 node scripts/upload-openfoodfacts-vector.js"
   },
   "dependencies": {

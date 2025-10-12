@@ -1,30 +1,42 @@
 # Implementation Plan
 
 - [ ] 1. Set up MongoDB Atlas Vector Search infrastructure and core data models
-  - Create MongoDB Atlas cluster with Vector Search enabled (M30+ tier)
-  - Define Product schema with vector embedding fields and dietary flags
+  - Create MongoDB Atlas cluster on AWS with Vector Search enabled (M10+ tier)
+  - Configure IP whitelisting for hackathon venue access
+  - Define Product schema with 384-dimension vector embedding fields and dietary flags
   - Create database indexes for UPC lookup and vector similarity search
   - Set up connection utilities and error handling for database operations
   - _Requirements: 1.1, 1.2, 1.5_
 
-- [ ] 2. Implement vector embedding service with OpenAI/Anthropic integration
-  - [ ] 2.1 Create embedding service interface and client implementations
-    - Build EmbeddingClient for OpenAI/Anthropic API integration
-    - Implement batch processing for efficient embedding generation
-    - Add embedding caching layer to reduce API costs
+- [ ] 2. Set up Hugging Face Transformers for local embedding generation
+  - [ ] 2.1 Install and configure Hugging Face environment
+    - Create Python virtual environment: `python -m venv venv`
+    - Install sentence-transformers: `pip install sentence-transformers`
+    - Install additional dependencies: `pip install torch numpy pandas`
+    - Download all-MiniLM-L6-v2 model: `SentenceTransformer('all-MiniLM-L6-v2')`
+    - Configure model caching directory and memory management settings
+    - Test model loading and basic embedding generation
     - _Requirements: 2.1, 2.5_
 
-  - [ ] 2.2 Implement embedding generation for product data
-    - Create ingredient text embedding generation (1536 dimensions)
+  - [ ] 2.2 Create embedding service interface and implementation
+    - Build HuggingFaceEmbedder class with sentence-transformers integration
+    - Implement batch processing for efficient local embedding generation
+    - Add embedding caching layer to avoid recomputation
+    - Create model initialization and memory management utilities
+    - _Requirements: 2.1, 2.5_
+
+  - [ ] 2.3 Implement embedding generation for product data
+    - Create ingredient text embedding generation (384 dimensions)
     - Build product name embedding generation with text normalization
     - Implement allergen profile embedding from allergen tags
     - Add embedding quality validation and consistency checks
     - _Requirements: 1.2, 2.1_
 
-  - [ ] 2.3 Write unit tests for embedding service
+  - [ ] 2.4 Write unit tests for Hugging Face embedding service
     - Test embedding generation consistency and quality
-    - Validate batch processing efficiency and error handling
-    - Test caching mechanisms and API rate limiting
+    - Validate batch processing efficiency and performance
+    - Test caching mechanisms and model loading
+    - Verify 384-dimension output format and normalization
     - _Requirements: 2.1, 2.5_
 
 - [ ] 3. Build data processing pipeline for OpenFoodFacts ingestion
@@ -112,9 +124,9 @@
     - _Requirements: 3.1, 3.5, 4.1_
 
 - [ ] 6. Create MongoDB Atlas Vector Search indexes and optimization
-  - [ ] 6.1 Configure vector search indexes
-    - Create ingredients_embedding vector index with cosine similarity
-    - Build product_name_embedding and allergens_embedding indexes
+  - [ ] 6.1 Configure vector search indexes for 384-dimension embeddings
+    - Create ingredients_embedding vector index with cosine similarity (384 dims)
+    - Build product_name_embedding and allergens_embedding indexes (384 dims)
     - Add compound indexes for hybrid search optimization
     - Configure filtering indexes for dietary flags and allergen tags
     - _Requirements: 1.3, 2.2_
