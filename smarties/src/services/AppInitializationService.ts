@@ -10,8 +10,8 @@
  * Requirements: 5.1, 5.5
  */
 
-import { DatabaseService } from '../../../src/services/DatabaseService';
-import { config } from '../../../src/config/config';
+import { DatabaseService } from './DatabaseService';
+import { config } from '../config/config';
 
 export interface InitializationResult {
   success: boolean;
@@ -89,6 +89,7 @@ export class AppInitializationService {
    */
   private async initializeDatabase(): Promise<void> {
     try {
+      console.log('Initializing MongoDB Atlas connection...');
       await this.databaseService.connect();
       
       // Perform health check
@@ -97,9 +98,9 @@ export class AppInitializationService {
         throw new Error(`Database health check failed: ${healthStatus.message}`);
       }
 
-      console.log('Database connection initialized successfully');
+      console.log('✅ Database connection initialized successfully');
     } catch (error) {
-      console.error('Database initialization failed:', error);
+      console.error('❌ Database initialization failed:', error);
       throw new Error(`Database connection failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }

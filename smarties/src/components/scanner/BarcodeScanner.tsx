@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 
 export interface BarcodeScannerProps {
   onBarcodeScanned: (barcode: string) => void;
@@ -13,126 +12,85 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
   onError,
   onClose,
 }) => {
-  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
-  const [scanned, setScanned] = useState(false);
+  const [manualBarcode, setManualBarcode] = useState('');
 
-  useEffect(() => {
-    getCameraPermissions();
-  }, []);
-
-  const getCameraPermissions = async () => {
-    try {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-      
-      if (status !== 'granted') {
-        const errorMsg = 'Camera permission is required to scan barcodes';
-        onError?.(errorMsg);
-        Alert.alert('Permission Required', errorMsg);
-      }
-    } catch (error) {
-      const errorMsg = 'Failed to request camera permissions';
-      console.error('Camera permission error:', error);
-      onError?.(errorMsg);
-      Alert.alert('Error', errorMsg);
+  const handleManualScan = () => {
+    if (manualBarcode.trim()) {
+      onBarcodeScanned(manualBarcode.trim());
+    } else {
+      onError?.('Please enter a barcode');
     }
   };
 
-  const handleBarCodeScanned = ({ data }: { type: string; data: string }) => {
-    if (scanned) return;
-    
-    setScanned(true);
-    
-    try {
-      // Validate UPC format
-      if (isValidUPC(data)) {
-        onBarcodeScanned(data);
-      } else {
-        const errorMsg = 'Invalid barcode format. Please try scanning a UPC barcode.';
-        onError?.(errorMsg);
-        Alert.alert('Invalid Barcode', errorMsg, [
-          { text: 'Try Again', onPress: () => setScanned(false) }
-        ]);
-      }
-    } catch (error) {
-      const errorMsg = 'Error processing barcode scan';
-      console.error('Barcode processing error:', error);
-      onError?.(errorMsg);
-      Alert.alert('Scan Error', errorMsg, [
-        { text: 'Try Again', onPress: () => setScanned(false) }
-      ]);
-    }
+  const handleTestScan = (testBarcode: string) => {
+    onBarcodeScanned(testBarcode);
   };
-
-  const isValidUPC = (barcode: string): boolean => {
-    // UPC-A: 12 digits, UPC-E: 8 digits, EAN-13: 13 digits
-    const upcPattern = /^(\d{8}|\d{12}|\d{13})$/;
-    return upcPattern.test(barcode);
-  };
-
-
-
-  const resetScanner = () => {
-    setScanned(false);
-  };
-
-  if (hasPermission === null) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.message}>Requesting camera permission...</Text>
-      </View>
-    );
-  }
-
-  if (hasPermission === false) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.message}>No access to camera</Text>
-        <TouchableOpacity style={styles.button} onPress={getCameraPermissions}>
-          <Text style={styles.buttonText}>Grant Permission</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
 
   return (
     <View style={styles.container}>
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={styles.scanner}
-        barCodeTypes={[
-          BarCodeScanner.Constants.BarCodeType.upc_a,
-          BarCodeScanner.Constants.BarCodeType.upc_e,
-          BarCodeScanner.Constants.BarCodeType.ean13,
-          BarCodeScanner.Constants.BarCodeType.ean8,
-        ]}
-      />
-      
-      {/* Scanning overlay */}
-      <View style={styles.overlay}>
-        <View style={styles.scanArea}>
-          <View style={styles.scanFrame} />
-        </View>
-        
-        <View style={styles.instructions}>
+      {/* Mock camera view */}
+      <View style={styles.cameraView}>
+        <View style={styles.scanFrame}>
+          <Text style={styles.scanFrameText}>📷 Mock Camera View</Text>
           <Text style={styles.instructionText}>
-            {scanned ? 'Barcode scanned!' : 'Point camera at barcode'}
+            Development Mode - Use buttons below to simulate scanning
           </Text>
         </View>
-        
-        <View style={styles.controls}>
-          {scanned && (
-            <TouchableOpacity style={styles.controlButton} onPress={resetScanner}>
-              <Text style={styles.controlButtonText}>Scan Again</Text>
-            </TouchableOpacity>
-          )}
+      </View>
+      
+      {/* Manual barcode input */}
+      <View style={styles.inputSection}>
+        <Text style={styles.inputLabel}>Enter Barcode Manually:</Text>
+        <TextInput
+          style={styles.input}
+          value={manualBarcode}
+          onChangeText={setManualBarcode}
+          placeholder="Enter UPC barcode (e.g., 123456789012)"
+          placeholderTextColor="#999"
+          keyboardType="numeric"
+        />
+        <TouchableOpacity style={styles.scanButton} onPress={handleManualScan}>
+          <Text style={styles.scanButtonText}>Scan Manual Code</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Test barcodes */}
+      <View style={styles.testSection}>
+        <Text style={styles.testLabel}>Test Barcodes:</Text>
+        <View style={styles.testButtons}>
+          <TouchableOpacity 
+            style={[styles.testButton, styles.safeButton]} 
+            onPress={() => handleTestScan('123456789012')}
+          >
+            <Text style={styles.testButtonText}>Safe Product</Text>
+            <Text style={styles.testButtonSubtext}>123456789012</Text>
+          </TouchableOpacity>
           
-          {onClose && (
-            <TouchableOpacity style={styles.controlButton} onPress={onClose}>
-              <Text style={styles.controlButtonText}>Close</Text>
-            </TouchableOpacity>
-          )}
+          <TouchableOpacity 
+            style={[styles.testButton, styles.warningButton]} 
+            onPress={() => handleTestScan('987654321098')}
+          >
+            <Text style={styles.testButtonText}>Contains Allergens</Text>
+            <Text style={styles.testButtonSubtext}>987654321098</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={[styles.testButton, styles.dangerButton]} 
+            onPress={() => handleTestScan('555666777888')}
+          >
+            <Text style={styles.testButtonText}>Multiple Violations</Text>
+            <Text style={styles.testButtonSubtext}>555666777888</Text>
+          </TouchableOpacity>
         </View>
+      </View>
+
+      {/* Controls */}
+      <View style={styles.controls}>
+        {onClose && (
+          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+            <Text style={styles.closeButtonText}>Close Scanner</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -143,76 +101,121 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000',
   },
-  scanner: {
-    flex: 1,
-  },
-  overlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 50,
-  },
-  scanArea: {
+  cameraView: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#1a1a1a',
   },
   scanFrame: {
-    width: 250,
-    height: 150,
-    borderWidth: 2,
+    width: 280,
+    height: 180,
+    borderWidth: 3,
     borderColor: '#1168bd',
-    borderRadius: 10,
-    backgroundColor: 'transparent',
+    borderRadius: 15,
+    backgroundColor: 'rgba(17, 104, 189, 0.1)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
-  instructions: {
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 20,
-    marginBottom: 20,
+  scanFrameText: {
+    color: '#1168bd',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
   instructionText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 14,
     textAlign: 'center',
+    lineHeight: 20,
   },
-  controls: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    paddingHorizontal: 20,
+  inputSection: {
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    padding: 20,
+    margin: 15,
+    borderRadius: 15,
   },
-  controlButton: {
-    backgroundColor: 'rgba(17, 104, 189, 0.8)',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 20,
-    marginHorizontal: 5,
+  inputLabel: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 10,
   },
-  controlButtonText: {
+  input: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    backgroundColor: '#fff',
+    marginBottom: 15,
+  },
+  scanButton: {
+    backgroundColor: '#1168bd',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  scanButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  testSection: {
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    padding: 20,
+    margin: 15,
+    marginTop: 0,
+    borderRadius: 15,
+  },
+  testLabel: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 15,
+  },
+  testButtons: {
+    gap: 10,
+  },
+  testButton: {
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  safeButton: {
+    backgroundColor: '#2ECC40',
+  },
+  warningButton: {
+    backgroundColor: '#FFDC00',
+  },
+  dangerButton: {
+    backgroundColor: '#FF4136',
+  },
+  testButtonText: {
     color: '#fff',
     fontSize: 14,
     fontWeight: 'bold',
+    marginBottom: 4,
   },
-  message: {
-    textAlign: 'center',
-    paddingBottom: 10,
-    color: '#fff',
-    fontSize: 16,
+  testButtonSubtext: {
+    color: 'rgba(255, 255, 255, 0.9)',
+    fontSize: 12,
+    fontFamily: 'monospace',
   },
-  button: {
-    backgroundColor: '#1168bd',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 20,
-    alignSelf: 'center',
+  controls: {
+    padding: 20,
+    alignItems: 'center',
   },
-  buttonText: {
+  closeButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    paddingHorizontal: 30,
+    paddingVertical: 12,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  closeButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',

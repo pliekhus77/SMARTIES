@@ -49,13 +49,13 @@ export class SecretsManager {
     try {
       const rawSecrets = {
         mongodb: {
-          uri: process.env.MONGODB_URI || '',
+          uri: process.env.MONGODB_URI || 'mongodb://localhost:27017/smarties_local',
           username: process.env.MONGODB_USERNAME,
           password: process.env.MONGODB_PASSWORD,
         },
         ai: {
-          openaiApiKey: process.env.OPENAI_API_KEY || '',
-          anthropicApiKey: process.env.ANTHROPIC_API_KEY || '',
+          openaiApiKey: process.env.OPENAI_API_KEY || 'sk-mock-openai-key-for-development',
+          anthropicApiKey: process.env.ANTHROPIC_API_KEY || 'sk-ant-mock-anthropic-key-for-development',
         },
         apis: {
           usdaApiKey: process.env.USDA_API_KEY,

@@ -1017,7 +1017,15 @@ export class DatabaseService {
       console.error('Fast UPC lookup failed:', error);
       return null;
     }
-  }  async getUserByProfileId(profileId: string): Promise<DatabaseResult<User | null>> {
+  }
+
+  /**
+   * Get user by profile ID
+   */
+  async getUserByProfileId(profileId: string): Promise<DatabaseResult<User | null>> {
+    return this.readOne<User>('users', { profileId });
+  }
+
   /**
    * Execute aggregation pipeline on products collection
    */
@@ -1035,7 +1043,6 @@ export class DatabaseService {
       console.error('Product aggregation failed:', error);
       return [];
     }
-  }    return this.readOne<User>('users', { profileId });
   }
 
   async getUserScanHistory(userId: string, limit: number = 50): Promise<DatabaseResult<ScanResult[]>> {

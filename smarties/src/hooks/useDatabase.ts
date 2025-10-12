@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AppInitializationService } from '../services/AppInitializationService';
-import { DatabaseService, DatabaseResult } from '../../../src/services/DatabaseService';
+import { DatabaseService, DatabaseResult } from '../services/DatabaseService';
 
 export interface DatabaseHookState {
   isLoading: boolean;
