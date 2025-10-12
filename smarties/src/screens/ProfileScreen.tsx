@@ -23,9 +23,13 @@ import {
   DietaryRestriction, 
   SeverityLevel, 
   AllergenType,
+  ReligiousType,
+  LifestyleType,
+  RestrictionType,
   ProfileScreenState,
   createDietaryRestriction,
-  getAllergenDisplayName
+  getRestrictionDisplayName,
+  getRestrictionCategory
 } from '../types/profile';
 
 // Import profile service
@@ -69,17 +73,29 @@ export const ProfileScreen: React.FC = () => {
     } catch (error) {
       console.error('Failed to load user restrictions:', error);
       
-      // Create sample restrictions for demo
+      // Create sample restrictions for demo - including all categories
       const sampleRestrictions: DietaryRestriction[] = [
         {
           id: '1',
-          ...createDietaryRestriction('Peanuts', AllergenType.PEANUTS, SeverityLevel.ANAPHYLACTIC, 'Severe allergy - carry EpiPen'),
+          ...createDietaryRestriction('Peanuts', AllergenType.PEANUTS, getRestrictionCategory(AllergenType.PEANUTS), SeverityLevel.ANAPHYLACTIC),
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
           id: '2',
-          ...createDietaryRestriction('Milk', AllergenType.MILK, SeverityLevel.SEVERE, 'Lactose intolerant'),
+          ...createDietaryRestriction('Milk', AllergenType.MILK, getRestrictionCategory(AllergenType.MILK), SeverityLevel.SEVERE),
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          id: '3',
+          ...createDietaryRestriction('Halal', ReligiousType.HALAL, getRestrictionCategory(ReligiousType.HALAL), SeverityLevel.SEVERE),
+          createdAt: new Date(),
+          updatedAt: new Date()
+        },
+        {
+          id: '4',
+          ...createDietaryRestriction('Vegan', LifestyleType.VEGAN, getRestrictionCategory(LifestyleType.VEGAN), SeverityLevel.SEVERE),
           createdAt: new Date(),
           updatedAt: new Date()
         }
@@ -118,30 +134,7 @@ export const ProfileScreen: React.FC = () => {
     }
   };
 
-  const handleNotesChange = async (id: string, notes: string) => {
-    try {
-      const restriction = state.restrictions.find(r => r.id === id);
-      if (!restriction) return;
 
-      const updatedRestriction = {
-        ...restriction,
-        notes,
-        updatedAt: new Date()
-      };
-
-      await profileService.updateRestriction(updatedRestriction);
-      
-      setState(prev => ({
-        ...prev,
-        restrictions: prev.restrictions.map(r => 
-          r.id === id ? updatedRestriction : r
-        )
-      }));
-    } catch (error) {
-      console.error('Failed to update notes:', error);
-      Alert.alert('Error', 'Failed to update notes. Please try again.');
-    }
-  };
 
   const handleDelete = async (id: string) => {
     const restriction = state.restrictions.find(r => r.id === id);
@@ -173,31 +166,38 @@ export const ProfileScreen: React.FC = () => {
   };
 
   const handleAddRestriction = () => {
-    // Check if there are available allergen types to add
-    const availableTypes = Object.values(AllergenType).filter(type => 
+    // Check if there are available restriction types to add
+    const allTypes = [
+      ...Object.values(AllergenType),
+      ...Object.values(ReligiousType),
+      ...Object.values(LifestyleType)
+    ];
+    
+    const availableTypes = allTypes.filter(type => 
       !state.restrictions.some(r => r.type === type)
     );
 
     if (availableTypes.length === 0) {
-      Alert.alert('All Set!', 'You have already added all available allergen types.');
+      Alert.alert('All Set!', 'You have already added all available dietary restrictions.');
       return;
     }
 
-    // Open the allergen selection modal
+    // Open the restriction selection modal
     setShowAllergenSelection(true);
   };
 
-  const handleAllergenSelected = async (allergenType: AllergenType) => {
+  const handleRestrictionSelected = async (restrictionType: RestrictionType) => {
     const restrictionId = Date.now().toString();
+    const category = getRestrictionCategory(restrictionType);
     
     try {
       const newRestriction: DietaryRestriction = {
         id: restrictionId,
         ...createDietaryRestriction(
-          getAllergenDisplayName(allergenType),
-          allergenType,
-          SeverityLevel.SEVERE,
-          ''
+          getRestrictionDisplayName(restrictionType),
+          restrictionType,
+          category,
+          SeverityLevel.SEVERE
         ),
         createdAt: new Date(),
         updatedAt: new Date()
@@ -270,7 +270,6 @@ export const ProfileScreen: React.FC = () => {
               key={restriction.id}
               restriction={restriction}
               onSeverityChange={handleSeverityChange}
-              onNotesChange={handleNotesChange}
               onDelete={handleDelete}
             />
           ))
@@ -286,11 +285,11 @@ export const ProfileScreen: React.FC = () => {
         <View style={styles.bottomSpacing} />
       </ScrollView>
 
-      {/* Allergen Selection Modal */}
+      {/* Restriction Selection Modal */}
       <AllergenSelectionModal
         visible={showAllergenSelection}
         onClose={() => setShowAllergenSelection(false)}
-        onSelectAllergen={handleAllergenSelected}
+        onSelectRestriction={handleRestrictionSelected}
         excludeTypes={state.restrictions.map(r => r.type)}
       />
     </SafeAreaView>

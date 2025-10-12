@@ -6,7 +6,7 @@
  */
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { DietaryRestriction, IProfileService, SeverityLevel, AllergenType } from '../../types/profile';
+import { DietaryRestriction, IProfileService, SeverityLevel, AllergenType, RestrictionCategory } from '../../types/profile';
 
 const PROFILE_STORAGE_KEY = '@smarties_profile_restrictions';
 
@@ -117,7 +117,7 @@ export class ProfileService implements IProfileService {
    * Generate unique ID for restrictions
    */
   private generateId(): string {
-    return `restriction_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `restriction_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
   }
 }
 
@@ -130,8 +130,8 @@ export class MockProfileService implements IProfileService {
       id: 'mock_1',
       name: 'Peanuts',
       type: AllergenType.PEANUTS,
+      category: RestrictionCategory.ALLERGEN,
       severity: SeverityLevel.ANAPHYLACTIC,
-      notes: 'Carry EpiPen at all times',
       isActive: true,
       createdAt: new Date('2024-01-01'),
       updatedAt: new Date('2024-01-01')
@@ -140,8 +140,8 @@ export class MockProfileService implements IProfileService {
       id: 'mock_2',
       name: 'Milk',
       type: AllergenType.MILK,
+      category: RestrictionCategory.ALLERGEN,
       severity: SeverityLevel.SEVERE,
-      notes: 'Lactose intolerant',
       isActive: true,
       createdAt: new Date('2024-01-02'),
       updatedAt: new Date('2024-01-02')

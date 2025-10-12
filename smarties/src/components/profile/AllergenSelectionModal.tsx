@@ -1,11 +1,11 @@
 /**
  * AllergenSelectionModal Component
  * 
- * Modal interface for selecting new dietary restrictions from available allergen types.
- * Displays available allergens with icons and allows user to select which one to add.
+ * Modal interface for selecting new dietary restrictions from available types.
+ * Features tabbed interface for allergens, religious restrictions, and lifestyle choices.
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -16,31 +16,131 @@ import {
   SafeAreaView
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { AllergenType, getAllergenDisplayName } from '../../types/profile';
+import { 
+  RestrictionType, 
+  RestrictionCategory,
+  AllergenType,
+  ReligiousType,
+  LifestyleType,
+  getRestrictionDisplayName,
+  getRestrictionCategory
+} from '../../types/profile';
 import { AllergenIcon } from './AllergenIcon';
 
 interface AllergenSelectionModalProps {
   visible: boolean;
   onClose: () => void;
-  onSelectAllergen: (allergenType: AllergenType) => void;
-  excludeTypes: AllergenType[]; // Already added allergens to exclude
+  onSelectRestriction: (restrictionType: RestrictionType) => void;
+  excludeTypes: RestrictionType[]; // Already added restrictions to exclude
 }
 
 export const AllergenSelectionModal: React.FC<AllergenSelectionModalProps> = ({
   visible,
   onClose,
-  onSelectAllergen,
+  onSelectRestriction,
   excludeTypes
 }) => {
-  // Get all available allergen types that haven't been added yet
-  const availableAllergens = Object.values(AllergenType).filter(
-    type => !excludeTypes.includes(type)
-  );
+  const [activeTab, setActiveTab] = useState<RestrictionCategory>(RestrictionCategory.ALLERGEN);
 
-  const handleAllergenSelect = (allergenType: AllergenType) => {
-    onSelectAllergen(allergenType);
+  // Get available restrictions by category
+  const getAvailableRestrictions = (category: RestrictionCategory): RestrictionType[] => {
+    let allTypes: RestrictionType[] = [];
+    
+    switch (category) {
+      case RestrictionCategory.ALLERGEN:
+        allTypes = Object.values(AllergenType);
+        break;
+      case RestrictionCategory.RELIGIOUS:
+        allTypes = Object.values(ReligiousType);
+        break;
+      case RestrictionCategory.LIFESTYLE:
+        allTypes = Object.values(LifestyleType);
+        break;
+    }
+    
+    return allTypes.filter(type => !excludeTypes.includes(type));
+  };
+
+  const handleRestrictionSelect = (restrictionType: RestrictionType) => {
+    onSelectRestriction(restrictionType);
     onClose();
   };
+
+  const getTabIcon = (category: RestrictionCategory): string => {
+    switch (category) {
+      case RestrictionCategory.ALLERGEN:
+        return 'warning-outline';
+      case RestrictionCategory.RELIGIOUS:
+        return 'library-outline';
+      case RestrictionCategory.LIFESTYLE:
+        return 'leaf-outline';
+      default:
+        return 'ellipse-outline';
+    }
+  };
+
+  const getTabLabel = (category: RestrictionCategory): string => {
+    switch (category) {
+      case RestrictionCategory.ALLERGEN:
+        return 'Allergens';
+      case RestrictionCategory.RELIGIOUS:
+        return 'Religious';
+      case RestrictionCategory.LIFESTYLE:
+        return 'Lifestyle';
+      default:
+        return 'Other';
+    }
+  };
+
+  const getRestrictionIcon = (type: RestrictionType): string => {
+    const category = getRestrictionCategory(type);
+    
+    if (category === RestrictionCategory.ALLERGEN) {
+      // Use existing allergen icons
+      return type;
+    } else if (category === RestrictionCategory.RELIGIOUS) {
+      switch (type as ReligiousType) {
+        case ReligiousType.HALAL:
+          return '☪️';
+        case ReligiousType.KOSHER:
+          return '✡️';
+        case ReligiousType.HINDU_VEGETARIAN:
+          return '🕉️';
+        case ReligiousType.JAIN:
+          return '☸️';
+        case ReligiousType.BUDDHIST:
+          return '☸️';
+        default:
+          return '🙏';
+      }
+    } else if (category === RestrictionCategory.LIFESTYLE) {
+      switch (type as LifestyleType) {
+        case LifestyleType.VEGAN:
+          return '🌱';
+        case LifestyleType.VEGETARIAN:
+          return '🥬';
+        case LifestyleType.KETO:
+          return '🥑';
+        case LifestyleType.PALEO:
+          return '🥩';
+        case LifestyleType.ORGANIC_ONLY:
+          return '🌿';
+        case LifestyleType.NON_GMO:
+          return '🌾';
+        case LifestyleType.LOW_SODIUM:
+          return '🧂';
+        case LifestyleType.SUGAR_FREE:
+          return '🚫';
+        default:
+          return '🍃';
+      }
+    }
+    
+    return '❓';
+  };
+
+  const availableRestrictions = getAvailableRestrictions(activeTab);
+  const tabs = Object.values(RestrictionCategory);
 
   return (
     <Modal
@@ -59,30 +159,61 @@ export const AllergenSelectionModal: React.FC<AllergenSelectionModalProps> = ({
           <View style={styles.placeholder} />
         </View>
 
+        {/* Tab Navigation */}
+        <View style={styles.tabContainer}>
+          {tabs.map((tab) => (
+            <TouchableOpacity
+              key={tab}
+              style={[styles.tab, activeTab === tab && styles.activeTab]}
+              onPress={() => setActiveTab(tab)}
+            >
+              <Ionicons 
+                name={getTabIcon(tab) as any} 
+                size={20} 
+                color={activeTab === tab ? '#1E88E5' : 'rgba(255, 255, 255, 0.7)'} 
+              />
+              <Text style={[
+                styles.tabText, 
+                activeTab === tab && styles.activeTabText
+              ]}>
+                {getTabLabel(tab)}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
         {/* Content */}
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
           <Text style={styles.subtitle}>
-            Select an allergen or dietary restriction to add to your profile:
+            Select a {getTabLabel(activeTab).toLowerCase()} restriction to add to your profile:
           </Text>
 
-          {availableAllergens.length === 0 ? (
+          {availableRestrictions.length === 0 ? (
             <View style={styles.emptyState}>
               <Text style={styles.emptyStateText}>
-                You have already added all available allergen types!
+                You have already added all available {getTabLabel(activeTab).toLowerCase()} restrictions!
               </Text>
             </View>
           ) : (
-            <View style={styles.allergenGrid}>
-              {availableAllergens.map((allergenType) => (
+            <View style={styles.restrictionGrid}>
+              {availableRestrictions.map((restrictionType) => (
                 <TouchableOpacity
-                  key={allergenType}
-                  style={styles.allergenCard}
-                  onPress={() => handleAllergenSelect(allergenType)}
+                  key={restrictionType}
+                  style={styles.restrictionCard}
+                  onPress={() => handleRestrictionSelect(restrictionType)}
                   activeOpacity={0.7}
                 >
-                  <AllergenIcon allergenType={allergenType} size={64} />
-                  <Text style={styles.allergenName}>
-                    {getAllergenDisplayName(allergenType)}
+                  {getRestrictionCategory(restrictionType) === RestrictionCategory.ALLERGEN ? (
+                    <AllergenIcon allergenType={restrictionType} size={64} />
+                  ) : (
+                    <View style={styles.iconContainer}>
+                      <Text style={styles.emoji}>
+                        {getRestrictionIcon(restrictionType)}
+                      </Text>
+                    </View>
+                  )}
+                  <Text style={styles.restrictionName}>
+                    {getRestrictionDisplayName(restrictionType)}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -133,13 +264,43 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     lineHeight: 22,
   },
-  allergenGrid: {
+  tabContainer: {
+    flexDirection: 'row',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    marginHorizontal: 20,
+    borderRadius: 12,
+    padding: 4,
+    marginBottom: 20,
+  },
+  tab: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+  },
+  activeTab: {
+    backgroundColor: '#FFFFFF',
+  },
+  tabText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: 'rgba(255, 255, 255, 0.7)',
+    marginLeft: 6,
+  },
+  activeTabText: {
+    color: '#1E88E5',
+    fontWeight: '600',
+  },
+  restrictionGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     paddingBottom: 40,
   },
-  allergenCard: {
+  restrictionCard: {
     width: '48%',
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
     borderRadius: 16,
@@ -149,7 +310,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)',
   },
-  allergenName: {
+  iconContainer: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  emoji: {
+    fontSize: 32,
+    textAlign: 'center',
+  },
+  restrictionName: {
     fontSize: 16,
     fontWeight: '600',
     color: '#FFFFFF',

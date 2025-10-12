@@ -12,6 +12,7 @@ import {
   getSeverityDisplayName,
   getAllergenDisplayName,
   getSeverityColor,
+  getRestrictionCategory,
   ProfileErrorType
 } from '../../types/profile';
 
@@ -22,7 +23,6 @@ describe('Profile Type Validation', () => {
         name: 'Peanut Allergy',
         type: AllergenType.PEANUTS,
         severity: SeverityLevel.SEVERE,
-        notes: 'Carry EpiPen',
         isActive: true
       };
 
@@ -39,8 +39,8 @@ describe('Profile Type Validation', () => {
 
       const errors = validateDietaryRestriction(invalidRestriction);
       expect(errors).toHaveLength(1);
-      expect(errors[0].type).toBe(ProfileErrorType.VALIDATION_ERROR);
-      expect(errors[0].message).toBe('Dietary restriction name is required');
+      expect(errors[0]?.type).toBe(ProfileErrorType.VALIDATION_ERROR);
+      expect(errors[0]?.message).toBe('Dietary restriction name is required');
     });
 
     it('should return error for empty name', () => {
@@ -53,7 +53,7 @@ describe('Profile Type Validation', () => {
 
       const errors = validateDietaryRestriction(invalidRestriction);
       expect(errors).toHaveLength(1);
-      expect(errors[0].message).toBe('Dietary restriction name is required');
+      expect(errors[0]?.message).toBe('Dietary restriction name is required');
     });
 
     it('should return error for name too long', () => {
@@ -66,10 +66,10 @@ describe('Profile Type Validation', () => {
 
       const errors = validateDietaryRestriction(invalidRestriction);
       expect(errors).toHaveLength(1);
-      expect(errors[0].message).toBe('Dietary restriction name must be 100 characters or less');
+      expect(errors[0]?.message).toBe('Dietary restriction name must be 100 characters or less');
     });
 
-    it('should return error for invalid allergen type', () => {
+    it('should return error for invalid restriction type', () => {
       const invalidRestriction = {
         name: 'Test Allergy',
         type: 'invalid_type' as AllergenType,
@@ -79,7 +79,7 @@ describe('Profile Type Validation', () => {
 
       const errors = validateDietaryRestriction(invalidRestriction);
       expect(errors).toHaveLength(1);
-      expect(errors[0].message).toBe('Valid allergen type is required');
+      expect(errors[0]?.message).toBe('Valid restriction type is required');
     });
 
     it('should return error for invalid severity level', () => {
@@ -92,22 +92,10 @@ describe('Profile Type Validation', () => {
 
       const errors = validateDietaryRestriction(invalidRestriction);
       expect(errors).toHaveLength(1);
-      expect(errors[0].message).toBe('Valid severity level is required');
+      expect(errors[0]?.message).toBe('Valid severity level is required');
     });
 
-    it('should return error for notes too long', () => {
-      const invalidRestriction = {
-        name: 'Test Allergy',
-        type: AllergenType.PEANUTS,
-        severity: SeverityLevel.SEVERE,
-        notes: 'A'.repeat(501),
-        isActive: true
-      };
 
-      const errors = validateDietaryRestriction(invalidRestriction);
-      expect(errors).toHaveLength(1);
-      expect(errors[0].message).toBe('Notes must be 500 characters or less');
-    });
 
     it('should return multiple errors for multiple invalid fields', () => {
       const invalidRestriction = {
@@ -118,7 +106,7 @@ describe('Profile Type Validation', () => {
       };
 
       const errors = validateDietaryRestriction(invalidRestriction);
-      expect(errors).toHaveLength(3);
+      expect(errors).toHaveLength(3); // name, type, and severity are all invalid
     });
   });
 
@@ -150,40 +138,37 @@ describe('Profile Type Validation', () => {
 
   describe('createDietaryRestriction', () => {
     it('should create dietary restriction with defaults', () => {
-      const restriction = createDietaryRestriction('Peanuts', AllergenType.PEANUTS);
+      const restriction = createDietaryRestriction('Peanuts', AllergenType.PEANUTS, getRestrictionCategory(AllergenType.PEANUTS));
       
       expect(restriction.name).toBe('Peanuts');
       expect(restriction.type).toBe(AllergenType.PEANUTS);
       expect(restriction.severity).toBe(SeverityLevel.SEVERE);
-      expect(restriction.notes).toBe('');
       expect(restriction.isActive).toBe(true);
     });
 
-    it('should create dietary restriction with custom values', () => {
+    it('should create dietary restriction with custom severity', () => {
       const restriction = createDietaryRestriction(
         'Milk Allergy',
         AllergenType.MILK,
-        SeverityLevel.ANAPHYLACTIC,
-        'Severe reaction'
+        getRestrictionCategory(AllergenType.MILK),
+        SeverityLevel.ANAPHYLACTIC
       );
       
       expect(restriction.name).toBe('Milk Allergy');
       expect(restriction.type).toBe(AllergenType.MILK);
       expect(restriction.severity).toBe(SeverityLevel.ANAPHYLACTIC);
-      expect(restriction.notes).toBe('Severe reaction');
       expect(restriction.isActive).toBe(true);
     });
 
-    it('should trim whitespace from name and notes', () => {
+    it('should trim whitespace from name', () => {
       const restriction = createDietaryRestriction(
         '  Egg Allergy  ',
         AllergenType.EGGS,
-        SeverityLevel.IRRITATION,
-        '  Mild symptoms  '
+        getRestrictionCategory(AllergenType.EGGS),
+        SeverityLevel.IRRITATION
       );
       
       expect(restriction.name).toBe('Egg Allergy');
-      expect(restriction.notes).toBe('Mild symptoms');
     });
   });
 

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This specification covers the vector search setup phase (steps 4.1 - 4.5) of the SMARTIES hackathon project. The goal is to implement MongoDB Atlas Vector Search capabilities for intelligent product matching and AI-powered dietary recommendations. This phase establishes the foundation for semantic search across product ingredients and enables the RAG (Retrieval-Augmented Generation) pipeline that will power the AI dietary analysis features.
+This specification covers the complete vector search and RAG (Retrieval-Augmented Generation) implementation for the SMARTIES hackathon project. The goal is to implement MongoDB Atlas Vector Search capabilities combined with AI-powered dietary compliance analysis that uses UPC-based product lookup and semantic ingredient matching. This system will provide instant, accurate dietary restriction checking for allergies, religious requirements, and lifestyle preferences through an integrated RAG pipeline that combines vector similarity search with LLM reasoning.
 
 ## Requirements
 
@@ -56,12 +56,84 @@ This specification covers the vector search setup phase (steps 4.1 - 4.5) of the
 
 ### Requirement 5
 
-**User Story:** As a product manager, I want to create sample queries for demo so that the hackathon demonstration can showcase intelligent product matching and AI-powered recommendations based on dietary restrictions and ingredient similarity.
+**User Story:** As a mobile app user, I want to scan a UPC barcode and receive instant dietary compliance analysis so that I can quickly determine if a product is safe for my specific allergies, religious restrictions, and lifestyle preferences.
 
 #### Acceptance Criteria
 
-1. WHEN demo queries are prepared THEN the system SHALL include searches for products similar to common allergen-containing items
-2. WHEN alternative product scenarios are created THEN the system SHALL demonstrate finding safe alternatives for restricted products
-3. WHEN dietary restriction queries are developed THEN the system SHALL show ingredient-based filtering combined with vector similarity
-4. WHEN demo data is validated THEN the system SHALL ensure sample queries return meaningful and accurate results
-5. WHEN presentation scenarios are prepared THEN the system SHALL have ready-to-use examples that highlight the AI-powered recommendation capabilities
+1. WHEN a UPC barcode is scanned THEN the system SHALL retrieve the product from MongoDB Atlas using the UPC as the primary key
+2. WHEN product data is found THEN the system SHALL extract ingredient lists, nutritional information, and certification labels for analysis
+3. WHEN product data is missing THEN the system SHALL attempt fallback lookup through Open Food Facts API and cache results locally
+4. WHEN user dietary profile is loaded THEN the system SHALL combine user restrictions (allergies, religious, medical, lifestyle) with product data
+5. WHEN compliance analysis is requested THEN the system SHALL return results within 3 seconds of barcode scan completion
+
+### Requirement 6
+
+**User Story:** As a user with multiple dietary restrictions, I want the AI system to understand complex ingredient interactions so that I receive accurate warnings about cross-contamination, hidden allergens, and certification conflicts.
+
+#### Acceptance Criteria
+
+1. WHEN ingredient analysis occurs THEN the system SHALL use vector similarity search to identify semantically similar ingredients and additives
+2. WHEN allergen detection is performed THEN the system SHALL check for direct allergens, derived ingredients, and cross-contamination warnings
+3. WHEN religious compliance is evaluated THEN the system SHALL prioritize certified labels (Halal/Kosher symbols) over ingredient-based analysis
+4. WHEN medical restrictions are processed THEN the system SHALL calculate nutritional compliance for conditions like diabetes, hypertension, and kidney disease
+5. WHEN lifestyle preferences are checked THEN the system SHALL identify vegan, vegetarian, keto, and other dietary pattern violations
+
+### Requirement 7
+
+**User Story:** As a system architect, I want to implement a RAG pipeline that combines vector search with LLM reasoning so that the dietary analysis provides contextual explanations and alternative product recommendations.
+
+#### Acceptance Criteria
+
+1. WHEN RAG context is built THEN the system SHALL retrieve similar products and ingredients using MongoDB Atlas Vector Search
+2. WHEN LLM prompt is constructed THEN the system SHALL include user profile, product data, similar products, and dietary guidelines as context
+3. WHEN AI analysis is performed THEN the system SHALL use OpenAI/Anthropic APIs to generate structured compliance assessments
+4. WHEN response is formatted THEN the system SHALL return safety level (safe/caution/danger), specific violations, and explanatory reasoning
+5. WHEN alternative recommendations are generated THEN the system SHALL suggest similar products that meet the user's dietary requirements
+
+### Requirement 8
+
+**User Story:** As a user concerned about food safety, I want the system to provide confidence scores and detailed explanations so that I can make informed decisions about products with uncertain or incomplete ingredient information.
+
+#### Acceptance Criteria
+
+1. WHEN confidence scoring is calculated THEN the system SHALL rate analysis certainty based on data completeness and AI model confidence
+2. WHEN explanations are generated THEN the system SHALL provide clear reasoning for each dietary restriction violation or approval
+3. WHEN uncertainty exists THEN the system SHALL err on the side of caution and recommend avoiding products with insufficient data
+4. WHEN user feedback is collected THEN the system SHALL allow users to report incorrect analyses to improve model accuracy
+5. WHEN learning occurs THEN the system SHALL use user corrections to refine future dietary compliance assessments
+
+### Requirement 9
+
+**User Story:** As a performance-conscious developer, I want the RAG system to operate efficiently with caching and optimization so that users receive fast responses while minimizing API costs and battery usage.
+
+#### Acceptance Criteria
+
+1. WHEN caching is implemented THEN the system SHALL store recent product analyses locally to avoid redundant API calls
+2. WHEN vector search is optimized THEN the system SHALL limit similarity searches to relevant product categories and dietary contexts
+3. WHEN LLM usage is managed THEN the system SHALL use prompt optimization and response caching to minimize token consumption
+4. WHEN offline capability is maintained THEN the system SHALL provide basic dietary analysis using cached data when network is unavailable
+5. WHEN performance monitoring occurs THEN the system SHALL track response times, API usage, and user satisfaction metrics
+
+### Requirement 10
+
+**User Story:** As a user with severe allergies, I want the system to prioritize safety over convenience so that I never receive false negatives that could endanger my health.
+
+#### Acceptance Criteria
+
+1. WHEN safety-first logic is applied THEN the system SHALL classify uncertain products as potentially unsafe rather than safe
+2. WHEN allergen detection occurs THEN the system SHALL flag products with "may contain" warnings and shared manufacturing facilities
+3. WHEN ingredient parsing fails THEN the system SHALL recommend manual review rather than assuming safety
+4. WHEN AI confidence is low THEN the system SHALL display prominent warnings and suggest consulting healthcare providers
+5. WHEN critical errors are detected THEN the system SHALL log incidents for review and system improvement
+
+### Requirement 11
+
+**User Story:** As a product manager, I want to create comprehensive demo scenarios so that the hackathon demonstration can showcase the complete RAG-powered dietary compliance system from barcode scanning to personalized recommendations.
+
+#### Acceptance Criteria
+
+1. WHEN demo scenarios are prepared THEN the system SHALL include UPC scanning with real-time dietary compliance analysis
+2. WHEN alternative product demonstrations are created THEN the system SHALL show AI-powered recommendations for safer alternatives
+3. WHEN multi-restriction scenarios are developed THEN the system SHALL demonstrate complex dietary profile analysis (allergies + religious + lifestyle)
+4. WHEN confidence scoring demos are prepared THEN the system SHALL show how uncertainty is communicated to users
+5. WHEN family profile scenarios are ready THEN the system SHALL demonstrate multi-user analysis for household dietary management

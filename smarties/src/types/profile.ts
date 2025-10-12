@@ -2,7 +2,7 @@
  * Enhanced profile type definitions for SMARTIES app
  * 
  * This file defines the enhanced types for the profile screen
- * including dietary restrictions with severity levels and notes.
+ * including dietary restrictions with severity levels.
  */
 
 import { NavigationProp, RouteProp } from '@react-navigation/native';
@@ -14,16 +14,23 @@ export enum SeverityLevel {
   ANAPHYLACTIC = 'anaphylactic'
 }
 
-// Enhanced dietary restriction with severity and notes
+// Enhanced dietary restriction with severity
 export interface DietaryRestriction {
   id: string;
   name: string;
-  type: AllergenType;
+  type: RestrictionType;
+  category: RestrictionCategory;
   severity: SeverityLevel;
-  notes: string;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
+}
+
+// Dietary restriction categories
+export enum RestrictionCategory {
+  ALLERGEN = 'allergen',
+  RELIGIOUS = 'religious',
+  LIFESTYLE = 'lifestyle'
 }
 
 // Allergen types based on FDA Top 9 + additional
@@ -39,6 +46,30 @@ export enum AllergenType {
   SESAME = 'sesame',
   GLUTEN = 'gluten'
 }
+
+// Religious dietary restrictions
+export enum ReligiousType {
+  HALAL = 'halal',
+  KOSHER = 'kosher',
+  HINDU_VEGETARIAN = 'hindu_vegetarian',
+  JAIN = 'jain',
+  BUDDHIST = 'buddhist'
+}
+
+// Lifestyle dietary choices
+export enum LifestyleType {
+  VEGAN = 'vegan',
+  VEGETARIAN = 'vegetarian',
+  KETO = 'keto',
+  PALEO = 'paleo',
+  ORGANIC_ONLY = 'organic_only',
+  NON_GMO = 'non_gmo',
+  LOW_SODIUM = 'low_sodium',
+  SUGAR_FREE = 'sugar_free'
+}
+
+// Union type for all restriction types
+export type RestrictionType = AllergenType | ReligiousType | LifestyleType;
 
 // Profile screen state management
 export interface ProfileScreenState {
@@ -57,7 +88,6 @@ export interface ProfileScreenProps {
 export interface RestrictionCardProps {
   restriction: DietaryRestriction;
   onSeverityChange: (id: string, severity: SeverityLevel) => void;
-  onNotesChange: (id: string, notes: string) => void;
   onDelete: (id: string) => void;
 }
 
@@ -119,10 +149,10 @@ export const validateDietaryRestriction = (restriction: Partial<DietaryRestricti
   }
 
   // Validate type
-  if (!restriction.type || !Object.values(AllergenType).includes(restriction.type)) {
+  if (!restriction.type || !validateRestrictionType(restriction.type)) {
     errors.push({
       type: ProfileErrorType.VALIDATION_ERROR,
-      message: 'Valid allergen type is required'
+      message: 'Valid restriction type is required'
     });
   }
 
@@ -134,13 +164,7 @@ export const validateDietaryRestriction = (restriction: Partial<DietaryRestricti
     });
   }
 
-  // Validate notes (optional but if provided, should be reasonable length)
-  if (restriction.notes && restriction.notes.length > 500) {
-    errors.push({
-      type: ProfileErrorType.VALIDATION_ERROR,
-      message: 'Notes must be 500 characters or less'
-    });
-  }
+
 
   // Validate isActive
   if (restriction.isActive !== undefined && typeof restriction.isActive !== 'boolean') {
@@ -161,18 +185,24 @@ export const validateAllergenType = (type: string): boolean => {
   return Object.values(AllergenType).includes(type as AllergenType);
 };
 
+export const validateRestrictionType = (type: string): boolean => {
+  return Object.values(AllergenType).includes(type as AllergenType) ||
+         Object.values(ReligiousType).includes(type as ReligiousType) ||
+         Object.values(LifestyleType).includes(type as LifestyleType);
+};
+
 // Helper function to create a new dietary restriction with defaults
 export const createDietaryRestriction = (
   name: string,
-  type: AllergenType,
-  severity: SeverityLevel = SeverityLevel.SEVERE,
-  notes: string = ''
+  type: RestrictionType,
+  category: RestrictionCategory,
+  severity: SeverityLevel = SeverityLevel.SEVERE
 ): Omit<DietaryRestriction, 'id' | 'createdAt' | 'updatedAt'> => {
   return {
     name: name.trim(),
     type,
+    category,
     severity,
-    notes: notes.trim(),
     isActive: true
   };
 };
@@ -191,32 +221,92 @@ export const getSeverityDisplayName = (severity: SeverityLevel): string => {
   }
 };
 
-// Helper function to get allergen type display name
-export const getAllergenDisplayName = (type: AllergenType): string => {
-  switch (type) {
-    case AllergenType.PEANUTS:
-      return 'Peanuts';
-    case AllergenType.TREE_NUTS:
-      return 'Tree Nuts';
-    case AllergenType.MILK:
-      return 'Milk';
-    case AllergenType.EGGS:
-      return 'Eggs';
-    case AllergenType.FISH:
-      return 'Fish';
-    case AllergenType.SHELLFISH:
-      return 'Shellfish';
-    case AllergenType.SOY:
-      return 'Soy';
-    case AllergenType.WHEAT:
-      return 'Wheat';
-    case AllergenType.SESAME:
-      return 'Sesame';
-    case AllergenType.GLUTEN:
-      return 'Gluten';
-    default:
-      return 'Unknown';
+// Helper function to get restriction type display name
+export const getRestrictionDisplayName = (type: RestrictionType): string => {
+  // Allergen types
+  if (Object.values(AllergenType).includes(type as AllergenType)) {
+    switch (type as AllergenType) {
+      case AllergenType.PEANUTS:
+        return 'Peanuts';
+      case AllergenType.TREE_NUTS:
+        return 'Tree Nuts';
+      case AllergenType.MILK:
+        return 'Milk';
+      case AllergenType.EGGS:
+        return 'Eggs';
+      case AllergenType.FISH:
+        return 'Fish';
+      case AllergenType.SHELLFISH:
+        return 'Shellfish';
+      case AllergenType.SOY:
+        return 'Soy';
+      case AllergenType.WHEAT:
+        return 'Wheat';
+      case AllergenType.SESAME:
+        return 'Sesame';
+      case AllergenType.GLUTEN:
+        return 'Gluten';
+    }
   }
+  
+  // Religious types
+  if (Object.values(ReligiousType).includes(type as ReligiousType)) {
+    switch (type as ReligiousType) {
+      case ReligiousType.HALAL:
+        return 'Halal';
+      case ReligiousType.KOSHER:
+        return 'Kosher';
+      case ReligiousType.HINDU_VEGETARIAN:
+        return 'Hindu Vegetarian';
+      case ReligiousType.JAIN:
+        return 'Jain';
+      case ReligiousType.BUDDHIST:
+        return 'Buddhist';
+    }
+  }
+  
+  // Lifestyle types
+  if (Object.values(LifestyleType).includes(type as LifestyleType)) {
+    switch (type as LifestyleType) {
+      case LifestyleType.VEGAN:
+        return 'Vegan';
+      case LifestyleType.VEGETARIAN:
+        return 'Vegetarian';
+      case LifestyleType.KETO:
+        return 'Keto';
+      case LifestyleType.PALEO:
+        return 'Paleo';
+      case LifestyleType.ORGANIC_ONLY:
+        return 'Organic Only';
+      case LifestyleType.NON_GMO:
+        return 'Non-GMO';
+      case LifestyleType.LOW_SODIUM:
+        return 'Low Sodium';
+      case LifestyleType.SUGAR_FREE:
+        return 'Sugar Free';
+    }
+  }
+  
+  return 'Unknown';
+};
+
+// Helper function to get allergen type display name (for backward compatibility)
+export const getAllergenDisplayName = (type: AllergenType): string => {
+  return getRestrictionDisplayName(type);
+};
+
+// Helper function to get restriction category
+export const getRestrictionCategory = (type: RestrictionType): RestrictionCategory => {
+  if (Object.values(AllergenType).includes(type as AllergenType)) {
+    return RestrictionCategory.ALLERGEN;
+  }
+  if (Object.values(ReligiousType).includes(type as ReligiousType)) {
+    return RestrictionCategory.RELIGIOUS;
+  }
+  if (Object.values(LifestyleType).includes(type as LifestyleType)) {
+    return RestrictionCategory.LIFESTYLE;
+  }
+  return RestrictionCategory.ALLERGEN; // Default fallback
 };
 
 // Helper function to get severity color for UI

@@ -70,6 +70,8 @@
 
 - [x] 5. Implement SeveritySlider component
   - [x] 5.1 Create custom slider component with three severity levels
+
+
     - Build custom slider component with three-point scale
     - Implement touch handling and value selection
     - Add visual indicators for each severity level
@@ -93,33 +95,18 @@
     - Test haptic feedback integration
     - _Requirements: 2.1, 2.2, 2.7_
 
-- [x] 6. Implement notes functionality
-  - [x] 6.1 Add notes section to RestrictionCard
-    - Create editable notes section below severity slider
-    - Implement text input with proper styling
-    - Add placeholder text and auto-save functionality
-    - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
 
-  - [x] 6.2 Implement notes editing and persistence
-    - Add tap-to-edit functionality for notes
-    - Implement auto-save when user finishes editing
-    - Handle keyboard interactions and text formatting
-    - _Requirements: 3.2, 3.3, 8.1_
 
-  - [x]* 6.3 Write unit tests for notes functionality
-    - Test notes editing and saving
-    - Verify placeholder text display
-    - Test keyboard interactions
-    - _Requirements: 3.1, 3.3_
-
-- [x] 7. Implement add restriction functionality
-  - [x] 7.1 Create AddRestrictionButton component
+- [x] 6. Implement add restriction functionality
+  - [x] 6.1 Create AddRestrictionButton component
     - Build circular "+" button with proper styling
     - Position button below existing restrictions
     - Add press animations and visual feedback
     - _Requirements: 4.1, 4.4_
 
-  - [x] 7.2 Implement restriction selection interface
+  - [x] 6.2 Implement restriction selection interface
+
+
 
 
 
@@ -128,14 +115,14 @@
     - Handle selection and addition to user profile
     - _Requirements: 4.2, 4.3, 4.4_
 
-  - [x]* 7.3 Write unit tests for add restriction functionality
+  - [x]* 6.3 Write unit tests for add restriction functionality
     - Test add button rendering and interactions
     - Verify restriction selection flow
     - Test new restriction addition to profile
     - _Requirements: 4.1, 4.2, 4.3_
 
-- [x] 8. Implement data persistence and synchronization
-  - [x] 8.1 Integrate AsyncStorage for local data persistence
+- [x] 7. Implement data persistence and synchronization
+  - [x] 7.1 Integrate AsyncStorage for local data persistence
     - Implement local storage for dietary restrictions
     - Add automatic saving of profile changes
     - Handle storage errors and fallbacks

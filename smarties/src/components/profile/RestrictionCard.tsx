@@ -2,35 +2,34 @@
  * RestrictionCard Component
  * 
  * Individual card displaying allergen information with interactive controls
- * including severity slider, notes editing, and delete functionality.
+ * including severity slider and delete functionality.
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   View, 
   Text, 
   StyleSheet, 
   TouchableOpacity, 
-  TextInput,
   Alert
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { RestrictionCardProps, getSeverityColor, getSeverityDisplayName } from '../../types/profile';
+import { 
+  RestrictionCardProps, 
+  getSeverityColor, 
+  getSeverityDisplayName, 
+  RestrictionCategory,
+  getRestrictionCategory,
+  ReligiousType,
+  LifestyleType
+} from '../../types/profile';
 import { AllergenIcon, SeveritySlider } from './';
 
 export const RestrictionCard: React.FC<RestrictionCardProps> = ({
   restriction,
   onSeverityChange,
-  onNotesChange,
   onDelete
 }) => {
-  const [isEditingNotes, setIsEditingNotes] = useState(false);
-  const [notesText, setNotesText] = useState(restriction.notes);
-
-  const handleNotesSubmit = () => {
-    onNotesChange(restriction.id, notesText);
-    setIsEditingNotes(false);
-  };
 
   const handleDeletePress = () => {
     Alert.alert(
@@ -48,70 +47,118 @@ export const RestrictionCard: React.FC<RestrictionCardProps> = ({
   };
 
   const severityColor = getSeverityColor(restriction.severity);
+  const category = getRestrictionCategory(restriction.type);
+  const showSeveritySlider = category === RestrictionCategory.ALLERGEN;
+
+  // Get appropriate icon for non-allergen restrictions
+  const getRestrictionIcon = () => {
+    if (category === RestrictionCategory.ALLERGEN) {
+      return (
+        <AllergenIcon 
+          allergenType={restriction.type} 
+          size={48}
+        />
+      );
+    }
+
+    let emoji = '❓';
+    if (category === RestrictionCategory.RELIGIOUS) {
+      switch (restriction.type as ReligiousType) {
+        case ReligiousType.HALAL:
+          emoji = '☪️';
+          break;
+        case ReligiousType.KOSHER:
+          emoji = '✡️';
+          break;
+        case ReligiousType.HINDU_VEGETARIAN:
+          emoji = '🕉️';
+          break;
+        case ReligiousType.JAIN:
+        case ReligiousType.BUDDHIST:
+          emoji = '☸️';
+          break;
+        default:
+          emoji = '🙏';
+      }
+    } else if (category === RestrictionCategory.LIFESTYLE) {
+      switch (restriction.type as LifestyleType) {
+        case LifestyleType.VEGAN:
+          emoji = '🌱';
+          break;
+        case LifestyleType.VEGETARIAN:
+          emoji = '🥬';
+          break;
+        case LifestyleType.KETO:
+          emoji = '🥑';
+          break;
+        case LifestyleType.PALEO:
+          emoji = '🥩';
+          break;
+        case LifestyleType.ORGANIC_ONLY:
+          emoji = '🌿';
+          break;
+        case LifestyleType.NON_GMO:
+          emoji = '🌾';
+          break;
+        case LifestyleType.LOW_SODIUM:
+          emoji = '🧂';
+          break;
+        case LifestyleType.SUGAR_FREE:
+          emoji = '🚫';
+          break;
+        default:
+          emoji = '🍃';
+      }
+    }
+
+    return (
+      <View style={styles.iconContainer}>
+        <Text style={styles.emoji}>{emoji}</Text>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
       {/* Header with icon, name, and delete button */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
-          <AllergenIcon 
-            allergenType={restriction.type} 
-            size={48}
-          />
+          {getRestrictionIcon()}
           <View style={styles.titleContainer}>
             <Text style={styles.title}>{restriction.name}</Text>
-            <View style={[styles.severityBadge, { backgroundColor: severityColor }]}>
-              <Text style={styles.severityText}>
-                {getSeverityDisplayName(restriction.severity)}
-              </Text>
-            </View>
+            {showSeveritySlider && (
+              <View style={[styles.severityBadge, { backgroundColor: severityColor }]}>
+                <Text style={styles.severityText}>
+                  {getSeverityDisplayName(restriction.severity)}
+                </Text>
+              </View>
+            )}
+            {!showSeveritySlider && (
+              <View style={styles.activeBadge}>
+                <Text style={styles.activeText}>Active</Text>
+              </View>
+            )}
           </View>
         </View>
         <TouchableOpacity 
           style={styles.deleteButton}
           onPress={handleDeletePress}
+          testID="delete-button"
         >
           <Ionicons name="trash-outline" size={20} color="#F44336" />
         </TouchableOpacity>
       </View>
 
-      {/* Severity Slider */}
-      <View style={styles.sliderSection}>
-        <Text style={styles.sectionLabel}>Severity Level</Text>
-        <SeveritySlider
-          value={restriction.severity}
-          onChange={(severity) => onSeverityChange(restriction.id, severity)}
-        />
-      </View>
-
-      {/* Notes Section */}
-      <View style={styles.notesSection}>
-        <Text style={styles.sectionLabel}>Notes</Text>
-        {isEditingNotes ? (
-          <View style={styles.notesEditContainer}>
-            <TextInput
-              style={styles.notesInput}
-              value={notesText}
-              onChangeText={setNotesText}
-              placeholder="Add notes about this restriction..."
-              placeholderTextColor="rgba(255, 255, 255, 0.5)"
-              multiline
-              autoFocus
-              onBlur={handleNotesSubmit}
-              onSubmitEditing={handleNotesSubmit}
-            />
-          </View>
-        ) : (
-          <TouchableOpacity 
-            style={styles.notesDisplay}
-            onPress={() => setIsEditingNotes(true)}
-          >
-            <Text style={restriction.notes ? styles.notesText : styles.notesPlaceholder}>
-              {restriction.notes || 'Tap to add notes...'}
-            </Text>
-          </TouchableOpacity>
-        )}
-      </View>
+      {/* Severity Slider - Only for allergens */}
+      {showSeveritySlider && (
+        <View style={styles.sliderSection}>
+          <Text style={styles.sectionLabel}>Severity Level</Text>
+          <SeveritySlider
+            value={restriction.severity}
+            onChange={(severity) => onSeverityChange(restriction.id, severity)}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -158,6 +205,32 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
   },
+  activeBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    alignSelf: 'flex-start',
+    backgroundColor: '#4CAF50', // Green for active
+  },
+  activeText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  iconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  emoji: {
+    fontSize: 24,
+    textAlign: 'center',
+  },
   deleteButton: {
     padding: 8,
     borderRadius: 20,
@@ -171,35 +244,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     marginBottom: 8,
-  },
-  notesSection: {
-    marginTop: 8,
-  },
-  notesEditContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 8,
-    padding: 12,
-  },
-  notesInput: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    minHeight: 40,
-    textAlignVertical: 'top',
-  },
-  notesDisplay: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 8,
-    padding: 12,
-    minHeight: 40,
-    justifyContent: 'center',
-  },
-  notesText: {
-    color: 'rgba(255, 255, 255, 0.8)',
-    fontSize: 14,
-  },
-  notesPlaceholder: {
-    color: 'rgba(255, 255, 255, 0.5)',
-    fontSize: 14,
-    fontStyle: 'italic',
   },
 });

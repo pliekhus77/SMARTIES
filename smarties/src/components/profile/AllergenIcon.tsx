@@ -13,8 +13,9 @@ export const AllergenIcon: React.FC<AllergenIconProps> = ({
   allergenType,
   size = 48
 }) => {
-  // Map allergen types to emoji icons
-  const getAllergenEmoji = (type: string): string => {
+  // Map restriction types to emoji icons
+  const getRestrictionEmoji = (type: string): string => {
+    // Allergen types
     switch (type) {
       case AllergenType.PEANUTS:
         return '🥜';
@@ -41,7 +42,7 @@ export const AllergenIcon: React.FC<AllergenIconProps> = ({
     }
   };
 
-  const emoji = getAllergenEmoji(allergenType);
+  const emoji = getRestrictionEmoji(allergenType);
 
   return (
     <View style={[styles.container, { width: size, height: size, borderRadius: size / 2 }]}>

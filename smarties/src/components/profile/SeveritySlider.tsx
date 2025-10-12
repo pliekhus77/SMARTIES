@@ -20,7 +20,7 @@ export const SeveritySlider: React.FC<SeveritySliderProps> = ({
     { level: SeverityLevel.ANAPHYLACTIC, label: 'Critical', position: 1 }
   ];
 
-  const currentIndex = severityLevels.findIndex(item => item.level === value);
+  const currentIndex = Math.max(0, severityLevels.findIndex(item => item.level === value));
   const currentColor = getSeverityColor(value);
 
   const handleLevelPress = (level: SeverityLevel) => {
@@ -84,7 +84,10 @@ export const SeveritySlider: React.FC<SeveritySliderProps> = ({
             onPress={() => {
               // Cycle to next severity level
               const nextIndex = (currentIndex + 1) % severityLevels.length;
-              handleLevelPress(severityLevels[nextIndex].level);
+              const nextLevel = severityLevels[nextIndex];
+              if (nextLevel) {
+                handleLevelPress(nextLevel.level);
+              }
             }}
             disabled={disabled}
           />
@@ -105,7 +108,7 @@ export const SeveritySlider: React.FC<SeveritySliderProps> = ({
 
       {/* Current value display */}
       <Text style={[styles.currentValue, { color: currentColor }]}>
-        {currentIndex >= 0 ? severityLevels[currentIndex].label : 'Severe'}
+        {severityLevels[currentIndex]?.label || 'Severe'}
       </Text>
     </View>
   );
