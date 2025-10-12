@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This specification covers the data schema and ingestion phase (steps 2.1 - 2.5) of the SMARTIES hackathon project. The goal is to establish a robust product data foundation using the OpenFoodFacts database dump (69GB of real product data) with proper schema design and data ingestion that will enable immediate testing and development of the dietary compliance features. This phase focuses on importing and structuring real-world product data with comprehensive UPC-to-product mapping and allergen information.
+This specification covers the data schema and ingestion phase (steps 2.1 - 2.5) of the SMARTIES hackathon project. The goal is to establish a robust product data foundation using the OpenFoodFacts database dump (69GB of real product data) with proper schema design and data ingestion that will enable immediate testing and development of the dietary compliance features. This phase focuses on importing and structuring real-world product data with comprehensive UPC-to-product mapping and allergen information with MongoDB Atlas Vector Search capabilities for AI-powered semantic analysis.
 
 ## Requirements
 
@@ -13,8 +13,8 @@ This specification covers the data schema and ingestion phase (steps 2.1 - 2.5) 
 #### Acceptance Criteria
 
 1. WHEN the product schema is defined THEN the system SHALL include fields for `code` (UPC/barcode), `product_name`, `brands_tags`, `ingredients_text`, and `allergens_tags` based on OpenFoodFacts structure
-2. WHEN vector embeddings are added THEN the system SHALL include vector fields for `ingredients_embedding`, `product_name_embedding`, and `allergens_embedding` using OpenAI/Anthropic embeddings
-3. WHEN allergen fields are structured THEN the system SHALL support comprehensive allergen information from `allergens_tags`, `allergens_hierarchy`, and `traces_tags` with vector similarity search
+2. WHEN vector embeddings are added THEN the system SHALL include vector fields for `ingredients_embedding`, `product_name_embedding`, and `allergens_embedding` using OpenAI/Anthropic embeddings with 1536 dimensions
+3. WHEN allergen fields are structured THEN the system SHALL support comprehensive allergen information from `allergens_tags`, `allergens_hierarchy`, and `traces_tags` with vector similarity search capabilities
 4. WHEN dietary compliance fields are added THEN the system SHALL derive boolean flags for halal, kosher, vegan, vegetarian, and gluten-free status from `ingredients_analysis_tags` and `labels_tags`
 5. WHEN the schema is validated THEN the system SHALL ensure proper data types, vector indexes for semantic search, and validation rules for fast barcode scanning and AI-powered matching
 
@@ -24,11 +24,11 @@ This specification covers the data schema and ingestion phase (steps 2.1 - 2.5) 
 
 #### Acceptance Criteria
 
-1. WHEN the OpenFoodFacts dump is ingested THEN the system SHALL import products with generated vector embeddings for ingredients, product names, and allergen information
-2. WHEN vector indexes are created THEN the system SHALL configure MongoDB Atlas Vector Search indexes for `ingredients_embedding`, `product_name_embedding`, and `allergens_embedding` fields
-3. WHEN semantic search is enabled THEN the system SHALL support finding similar products by ingredient composition using vector similarity
-4. WHEN AI-powered matching works THEN the system SHALL identify potential allergen risks in products with similar ingredient profiles
-5. WHEN data quality is maintained THEN the system SHALL ensure all imported products have valid UPC codes and high-quality vector embeddings
+1. WHEN the OpenFoodFacts dump is processed THEN the system SHALL import products with generated vector embeddings for ingredients, product names, and allergen information using OpenAI/Anthropic APIs
+2. WHEN vector indexes are created THEN the system SHALL configure MongoDB Atlas Vector Search indexes for `ingredients_embedding`, `product_name_embedding`, and `allergens_embedding` fields with cosine similarity
+3. WHEN semantic search is enabled THEN the system SHALL support finding similar products by ingredient composition using vector similarity with configurable threshold scores
+4. WHEN AI-powered matching works THEN the system SHALL identify potential allergen risks in products with similar ingredient profiles using vector distance calculations
+5. WHEN data quality is maintained THEN the system SHALL ensure all imported products have valid UPC codes, non-empty ingredient text, and successfully generated vector embeddings
 
 ### Requirement 3
 
@@ -36,11 +36,11 @@ This specification covers the data schema and ingestion phase (steps 2.1 - 2.5) 
 
 #### Acceptance Criteria
 
-1. WHEN semantic allergen detection works THEN the system SHALL identify products with similar allergen profiles using vector similarity search
-2. WHEN ingredient analysis is enhanced THEN the system SHALL detect potential allergen risks in ingredient synonyms and derivatives using embeddings
-3. WHEN cross-contamination detection works THEN the system SHALL find products with similar manufacturing processes that may share allergen risks
-4. WHEN AI-powered recommendations work THEN the system SHALL suggest safer alternative products using vector similarity matching
-5. WHEN confidence scoring is implemented THEN the system SHALL provide confidence levels for allergen detection based on vector similarity scores
+1. WHEN semantic allergen detection is queried THEN the system SHALL identify products with similar allergen profiles using vector similarity search with minimum 0.8 cosine similarity
+2. WHEN ingredient analysis is performed THEN the system SHALL detect potential allergen risks in ingredient synonyms and derivatives using vector embeddings with confidence scores
+3. WHEN cross-contamination detection is executed THEN the system SHALL find products with similar manufacturing processes that may share allergen risks using facility and trace information
+4. WHEN AI-powered recommendations are requested THEN the system SHALL suggest safer alternative products using vector similarity matching with dietary restriction filters
+5. WHEN confidence scoring is calculated THEN the system SHALL provide confidence levels for allergen detection based on vector similarity scores ranging from 0.0 to 1.0
 
 ### Requirement 4
 
@@ -48,11 +48,11 @@ This specification covers the data schema and ingestion phase (steps 2.1 - 2.5) 
 
 #### Acceptance Criteria
 
-1. WHEN dietary preference matching works THEN the system SHALL find products suitable for specific diets using vector similarity of ingredient profiles
-2. WHEN ingredient substitution detection works THEN the system SHALL identify when products contain alternative ingredients that may affect dietary compliance
-3. WHEN semantic certification matching works THEN the system SHALL understand certification equivalencies and ingredient implications using AI
-4. WHEN personalized recommendations work THEN the system SHALL suggest products based on user's dietary history and preferences using vector search
-5. WHEN cultural dietary understanding works THEN the system SHALL recognize cultural dietary restrictions through semantic analysis of ingredients
+1. WHEN dietary preference matching is requested THEN the system SHALL find products suitable for specific diets (vegan, kosher, halal, gluten-free) using vector similarity of ingredient profiles with minimum 0.7 similarity threshold
+2. WHEN ingredient substitution detection is performed THEN the system SHALL identify when products contain alternative ingredients that may affect dietary compliance using semantic ingredient analysis
+3. WHEN semantic certification matching is executed THEN the system SHALL understand certification equivalencies and ingredient implications using AI-powered label analysis
+4. WHEN personalized recommendations are generated THEN the system SHALL suggest products based on user's dietary history and preferences using vector search combined with explicit dietary flags
+5. WHEN cultural dietary understanding is applied THEN the system SHALL recognize cultural dietary restrictions (Hindu vegetarian, Jain, Buddhist) through semantic analysis of ingredients and preparation methods
 
 ### Requirement 5
 
@@ -60,11 +60,11 @@ This specification covers the data schema and ingestion phase (steps 2.1 - 2.5) 
 
 #### Acceptance Criteria
 
-1. WHEN hybrid search is implemented THEN the system SHALL combine exact `code` field matching with vector similarity search for comprehensive product discovery
-2. WHEN UPC lookup is optimized THEN the system SHALL retrieve products by barcode in under 100ms while maintaining vector search capabilities
-3. WHEN semantic queries work THEN the system SHALL support natural language queries like "nut-free cookies similar to Oreos" using vector search
-4. WHEN AI-powered analysis works THEN the system SHALL provide intelligent dietary insights using RAG (Retrieval-Augmented Generation) with vector search
-5. WHEN performance is optimized THEN the system SHALL ensure vector operations don't impact real-time barcode scanning performance
+1. WHEN hybrid search is implemented THEN the system SHALL combine exact `code` field matching with vector similarity search for comprehensive product discovery using MongoDB compound queries
+2. WHEN UPC lookup is optimized THEN the system SHALL retrieve products by barcode in under 100ms using indexed exact match while maintaining vector search capabilities for related products
+3. WHEN semantic queries are processed THEN the system SHALL support natural language queries like "nut-free cookies similar to Oreos" using vector search with text-to-embedding conversion
+4. WHEN AI-powered analysis is performed THEN the system SHALL provide intelligent dietary insights using RAG (Retrieval-Augmented Generation) with vector search results as context
+5. WHEN performance is measured THEN the system SHALL ensure vector operations execute in under 500ms and don't impact real-time barcode scanning performance of sub-100ms
 
 ## MongoDB Atlas Vector Search Integration
 
