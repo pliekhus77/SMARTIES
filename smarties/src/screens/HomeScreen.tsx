@@ -89,13 +89,12 @@ const HomeScreen: React.FC = () => {
               resizeMode="contain"
             />
           </View>
-          <Text style={styles.title}>SMARTIES</Text>
         </View>
 
         {/* Scan Button */}
         <TouchableOpacity style={styles.scanButton} onPress={handleScanPress}>
           <View style={styles.scanButtonIcon}>
-            <Ionicons name="barcode-outline" size={28} color="#fff" />
+            <Ionicons name="barcode-outline" size={49} color="#fff" />
           </View>
           <Text style={styles.scanButtonText}>Scan Barcode</Text>
         </TouchableOpacity>
@@ -120,14 +119,14 @@ const HomeScreen: React.FC = () => {
                     <View style={[styles.statusIcon, { backgroundColor: statusIcon.color }]}>
                       <Ionicons 
                         name={statusIcon.icon as any} 
-                        size={16} 
+                        size={32} 
                         color="#fff" 
                       />
                     </View>
                     <View style={[styles.allergenIcon, { backgroundColor: allergenIcon.color }]}>
                       <Ionicons 
                         name={allergenIcon.icon as any} 
-                        size={12} 
+                        size={24} 
                         color="#fff" 
                       />
                     </View>
@@ -198,44 +197,37 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
     paddingTop: 40,
-    paddingBottom: 30,
+    paddingBottom: 8, // Reduced from 15 to 8 (half of previous 25 total spacing)
   },
   logoContainer: {
-    marginBottom: 20,
+    marginBottom: 5, // Reduced from 10 to 5 (half of previous 25 total spacing)
   },
   logo: {
-    width: 120,
-    height: 120,
+    width: 211, // Increased from 176 to 211 (120% larger: 176 × 1.2 = 211)
+    height: 211, // Increased from 176 to 211 (120% larger: 176 × 1.2 = 211)
   },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#fff',
-    letterSpacing: 2,
-  },
+
   scanButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+    backgroundColor: '#1E88E5',
     borderRadius: 25,
-    paddingVertical: 18,
+    paddingVertical: 26, // Increased from 22 to 26 (120% taller)
     paddingHorizontal: 25,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 30,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.4)',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
   },
   scanButtonIcon: {
     marginRight: 12,
   },
   scanButtonText: {
     color: '#fff',
-    fontSize: 20,
+    fontSize: 26, // Increased from 24 to 26 (110% bigger)
     fontWeight: 'bold',
   },
   recentSection: {
@@ -266,16 +258,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   productIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 80, // Increased from 40 to 80 (200% size)
+    height: 80, // Increased from 40 to 80 (200% size)
+    borderRadius: 40, // Increased from 20 to 40 (200% size)
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 15,
   },
   scanIcon: {
-    fontSize: 20,
+    fontSize: 30, // Reduced from 40 to 30 (25% reduction)
   },
   scanName: {
     color: '#fff',
@@ -288,21 +280,21 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   statusIcon: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 56, // Increased from 28 to 56 (200% size)
+    height: 56, // Increased from 28 to 56 (200% size)
+    borderRadius: 28, // Increased from 14 to 28 (200% size)
     justifyContent: 'center',
     alignItems: 'center',
   },
   allergenIcon: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: 48, // Increased from 24 to 48 (200% size)
+    height: 48, // Increased from 24 to 48 (200% size)
+    borderRadius: 24, // Increased from 12 to 24 (200% size)
     justifyContent: 'center',
     alignItems: 'center',
   },
   statusSummary: {
-    backgroundColor: 'rgba(255, 193, 7, 0.9)',
+    backgroundColor: '#FFF3CD',
     borderRadius: 15,
     padding: 20,
     marginBottom: 20,

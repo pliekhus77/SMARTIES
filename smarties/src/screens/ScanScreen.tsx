@@ -1,23 +1,66 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BarcodeScanner } from '../components/scanner';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { BarcodeScanner as BarcodeScannerService } from '../services/barcode';
-import { useDatabase } from '../hooks/useDatabase';
+
+// Conditional import for expo-barcode-scanner with fallback
+let BarCodeScanner: any = null;
+try {
+  BarCodeScanner = require('expo-barcode-scanner').BarCodeScanner;
+} catch (error) {
+  console.log('expo-barcode-scanner not available, using mock scanner');
+}
 
 /**
  * Primary barcode scanning interface
- * This screen contains the main barcode scanning functionality
+ * This screen contains the main barcode scanning functionality with camera viewfinder
  */
 export const ScanScreen: React.FC = () => {
-  const [isScanning, setIsScanning] = useState(false);
   const [lastScannedBarcode, setLastScannedBarcode] = useState<string | null>(null);
-  
-  const barcodeService = new BarcodeScannerService();
-  // const { executeOperation } = useDatabase(); // TODO: Implement database operations
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [scanned, setScanned] = useState(false);
+  const [isNativeAvailable, setIsNativeAvailable] = useState(false);
+  const navigation = useNavigation();
 
-  const handleScanPress = () => {
-    setIsScanning(true);
+  const barcodeService = new BarcodeScannerService();
+
+  useEffect(() => {
+    const checkNativeModule = async () => {
+      if (BarCodeScanner) {
+        try {
+          const { status } = await BarCodeScanner.requestPermissionsAsync();
+          setHasPermission(status === 'granted');
+          setIsNativeAvailable(true);
+        } catch (error) {
+          console.log('Native barcode scanner not available, using mock');
+          setIsNativeAvailable(false);
+          setHasPermission(true); // Allow mock scanner to work
+        }
+      } else {
+        setIsNativeAvailable(false);
+        setHasPermission(true); // Allow mock scanner to work
+      }
+    };
+
+    checkNativeModule();
+  }, []);
+
+  const handleCapturePress = () => {
+    if (isNativeAvailable) {
+      // Reset scanned state to allow new scans
+      setScanned(false);
+    } else {
+      // Mock barcode scanning for development
+      const mockBarcode = '123456789012';
+      handleBarcodeScanned(mockBarcode);
+    }
+  };
+
+  const handleBarCodeScanned = ({ type, data }: { type: string; data: string }) => {
+    setScanned(true);
+    handleBarcodeScanned(data);
   };
 
   const handleBarcodeScanned = (barcode: string) => {
@@ -30,14 +73,13 @@ export const ScanScreen: React.FC = () => {
 
       if (processedBarcode) {
         setLastScannedBarcode(processedBarcode);
-        setIsScanning(false);
-        
+
         // Show success message with scanned barcode
         Alert.alert(
           'Barcode Scanned Successfully!',
           `UPC: ${processedBarcode}\n\nNext: Product lookup and dietary analysis will be implemented in the next phase.`,
           [
-            { text: 'Scan Another', onPress: () => setIsScanning(true) },
+            { text: 'Scan Another', style: 'default' },
             { text: 'OK', style: 'default' }
           ]
         );
@@ -53,53 +95,111 @@ export const ScanScreen: React.FC = () => {
   const handleScanError = (error: string) => {
     console.error('Scan error:', error);
     Alert.alert('Scan Error', error, [
-      { text: 'Try Again', onPress: () => setIsScanning(true) },
-      { text: 'Cancel', onPress: () => setIsScanning(false) }
+      { text: 'Try Again', style: 'default' },
+      { text: 'Cancel', style: 'cancel' }
     ]);
   };
 
-  const handleCloseScanner = () => {
-    setIsScanning(false);
+  const handleCancelPress = () => {
+    // Navigate back to home screen
+    navigation.navigate('Home' as never);
   };
-
-  if (isScanning) {
-    return (
-      <BarcodeScanner
-        onBarcodeScanned={handleBarcodeScanned}
-        onError={handleScanError}
-        onClose={handleCloseScanner}
-      />
-    );
-  }
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.scanArea}>
-          <Text style={styles.title}>Ready to Scan</Text>
-          <Text style={styles.subtitle}>
-            Point your camera at a product barcode to check for dietary restrictions
-          </Text>
-          
-          {lastScannedBarcode && (
-            <View style={styles.lastScanContainer}>
-              <Text style={styles.lastScanLabel}>Last scanned:</Text>
-              <Text style={styles.lastScanBarcode}>{lastScannedBarcode}</Text>
-            </View>
-          )}
-          
-          <TouchableOpacity style={styles.scanButton} onPress={handleScanPress}>
-            <Text style={styles.scanButtonText}>Start Scanning</Text>
-          </TouchableOpacity>
+      {/* Header with Logo */}
+      <View style={styles.header}>
+        <View style={styles.logoContainer}>
+          <Image
+            source={require('../../assets/smarties-logo.png')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
         </View>
-        
-        <View style={styles.instructions}>
-          <Text style={styles.instructionTitle}>How to use:</Text>
-          <Text style={styles.instructionText}>1. Tap "Start Scanning" above</Text>
-          <Text style={styles.instructionText}>2. Point camera at product barcode</Text>
-          <Text style={styles.instructionText}>3. Get instant dietary compliance results</Text>
-        </View>
+        <Text style={styles.title}>SCAN BARCODE</Text>
       </View>
+
+      {/* Camera Viewfinder Area */}
+      <View style={styles.cameraContainer}>
+        {hasPermission === null ? (
+          <View style={styles.cameraView}>
+            <Text style={styles.permissionText}>Requesting camera permission...</Text>
+          </View>
+        ) : hasPermission === false && isNativeAvailable ? (
+          <View style={styles.cameraView}>
+            <Text style={styles.permissionText}>No access to camera</Text>
+            <TouchableOpacity
+              style={styles.permissionButton}
+              onPress={() => BarCodeScanner?.requestPermissionsAsync()}
+            >
+              <Text style={styles.permissionButtonText}>Grant Permission</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={styles.cameraView}>
+            {isNativeAvailable && BarCodeScanner ? (
+              <BarCodeScanner
+                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                style={styles.camera}
+              />
+            ) : null}
+            {/* Viewfinder overlay */}
+            <View style={styles.viewfinderOverlay}>
+              <View style={styles.viewfinderContainer}>
+                <View style={[styles.corner, styles.topLeft]} />
+                <View style={[styles.corner, styles.topRight]} />
+                <View style={[styles.corner, styles.bottomLeft]} />
+                <View style={[styles.corner, styles.bottomRight]} />
+
+                {/* Barcode target area */}
+                <View style={styles.barcodeTarget}>
+                  {!isNativeAvailable && (
+                    <View style={styles.barcodeLines}>
+                      {Array.from({ length: 12 }, (_, i) => (
+                        <View key={i} style={[styles.barcodeLine, { width: i % 3 === 0 ? 4 : 2 }]} />
+                      ))}
+                    </View>
+                  )}
+                  <Text style={styles.scanInstructions}>
+                    {isNativeAvailable
+                      ? (scanned ? 'Barcode Scanned!' : 'Position barcode in frame')
+                      : 'Development Mode - Tap button to simulate scan'
+                    }
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        )}
+      </View>
+
+      {/* Capture Buttons */}
+      <View style={styles.captureContainer}>
+        <TouchableOpacity
+          style={[styles.captureButton, scanned && styles.captureButtonScanned]}
+          onPress={handleCapturePress}
+        >
+          <Ionicons name={scanned ? "refresh" : "camera"} size={32} color="#1E88E5" />
+          <Text style={styles.captureButtonText}>
+            {isNativeAvailable
+              ? (scanned ? 'Scan Another' : 'Ready to Scan')
+              : 'Simulate Scan'
+            }
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.cancelButton} onPress={handleCancelPress}>
+          <Text style={styles.cancelButtonText}>Cancel</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Last scanned result */}
+      {lastScannedBarcode && (
+        <View style={styles.lastScanContainer}>
+          <Text style={styles.lastScanLabel}>Last scanned:</Text>
+          <Text style={styles.lastScanBarcode}>{lastScannedBarcode}</Text>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -107,95 +207,208 @@ export const ScanScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#1E88E5', // Changed to match home screen blue
   },
-  content: {
-    flex: 1,
-    padding: 20,
+  header: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    alignItems: 'center',
   },
-  scanArea: {
+  logoContainer: {
+    marginBottom: 15,
+  },
+  logo: {
+    width: 120, // Smaller than home screen for scan interface
+    height: 120,
+  },
+  title: {
+    fontSize: 28, // Slightly smaller to accommodate logo
+    fontWeight: 'bold',
+    color: '#fff',
+    letterSpacing: 2,
+  },
+  cameraContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 30,
-    marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    paddingHorizontal: 40,
   },
-  title: {
-    fontSize: 28,
+  cameraView: {
+    width: '100%',
+    aspectRatio: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  camera: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  viewfinderOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  viewfinderContainer: {
+    width: '80%',
+    aspectRatio: 1,
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  corner: {
+    position: 'absolute',
+    width: 40,
+    height: 40,
+    borderColor: '#fff',
+    borderWidth: 4,
+  },
+  topLeft: {
+    top: 0,
+    left: 0,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+    borderTopLeftRadius: 20,
+  },
+  topRight: {
+    top: 0,
+    right: 0,
+    borderLeftWidth: 0,
+    borderBottomWidth: 0,
+    borderTopRightRadius: 20,
+  },
+  bottomLeft: {
+    bottom: 0,
+    left: 0,
+    borderRightWidth: 0,
+    borderTopWidth: 0,
+    borderBottomLeftRadius: 20,
+  },
+  bottomRight: {
+    bottom: 0,
+    right: 0,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+    borderBottomRightRadius: 20,
+  },
+  barcodeTarget: {
+    width: 200,
+    height: 120,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    borderWidth: 2,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+  },
+  scanInstructions: {
+    color: '#fff',
+    fontSize: 14,
     fontWeight: 'bold',
-    color: '#1168bd',
-    marginBottom: 16,
     textAlign: 'center',
   },
-  subtitle: {
+  barcodeLines: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+    marginBottom: 10,
+  },
+  barcodeLine: {
+    height: 40,
+    backgroundColor: '#fff',
+  },
+  permissionText: {
+    color: '#fff',
     fontSize: 16,
     textAlign: 'center',
-    color: '#666',
-    marginBottom: 30,
-    lineHeight: 22,
+    marginBottom: 20,
+  },
+  permissionButton: {
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 20,
+  },
+  permissionButtonText: {
+    color: '#1E88E5',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  captureContainer: {
+    paddingVertical: 20, // Reduced from 40 to 20
+    paddingHorizontal: 40,
+    alignItems: 'center',
+  },
+  captureButton: {
+    backgroundColor: '#fff',
+    borderRadius: 25,
+    paddingVertical: 20,
+    paddingHorizontal: 60,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+    minWidth: 280,
+    marginBottom: 15,
+  },
+  captureButtonScanned: {
+    backgroundColor: '#2ECC40', // Green when scanned
+  },
+  captureButtonText: {
+    color: '#1E88E5', // Use blue color to match theme
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 12,
+  },
+  cancelButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.15)', // Match home screen recent scans background
+    borderRadius: 25,
+    paddingVertical: 15,
+    paddingHorizontal: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+    minWidth: 280,
+  },
+  cancelButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   lastScanContainer: {
-    backgroundColor: '#f0f8ff',
-    padding: 15,
-    borderRadius: 8,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)', // Match home screen recent scans
+    marginHorizontal: 20,
     marginBottom: 20,
+    padding: 15,
+    borderRadius: 20, // Match home screen border radius
     borderLeftWidth: 4,
-    borderLeftColor: '#1168bd',
+    borderLeftColor: '#fff',
   },
   lastScanLabel: {
     fontSize: 12,
-    color: '#666',
+    color: 'rgba(255, 255, 255, 0.7)',
     marginBottom: 4,
   },
   lastScanBarcode: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#1168bd',
-    fontFamily: 'monospace',
-  },
-  scanButton: {
-    backgroundColor: '#1168bd',
-    paddingHorizontal: 40,
-    paddingVertical: 15,
-    borderRadius: 25,
-    shadowColor: '#1168bd',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 5,
-  },
-  scanButtonText: {
     color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  instructions: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  instructionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 12,
-  },
-  instructionText: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 6,
-    lineHeight: 20,
+    fontFamily: 'monospace',
   },
 });

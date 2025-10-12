@@ -1,95 +1,27 @@
 {
-  "name": "smarties",
+  "name": "smarties-backend",
   "version": "1.0.0",
-  "description": "Scan-based Mobile Allergen Risk Tracking & Intelligence Suite",
-  "main": "index.js",
+  "description": "SMARTIES Backend API Server - Connects React Native app to MongoDB Atlas",
+  "main": "backend-server.js",
   "scripts": {
-    "start": "react-native start",
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "test": "jest",
-    "test:unit": "jest --testPathIgnorePatterns=integration --testPathIgnorePatterns=platform",
-    "test:integration": "jest --testPathPattern=integration --runInBand",
-    "test:platform": "jest --testPathPattern=platform --runInBand",
-    "test:platform:ios": "TEST_PLATFORM=ios jest --testPathPattern=ios.platform.test.ts",
-    "test:platform:android": "TEST_PLATFORM=android jest --testPathPattern=android.platform.test.ts",
-    "test:platform:cross": "jest --testPathPattern=crossPlatform.test.ts --runInBand",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "test:all": "npm run test:unit && npm run test:integration && npm run test:platform",
-    "validate-setup": "node scripts/validate-setup.js",
-    "setup:collections": "node src/scripts/setup-collections.js",
-    "setup:mongodb": "npx ts-node src/scripts/setup-mongodb-atlas.ts",
-    "test:mongodb": "npx ts-node src/scripts/setup-mongodb-atlas.ts test",
-    "test:mongodb-setup": "npx ts-node src/scripts/test-mongodb-setup.ts",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "build": "react-native bundle",
-    "ci:validate": "node scripts/validate-ci.js",
-    "upload:openfoodfacts": "node scripts/upload-openfoodfacts-vector.js",
-    "upload:top10k": "MAX_PRODUCTS=10000 node scripts/upload-openfoodfacts-vector.js",
-    "upload:test": "MAX_PRODUCTS=1000 node scripts/upload-openfoodfacts-vector.js",
-    "create-vector-indexes": "npx ts-node src/scripts/create-vector-indexes.ts",
-    "test-query-optimization": "npx ts-node src/scripts/test-query-optimization.ts",
-    "test:integration:database": "npx ts-node src/scripts/run-integration-tests.ts",
-    "test:database:performance": "jest src/services/__tests__/DatabasePerformance.test.ts",
-    "test:database:integration": "jest src/services/__tests__/DatabaseIntegration.test.ts",
-    "analyze:size": "node scripts/analyze-record-size.js"
+    "start": "node backend-server.js",
+    "dev": "nodemon backend-server.js",
+    "load-products": "npx ts-node scripts/process-existing-data.ts",
+    "restore-and-load": "./scripts/restore-and-process.sh",
+    "process-restored": "npx ts-node scripts/process-restored-data.ts",
+    "extract-top-100": "npx ts-node scripts/extract-top-100.ts"
   },
   "dependencies": {
-    "mongodb": "^6.20.0",
-    "openai": "^4.20.1",
-    "zod": "^3.22.0"
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongodb": "^6.3.0",
+    "openai": "^4.104.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@types/jest": "^29.0.0",
-    "@types/node": "^20.0.0",
-    "jest": "^29.0.0",
-    "ts-jest": "^29.0.0",
-    "ts-node": "^10.9.0",
-    "typescript": "^5.0.0"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/test/setup.ts"
-    ],
-    "testEnvironment": "node",
-    "setupFiles": [
-      "<rootDir>/src/test/jest.setup.js"
-    ],
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "testMatch": [
-      "**/__tests__/**/*.test.ts",
-      "**/__tests__/**/*.test.tsx",
-      "**/integration/**/*.test.ts",
-      "**/platform/**/*.test.ts"
-    ],
-    "transform": {
-      "^.+\\.(ts|tsx)$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}",
-      "!src/**/*.d.ts",
-      "!src/test/**/*"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 80,
-        "functions": 80,
-        "lines": 80,
-        "statements": 80
-      }
-    }
-  },
-  "keywords": [
-    "react-native",
-    "mobile",
-    "allergen",
-    "barcode",
-    "dietary"
-  ],
-  "author": "SMARTIES Team",
-  "license": "MIT"
+    "@types/node": "^20.19.21",
+    "nodemon": "^3.0.2"
+  }
 }
