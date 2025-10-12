@@ -1,133 +1,234 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  ScrollView, 
+  ActivityIndicator, 
+  Alert,
+  Image
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+// import { useNavigation } from '@react-navigation/native'; // Available for future use
 
-// Mock user type for development
-interface User {
-  profileId: string;
-  name: string;
-  dietaryRestrictions: {
-    allergies: string[];
-    religious: string[];
-    medical: string[];
-    lifestyle: string[];
-  };
-  preferences: {
-    alertLevel: 'strict' | 'moderate' | 'relaxed';
-    notifications: boolean;
-  };
-}
+// Import enhanced profile components
+import { 
+  RestrictionCard, 
+  AddRestrictionButton,
+  AllergenSelectionModal
+} from '../components/profile';
+
+// Import enhanced types
+import { 
+  DietaryRestriction, 
+  SeverityLevel, 
+  AllergenType,
+  ProfileScreenState,
+  createDietaryRestriction,
+  getAllergenDisplayName
+} from '../types/profile';
+
+// Import profile service
+import { ProfileService } from '../services/profile/ProfileService';
 
 /**
- * User dietary profile management screen
- * Full-featured profile management with mock data for development
+ * Enhanced User Dietary Profile Management Screen
+ * 
+ * Modern, intuitive interface for managing dietary restrictions with visual 
+ * consistency matching the ScanScreen design. Features blue gradient background,
+ * prominent SMARTIES logo, and interactive controls for managing allergen 
+ * severity levels with accessibility support.
  */
 export const ProfileScreen: React.FC = () => {
-  const [userProfile, setUserProfile] = useState<User | null>(null);
-  const [isLoadingProfile, setIsLoadingProfile] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
+  // const navigation = useNavigation(); // Available for future use
+  const [state, setState] = useState<ProfileScreenState>({
+    restrictions: [],
+    isLoading: true,
+    isEditing: false,
+    selectedRestriction: null
+  });
+
+  const [showAllergenSelection, setShowAllergenSelection] = useState(false);
+
+  const profileService = new ProfileService();
 
   useEffect(() => {
-    loadUserProfile();
+    loadUserRestrictions();
   }, []);
 
-  const loadUserProfile = async () => {
-    setIsLoadingProfile(true);
+  const loadUserRestrictions = async () => {
+    setState(prev => ({ ...prev, isLoading: true }));
+    
     try {
-      // Try to load existing profile
-      const { executeOperation } = require('../hooks/useDatabase');
-      const result = await executeOperation(async (db: any) => {
-        return await db.readOne('users', { profileId: 'default' });
-      });
-
-      if (result.success && result.data) {
-        setUserProfile(result.data);
-      } else {
-        // Create default profile if none exists
-        const defaultProfile: User = {
-          profileId: 'default',
-          name: 'SMARTIES User',
-          dietaryRestrictions: {
-            allergies: [],
-            religious: [],
-            medical: [],
-            lifestyle: [],
-          },
-          preferences: {
-            alertLevel: 'moderate',
-            notifications: true,
-          },
-        };
-        setUserProfile(defaultProfile);
-      }
+      const restrictions = await profileService.getUserRestrictions();
+      setState(prev => ({ 
+        ...prev, 
+        restrictions,
+        isLoading: false 
+      }));
     } catch (error) {
-      console.error('Failed to load user profile:', error);
-      // Set default profile on error
-      setUserProfile({
-        profileId: 'default',
-        name: 'SMARTIES User',
-        dietaryRestrictions: {
-          allergies: [],
-          religious: [],
-          medical: [],
-          lifestyle: [],
+      console.error('Failed to load user restrictions:', error);
+      
+      // Create sample restrictions for demo
+      const sampleRestrictions: DietaryRestriction[] = [
+        {
+          id: '1',
+          ...createDietaryRestriction('Peanuts', AllergenType.PEANUTS, SeverityLevel.ANAPHYLACTIC, 'Severe allergy - carry EpiPen'),
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
-        preferences: {
-          alertLevel: 'moderate',
-          notifications: true,
-        },
-      });
-    } finally {
-      setIsLoadingProfile(false);
+        {
+          id: '2',
+          ...createDietaryRestriction('Milk', AllergenType.MILK, SeverityLevel.SEVERE, 'Lactose intolerant'),
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
+      ];
+      
+      setState(prev => ({ 
+        ...prev, 
+        restrictions: sampleRestrictions,
+        isLoading: false 
+      }));
     }
   };
 
-  const handleSetupProfile = async () => {
-    Alert.alert('Profile Options', 'Choose an action', [
-      { text: 'Edit Allergies', onPress: () => handleEditAllergies() },
-      { text: 'Edit Preferences', onPress: () => handleEditPreferences() },
-      { text: 'Reset Profile', onPress: handleResetProfile, style: 'destructive' },
-      { text: 'Cancel', style: 'cancel' },
-    ]);
+  const handleSeverityChange = async (id: string, severity: SeverityLevel) => {
+    try {
+      const restriction = state.restrictions.find(r => r.id === id);
+      if (!restriction) return;
+
+      const updatedRestriction = {
+        ...restriction,
+        severity,
+        updatedAt: new Date()
+      };
+
+      await profileService.updateRestriction(updatedRestriction);
+      
+      setState(prev => ({
+        ...prev,
+        restrictions: prev.restrictions.map(r => 
+          r.id === id ? updatedRestriction : r
+        )
+      }));
+    } catch (error) {
+      console.error('Failed to update severity:', error);
+      Alert.alert('Error', 'Failed to update severity level. Please try again.');
+    }
   };
 
-  const handleEditAllergies = () => {
-    Alert.alert('Edit Allergies', 'This feature will allow you to modify your allergen list.');
+  const handleNotesChange = async (id: string, notes: string) => {
+    try {
+      const restriction = state.restrictions.find(r => r.id === id);
+      if (!restriction) return;
+
+      const updatedRestriction = {
+        ...restriction,
+        notes,
+        updatedAt: new Date()
+      };
+
+      await profileService.updateRestriction(updatedRestriction);
+      
+      setState(prev => ({
+        ...prev,
+        restrictions: prev.restrictions.map(r => 
+          r.id === id ? updatedRestriction : r
+        )
+      }));
+    } catch (error) {
+      console.error('Failed to update notes:', error);
+      Alert.alert('Error', 'Failed to update notes. Please try again.');
+    }
   };
 
-  const handleEditPreferences = () => {
-    Alert.alert('Edit Preferences', 'This feature will allow you to modify your alert preferences.');
+  const handleDelete = async (id: string) => {
+    const restriction = state.restrictions.find(r => r.id === id);
+    if (!restriction) return;
+
+    Alert.alert(
+      'Delete Restriction',
+      `Are you sure you want to delete ${restriction.name}?`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { 
+          text: 'Delete', 
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await profileService.deleteRestriction(id);
+              setState(prev => ({
+                ...prev,
+                restrictions: prev.restrictions.filter(r => r.id !== id)
+              }));
+            } catch (error) {
+              console.error('Failed to delete restriction:', error);
+              Alert.alert('Error', 'Failed to delete restriction. Please try again.');
+            }
+          }
+        }
+      ]
+    );
   };
 
-  const handleResetProfile = async () => {
-    setIsSaving(true);
-    // Simulate saving
-    setTimeout(() => {
-      setUserProfile({
-        profileId: 'default',
-        name: 'Demo User',
-        dietaryRestrictions: {
-          allergies: [],
-          religious: [],
-          medical: [],
-          lifestyle: [],
-        },
-        preferences: {
-          alertLevel: 'moderate',
-          notifications: true,
-        },
-      });
-      setIsSaving(false);
-      Alert.alert('Success', 'Profile has been reset.');
-    }, 1000);
+  const handleAddRestriction = () => {
+    // Check if there are available allergen types to add
+    const availableTypes = Object.values(AllergenType).filter(type => 
+      !state.restrictions.some(r => r.type === type)
+    );
+
+    if (availableTypes.length === 0) {
+      Alert.alert('All Set!', 'You have already added all available allergen types.');
+      return;
+    }
+
+    // Open the allergen selection modal
+    setShowAllergenSelection(true);
   };
 
-  if (isLoadingProfile) {
+  const handleAllergenSelected = async (allergenType: AllergenType) => {
+    const restrictionId = Date.now().toString();
+    
+    try {
+      const newRestriction: DietaryRestriction = {
+        id: restrictionId,
+        ...createDietaryRestriction(
+          getAllergenDisplayName(allergenType),
+          allergenType,
+          SeverityLevel.SEVERE,
+          ''
+        ),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+
+      // Add to local state immediately for better UX
+      setState(prev => ({
+        ...prev,
+        restrictions: [...prev.restrictions, newRestriction]
+      }));
+
+      // Save to service
+      await profileService.addRestriction(newRestriction);
+    } catch (error) {
+      console.error('Failed to save new restriction:', error);
+      Alert.alert('Error', 'Failed to add restriction. Please try again.');
+      
+      // Remove from local state if save failed
+      setState(prev => ({
+        ...prev,
+        restrictions: prev.restrictions.filter(r => r.id !== restrictionId)
+      }));
+    }
+  };
+
+  if (state.isLoading) {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#1168bd" />
-          <Text style={styles.loadingText}>Loading profile...</Text>
+          <ActivityIndicator size="large" color="#FFFFFF" />
+          <Text style={styles.loadingText}>Loading your profile...</Text>
         </View>
       </SafeAreaView>
     );
@@ -135,52 +236,63 @@ export const ProfileScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.content}>
-        <View style={styles.profileCard}>
-          <Text style={styles.title}>Dietary Profile</Text>
-          {userProfile ? (
-            <>
-              <Text style={styles.subtitle}>Profile Active</Text>
-              <Text style={styles.profileInfo}>
-                Name: {userProfile.name}
-              </Text>
-              <Text style={styles.profileInfo}>
-                Allergies: {userProfile.dietaryRestrictions.allergies.length}
-              </Text>
-              <Text style={styles.profileInfo}>
-                Restrictions: {userProfile.dietaryRestrictions.religious.length + userProfile.dietaryRestrictions.medical.length + userProfile.dietaryRestrictions.lifestyle.length}
-              </Text>
-            </>
-          ) : (
-            <Text style={styles.subtitle}>
-              Set up your dietary restrictions and preferences to get personalized product recommendations
+      {/* Header with Logo and Title */}
+      <View style={styles.header}>
+        <View style={styles.logoContainer}>
+          <Image 
+            source={require('../../assets/smarties-logo.png')} 
+            style={styles.logo}
+            resizeMode="contain"
+          />
+        </View>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>MY DIETARY</Text>
+          <Text style={styles.title}>RESTRICTIONS</Text>
+        </View>
+      </View>
+
+      {/* Main Content */}
+      <ScrollView 
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {state.restrictions.length === 0 ? (
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyStateTitle}>No Restrictions Added</Text>
+            <Text style={styles.emptyStateText}>
+              Add your dietary restrictions to get personalized product safety alerts
             </Text>
-          )}
-          
-          <TouchableOpacity 
-            style={[styles.setupButton, isSaving && styles.disabledButton]} 
-            onPress={handleSetupProfile}
-            disabled={isSaving}
-          >
-            {isSaving ? (
-              <ActivityIndicator size="small" color="#fff" />
-            ) : (
-              <Text style={styles.setupButtonText}>
-                {userProfile ? 'Manage Profile' : 'Set Up Profile'}
-              </Text>
-            )}
-          </TouchableOpacity>
-        </View>
-        
-        <View style={styles.infoCard}>
-          <Text style={styles.infoTitle}>Profile Features:</Text>
-          <Text style={styles.infoText}>• Food allergies and intolerances</Text>
-          <Text style={styles.infoText}>• Religious dietary requirements</Text>
-          <Text style={styles.infoText}>• Medical dietary restrictions</Text>
-          <Text style={styles.infoText}>• Lifestyle preferences (vegan, keto, etc.)</Text>
-          <Text style={styles.infoText}>• Severity levels and alert preferences</Text>
-        </View>
+          </View>
+        ) : (
+          state.restrictions.map((restriction) => (
+            <RestrictionCard
+              key={restriction.id}
+              restriction={restriction}
+              onSeverityChange={handleSeverityChange}
+              onNotesChange={handleNotesChange}
+              onDelete={handleDelete}
+            />
+          ))
+        )}
+
+        {/* Add Restriction Button */}
+        <AddRestrictionButton 
+          onPress={handleAddRestriction}
+          disabled={state.isLoading}
+        />
+
+        {/* Bottom spacing for navigation */}
+        <View style={styles.bottomSpacing} />
       </ScrollView>
+
+      {/* Allergen Selection Modal */}
+      <AllergenSelectionModal
+        visible={showAllergenSelection}
+        onClose={() => setShowAllergenSelection(false)}
+        onSelectAllergen={handleAllergenSelected}
+        excludeTypes={state.restrictions.map(r => r.type)}
+      />
     </SafeAreaView>
   );
 };
@@ -188,11 +300,7 @@ export const ProfileScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  content: {
-    flex: 1,
-    padding: 20,
+    backgroundColor: '#1E88E5', // Primary blue gradient background
   },
   loadingContainer: {
     flex: 1,
@@ -202,98 +310,58 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#666',
+    color: '#FFFFFF',
+    fontWeight: '500',
   },
-  errorContainer: {
-    flex: 1,
-    justifyContent: 'center',
+  header: {
     alignItems: 'center',
-    padding: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingHorizontal: 0,
   },
-  errorText: {
-    fontSize: 16,
-    color: '#d32f2f',
-    textAlign: 'center',
-    marginBottom: 20,
+  logoContainer: {
+    marginBottom: 10,
   },
-  retryButton: {
-    backgroundColor: '#1168bd',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 8,
+  logo: {
+    width: 120,
+    height: 120,
   },
-  retryButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  profileCard: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 25,
-    marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+  titleContainer: {
     alignItems: 'center',
   },
   title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    letterSpacing: 2,
+    textAlign: 'center',
+    lineHeight: 32,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 100, // Extra space for bottom navigation
+  },
+  emptyState: {
+    alignItems: 'center',
+    paddingHorizontal: 40,
+    paddingVertical: 60,
+  },
+  emptyStateTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#1168bd',
+    color: '#FFFFFF',
     marginBottom: 16,
     textAlign: 'center',
   },
-  subtitle: {
+  emptyStateText: {
     fontSize: 16,
+    color: 'rgba(255, 255, 255, 0.8)',
     textAlign: 'center',
-    color: '#666',
-    marginBottom: 25,
-    lineHeight: 22,
+    lineHeight: 24,
   },
-  profileInfo: {
-    fontSize: 14,
-    color: '#333',
-    marginBottom: 8,
-  },
-  setupButton: {
-    backgroundColor: '#1168bd',
-    paddingHorizontal: 30,
-    paddingVertical: 12,
-    borderRadius: 20,
-    minWidth: 120,
-    alignItems: 'center',
-  },
-  disabledButton: {
-    opacity: 0.6,
-  },
-  setupButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  infoCard: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  infoTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 15,
-  },
-  infoText: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 8,
-    lineHeight: 20,
+  bottomSpacing: {
+    height: 40,
   },
 });

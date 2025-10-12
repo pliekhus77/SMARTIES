@@ -9,7 +9,7 @@
     "load-products": "npx ts-node scripts/process-existing-data.ts",
     "restore-and-load": "./scripts/restore-and-process.sh",
     "process-restored": "npx ts-node scripts/process-restored-data.ts",
-    "extract-top-100": "npx ts-node scripts/extract-top-100.ts"
+    "add-embeddings": "npx ts-node scripts/add-embeddings.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",

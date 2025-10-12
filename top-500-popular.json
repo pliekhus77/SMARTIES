@@ -1,0 +1,821 @@
+[
+  {
+    "allergens": "",
+    "brands": "Sidi Ali",
+    "categories": "Beverages and beverages preparations,Beverages,Waters,Spring waters,Mineral waters,Unsweetened beverages,Natural mineral waters",
+    "code": "6111035000430",
+    "ingredients_text": "OBD1 999 999 1112606 266963207 mb",
+    "product_name": "Sidi Ali",
+    "unique_scans_n": 3191
+  },
+  {
+    "allergens": "en:milk",
+    "brands": "Jaouda",
+    "categories": "Dairies,Fermented foods,Fermented milk products,Cheeses,Desserts,Dairy desserts,Fermented dairy desserts,Yogurts,Cream cheeses,fr:Fromages-frais-sucres",
+    "code": "6111242100992",
+    "ingredients_text": "Lait écrémé, crème, SUcre, ferments laciques Matière grasse:3 %% Poids net : 85g",
+    "product_name": "Perly",
+    "unique_scans_n": 2257
+  },
+  {
+    "allergens": "",
+    "brands": "sidi ali",
+    "categories": "Beverages and beverages preparations,Beverages,Waters,Spring waters,Mineral waters,Natural mineral waters",
+    "code": "6111035002175",
+    "ingredients_text": "Sodium 26 Calcium 12 Magnésium 9 Potassium 3 Bicarbonates 104 Sulfates 42 Chlorures 14 Nitrates 0 صوديوم كالسيوم تغازيوم بوتاسيوم میکرونات سلفات كلوري نترات",
+    "product_name": "Sidi Ali",
+    "unique_scans_n": 2249
+  },
+  {
+    "allergens": "",
+    "brands": "Les Eaux Minérales d'oulmès,Sidi Ali",
+    "categories": "Beverages and beverages preparations,Beverages,Waters,Spring waters,Mineral waters,Unsweetened beverages,Natural mineral waters",
+    "code": "6111035000058",
+    "ingredients_text": "eau minérale naturelle",
+    "product_name": "Eau minérale naturelle",
+    "unique_scans_n": 2105
+  },
+  {
+    "allergens": "",
+    "brands": "AQUAFINA",
+    "categories": "Boissons et préparations de boissons,Boissons,Eaux,Eaux de sources,Eaux minérales,Eaux de table",
+    "code": "6111252421568",
+    "ingredients_text": "ouverture et avant le : Voir bouteille. après مياه مصفاة بتقنية اكوافينا هايدرو - 7 Eau purifiée par la technique Aquafina HydRO-7",
+    "product_name": "اكوافينا",
+    "unique_scans_n": 1989
+  },
+  {
+    "allergens": "en:milk",
+    "brands": "Jaouda",
+    "categories": "Dairies,Meals,Milks (liquid and powder),Milks,Semi-skimmed milks",
+    "code": "6111266962187",
+    "ingredients_text": "Lait frais pasteurisé demi-écrémé à 15g/l de matière grasse",
+    "product_name": "Lait",
+    "unique_scans_n": 1937
+  },
+  {
+    "allergens": "",
+    "brands": "Cristaline",
+    "categories": "Beverages and beverages preparations,Beverages,Waters,Spring waters,Mineral waters,Unsweetened beverages,Natural mineral waters",
+    "code": "3274080005003",
+    "ingredients_text": "Eau de source",
+    "product_name": "Eau De Source",
+    "unique_scans_n": 1861
+  },
+  {
+    "allergens": "en:milk",
+    "brands": "MILKY FOOD PROFESSIONAL",
+    "categories": "Dairies,Fermented foods,Fermented milk products,Cheeses,Desserts,Dairy desserts,Fermented dairy desserts,Fromages blancs - petit suisses and skyr,Plain fermented dairy desserts,fr:Fromages blancs,fr:Fromages blancs natures",
+    "code": "6111246721261",
+    "ingredients_text": "Ferments lactiques, Présure, Sel.",
+    "product_name": "Fromage blanc nature",
+    "unique_scans_n": 1784
+  },
+  {
+    "allergens": "en:milk",
+    "brands": "Jaouda",
+    "categories": "Dairies,Milks,Homogenized milks,UHT Milks,Whole milks,Cow milks,Whole milk UHT",
+    "code": "6111242101180",
+    "ingredients_text": "Lait entier",
+    "product_name": "uht jaouda 1L",
+    "unique_scans_n": 1575
+  },
+  {
+    "allergens": "",
+    "brands": "Jaouda",
+    "categories": "en:Dairies, en:Fermented foods, en:Fermented milk products, en:Spreads, en:Cheeses, en:Salted spreads, en:Cheese spreads, en:Fromage frais nature à 21%de matière grasse",
+    "code": "6111242106949",
+    "ingredients_text": "lait frais entier, crème, stabilisants, amidon, carraghénane, sel, ferments lactiques\nmatière grasse 21%",
+    "product_name": "Jben",
+    "unique_scans_n": 1536
+  },
+  {
+    "allergens": "",
+    "brands": "Danone",
+    "categories": "Boissons,Eaux,Eaux de sources,Eaux minérales,Boissons sans alcool,Boissons sans sucre ajouté",
+    "code": "6111128000071",
+    "ingredients_text": "Eau minérale naturelle",
+    "product_name": "Ain Saïss",
+    "unique_scans_n": 1403
+  },
+  {
+    "allergens": "",
+    "brands": "Ain atlas",
+    "categories": "Beverages,Waters,Spring waters,Mineral waters,Natural mineral waters",
+    "code": "6111035502828",
+    "ingredients_text": "0800 94 Aïn Atlas EAU MINÉRALE NATURELLE 55 VOTRE CAFÉ POUR ACCOMPAGNER An Atlas ANNEMANG BLE",
+    "product_name": "Eau minéral naturelle",
+    "unique_scans_n": 1322
+  },
+  {
+    "allergens": "",
+    "brands": "Sidi Ali",
+    "categories": "Eaux minérales naturelles",
+    "code": "6111035000027",
+    "ingredients_text": "Composition minérale en mg/\r\nRésidu sec à 110°C: 186\r\n12 t S Sodium 26 tCalciumMagnésium9 tiiSulfates 42 i3 t H Chiorures 14Potassium\r\nBicarbonates 104 i Nitrates",
+    "product_name": "6111035000027",
+    "unique_scans_n": 1301
+  },
+  {
+    "allergens": "en:celery,en:gluten",
+    "brands": "Marmite,Unilever",
+    "categories": "Dairies, Fermented foods, Fermented milk products, Buttermilks, en:yeast-extract-spreads",
+    "code": "50184453",
+    "ingredients_text": "yeast extract, barley, wheat, oats, rye, salt, vegetable juice concentrate, thiamin, riboflavin, niacin, vitamin B12, folic acid, natural flavouring, celery",
+    "product_name": "Marmite Yeast Extract",
+    "unique_scans_n": 1195
+  },
+  {
+    "allergens": "",
+    "brands": "centrale danone",
+    "categories": "Dairies, Milks, Fresh milks, en:semi-skimmed-milks",
+    "code": "6111032009665",
+    "ingredients_text": "lait partiellement écrémé",
+    "product_name": "Lait Frais",
+    "unique_scans_n": 1167
+  },
+  {
+    "allergens": "",
+    "brands": "pepsi",
+    "categories": "Eaux,Eaux de table",
+    "code": "6111252421582",
+    "ingredients_text": "Aqua",
+    "product_name": "اكوافينا",
+    "unique_scans_n": 1089
+  },
+  {
+    "allergens": "en:eggs,en:gluten,en:milk,en:soybeans",
+    "brands": "Lu",
+    "categories": "Snacks,Snacks sucrés,Biscuits et gâteaux,Biscuits sucrés & biscuits apéritifs,Biscuits,Biscuits au chocolat",
+    "code": "7622210449283",
+    "ingredients_text": "Céréale 50 % (Farine de BLÉ 34,8 %, farine de BLÉ complète 15,2 %), sucre, huiles végétales (palme, colza), cacao maigre en poudre 4,5%, sirop de glucose, amidon de BLÉ, poudres à lever (carbonates d'ammonium, carbonates de sodium), émulsifiant (lécithines de SOJA), sel, LAIT écrémé en poudre, perméat de lactosérum (de LAIT), arômes.\n\nPEUT CONTENIR OEUF.",
+    "product_name": "Prince Goût Chocolat",
+    "unique_scans_n": 1050
+  },
+  {
+    "allergens": "",
+    "brands": "Lindt&Sprüngli",
+    "categories": "Snacks,Sweet snacks,Cocoa and its products,Chocolates,Dark chocolates,Extra fine dark chocolates",
+    "code": "3046920029759",
+    "ingredients_text": "cocoa mass, cocoa butter, fat reduced cocoa, sugar, vanilla",
+    "product_name": "Lindt Excellence 90%",
+    "unique_scans_n": 1045
+  },
+  {
+    "allergens": "",
+    "brands": "Les eaux minérales d'Oulmès S.A.",
+    "categories": "Boissons,Boissons gazeuses,Eaux,Eaux de sources,Eaux minérales,Eaux gazeuses,Eaux minérales naturelles,Eaux minérales gazeuses",
+    "code": "6111035003035",
+    "ingredients_text": "Natural carbonated water 100%",
+    "product_name": "Oulmes natural carbonated water",
+    "unique_scans_n": 972
+  },
+  {
+    "allergens": "en:milk,en:nuts,en:soybeans",
+    "brands": "Ferrero",
+    "categories": "Petit-déjeuners,Produits à tartiner,Produits à tartiner sucrés,Pâtes à tartiner,Pâtes à tartiner aux noisettes,Pâtes à tartiner au chocolat,Pâtes à tartiner aux noisettes et au cacao",
+    "code": "3017620425035",
+    "ingredients_text": "Sucre, huile de palme, NOISETTES 13%, LAIT écrémé en poudre 8,7%, cacao maigre 7,4%, émulsifiants: lécithines [SOJA]; vanilline. Sans gluten",
+    "product_name": "Nutella",
+    "unique_scans_n": 923
+  },
+  {
+    "allergens": "",
+    "brands": "Coca cola",
+    "categories": "Cibi e bevande a base vegetale,Bevande,Bevande a base di piante,Bevande a base di frutta,Succo e nettare,en:Orange-based beverages",
+    "code": "5449000147417",
+    "ingredients_text": "Water, Orange juice and pulp, Sugar, Acids: E300, E440, Emulsifiers: E445, E414, Natural flavors, Sweeteners: E950, E954, Color: E160a",
+    "product_name": "Orange juice",
+    "unique_scans_n": 903
+  },
+  {
+    "allergens": "en:gluten,en:milk,en:soybeans",
+    "brands": "Bimo",
+    "categories": "Plant-based foods and beverages,Plant-based foods,Snacks,Cereals and potatoes,Sweet snacks,Biscuits and cakes,Biscuits and crackers,Cereals and their products,Cocoa and its products,Confectioneries,Flours,Biscuits,Cereal flours,Chocolate candies,Sweeteners,Wheat flours,Sugars,fr:Gaufrettes-fourrees-au-cacao",
+    "code": "6111031005064",
+    "ingredients_text": "Coffret fourré au cacao (41,6%) et à la vanille (208) - Ingrédients Farine de blé, sucre, huile végétale non hydrogénée (huile de palme), filtrat de lait, poudre de cacao Émulsifiant à faible teneur en cacao (322) Lécithine de soja) Agent levant (5000) Sucre artificiel (vanilline) Sel Contient du lait, du blé (gluten) du soja",
+    "product_name": "Tonik",
+    "unique_scans_n": 888
+  },
+  {
+    "allergens": "",
+    "brands": "",
+    "categories": "levure patissiere",
+    "code": "6111180000231",
+    "ingredients_text": "Bicarbonate de sodium, amidon de maïs, pyrophosphate de sodium",
+    "product_name": "levure pâtisserie",
+    "unique_scans_n": 862
+  },
+  {
+    "allergens": "",
+    "brands": "Danone",
+    "categories": "Boissons et préparations de boissons,Boissons,Eaux,Eaux de sources,Eaux minérales",
+    "code": "6111128000163",
+    "ingredients_text": "Calcium : 63,5\r\nMagnésium : 35,5\r\nNitratex : 7\r\nSodium 8\r\nChlorures : 19,8\r\nSulfate : 3,8\r\nBicarbonate : 372\r\nPotassium : 1",
+    "product_name": "Ain Saiss Eau Minerale Naturelle",
+    "unique_scans_n": 846
+  },
+  {
+    "allergens": "",
+    "brands": "Gerblé",
+    "categories": "Snacks,Snacks sucrés,Biscuits et gâteaux,Biscuits sucrés & biscuits apéritifs,Biscuits",
+    "code": "3175680011480",
+    "ingredients_text": "Farine de blé 57%, sucre de canne roux, huile de colza, sésame toasté 10,6%, germe de blé 5,4%, farine complète de blé 5,4%, arôme naturel, magnésium, émulsifiant : lécithines, poudres à lever (tartrates de potassium, carbonates de sodium, carbonates d'ammonium), sel de mer, amidon de blé, vitamines (E, PP, B6, B1, B9).",
+    "product_name": "Sésame",
+    "unique_scans_n": 829
+  },
+  {
+    "allergens": "",
+    "brands": "Délicia",
+    "categories": "Aliments et boissons à base de végétaux,Aliments d'origine végétale,Aliments à base de fruits et de légumes,Petit-déjeuners,Produits à tartiner,Fruits et produits dérivés,Pâtes à tartiner végétales,Produits à tartiner sucrés,Confitures et marmelades,Confitures,Confitures de fruits rouges,Confitures de fraises",
+    "code": "6111162000839",
+    "ingredients_text": "Fraises, sucre.",
+    "product_name": "Confiture de fraise",
+    "unique_scans_n": 815
+  },
+  {
+    "allergens": "",
+    "brands": "Eau minérale naturelle des Montagnes d'Atlas",
+    "categories": "Boissons,Eaux,Eaux de sources,Eaux minérales",
+    "code": "6111035001659",
+    "ingredients_text": "Composition Minérale en mg/L \r\nRésidu Sec à 110°C: 249 en mg/L \r\n- Sodium 48 \r\n- Calcium 18 \r\n- Magnésium 13 \r\n- Potassium\r\n- Bicarbonates 217 \r\n- Chlorures 12 \r\n- Sulfates 8 \r\n- Nitrates 4",
+    "product_name": "Ain Atlas",
+    "unique_scans_n": 802
+  },
+  {
+    "allergens": "",
+    "brands": "Jaouda",
+    "categories": "Produits laitiers, Produits fermentés, Desserts, Produits laitiers fermentés, Desserts lactés, Desserts lactés fermentés, Yaourts, Yaourts natures",
+    "code": "6111242100206",
+    "ingredients_text": "lait frais entier, poudre de lait écrémé, amidon, ferment lactique sélectionné",
+    "product_name": "Yaourt nature",
+    "unique_scans_n": 789
+  },
+  {
+    "allergens": "",
+    "brands": "Eau minérale naturelle",
+    "categories": "Boissons et préparations de boissons,Boissons,Eaux,Eaux de sources,Eaux minérales",
+    "code": "6111035001635",
+    "ingredients_text": "Sodium 48 Calcium 18 Magnésium 13 Potassium 8 Bicarbonates 217 Chlorures 12 Sulfates Nitrates 4",
+    "product_name": "Ain Atlas",
+    "unique_scans_n": 776
+  },
+  {
+    "allergens": "en:eggs,en:mustard,en:soybeans,en:sulphur-dioxide-and-sulphites",
+    "brands": "Star",
+    "categories": "Condiments,Matières grasses,Sauces,Mayonnaises,en:groceries",
+    "code": "6111184004129",
+    "ingredients_text": "Huile de soja, eau, vinaigre de table, jaune d’œufs, moutarde&quot;, sel, stabilisants (E412, E415), conservateur : (E202, E211) et antioxydant : E330. * contient des sulfites",
+    "product_name": "Mayonnaise recette originale",
+    "unique_scans_n": 747
+  },
+  {
+    "allergens": "en:gluten",
+    "brands": "Jason’s",
+    "categories": "Plant-based foods and beverages,Plant-based foods,Cereals and potatoes,Breads,White breads,Sourdough-bread",
+    "code": "5025125000006",
+    "ingredients_text": "Wheat Flour (Fortified with Calcium Carbonate, Iron, Niacin, Thiamin), Water, Salt, Fermented Wheat Flour.",
+    "product_name": "Sourdough White Ciabattin Bread",
+    "unique_scans_n": 745
+  },
+  {
+    "allergens": "",
+    "brands": "Coca-Cola",
+    "categories": "Beverages and beverages preparations,Beverages,Carbonated drinks,Sodas,Non-alcoholic beverages,Colas,Sweetened beverages",
+    "code": "54491472",
+    "ingredients_text": "water, fructose-glucose syrup, carbon dioxide, colorant: e150d, acid: phosphoric acid, natural flavors, caffeine flavoring,",
+    "product_name": "coca cola 0,5",
+    "unique_scans_n": 733
+  },
+  {
+    "allergens": "en:soybeans",
+    "brands": "J.D. Gross",
+    "categories": "Snacks,Sweet snacks,Cocoa and its products,Chocolates,Dark chocolates",
+    "code": "20995553",
+    "ingredients_text": "Pâte de cacao, cacao maigre en poudre, beurre de cacao, sucre, émulsifiant : lécithines (soja) ; extrait de vanille. Traces éventuelles de fruits à coque et de lait.",
+    "product_name": "Chocolat noir - 85% cacao",
+    "unique_scans_n": 726
+  },
+  {
+    "allergens": "",
+    "brands": "Cristaline",
+    "categories": "Beverages and beverages preparations,Beverages,Waters,Spring waters,Unsweetened beverages",
+    "code": "3268840001008",
+    "ingredients_text": "Eau de source",
+    "product_name": "CRISTALINE Eau De Source 0.5L",
+    "unique_scans_n": 723
+  },
+  {
+    "allergens": "en:milk,en:nuts,en:soybeans",
+    "brands": "Ferrero",
+    "categories": "Petit-déjeuners,Produits à tartiner,Produits à tartiner sucrés,Pâtes à tartiner,Pâtes à tartiner aux noisettes",
+    "code": "3017620422003",
+    "ingredients_text": "Sucre, huile de palme, NOISETTES 13%, cacao maigre 7,4%, LAIT écrémé en poudre 6,6%, LACTOSERUM en poudre, émulsifiants: lécithines [SOJA), vanilline. Sans gluten.",
+    "product_name": "Nutella",
+    "unique_scans_n": 715
+  },
+  {
+    "allergens": "",
+    "brands": "Jason's Sourdough",
+    "categories": "Plant-based foods and beverages,Plant-based foods,Breads,Sourdough-bread",
+    "code": "5025125000112",
+    "ingredients_text": "Wheat Flour (Wheat Flour, Calcium Carbonate, Iron, Niacin, Thiamin), Water, Rye Flour, Salt, Fermented Wheat",
+    "product_name": "Proper Sourdough",
+    "unique_scans_n": 714
+  },
+  {
+    "allergens": "",
+    "brands": "Jason's",
+    "categories": "Plant-based foods and beverages,Plant-based foods,Cereals and potatoes,Breads,Sliced breads,Vegan,Vegetarian",
+    "code": "5025125000037",
+    "ingredients_text": "Wheat Flour (Wheat Flour, Calcium Carbonate, Iron, Niacin, Thiamin), Water, Mixed Seeds (Golden Linseeds, Sunflower Seeds (6%), Sprouted Spelt (Wheat) Grains (1.5%), Salt, Fermented Wheat Flour.",
+    "product_name": "Sourdough Grains & Seeds",
+    "unique_scans_n": 707
+  },
+  {
+    "allergens": "",
+    "brands": "la Hollandaise",
+    "categories": "Dairies, Fermented foods, Fermented milk products, Cheeses, Cow cheeses, Cheeses from the United Kingdom, Cheeses from England, Cheddar cheese, en:cheddar-slices",
+    "code": "6111203006653",
+    "ingredients_text": "(AJR 30%) ¿S-250 (AJR 100%) ¿S 10 (AJR 30%) ¿L 3,5 (AJR 30%) ¿S 300 فيتامين A فيتامين D فيتامين E كالسيوم جبنة مذوبة للدهن 50% مواد دسمة في المادة الجافة. الوزن الصافي : - المكونات حليب خالي من الدسم مشكل شيدر %25، زبدة، أملاح مستحلبة (E452 E341 E450) بروتينات الحليب قلح، مادة حافظة: سوربات البوتاسيوم، الكالسيوم، فيتامين ED،A أنتج بالمغرب من م.ص. عين الـ يحفظ في مكا تاريخ الاستخـ Agrément sanitaire MA LPL.5.11.13 111203 006653 LOONEY TUNES TH www.LOONEYTUNES.COM TH&War Bros Certamente 615) // AJR = Apports j",
+    "product_name": "Cheddar",
+    "unique_scans_n": 693
+  },
+  {
+    "allergens": "en:nuts",
+    "brands": "Alesto,Lidl",
+    "categories": "Plant-based foods and beverages,Plant-based foods,Nuts and their products,Nuts,Almonds,Shelled nuts,Shelled almonds,Unsalted almonds",
+    "code": "20724696",
+    "ingredients_text": "shelled almonds",
+    "product_name": "Mandeln",
+    "unique_scans_n": 688
+  },
+  {
+    "allergens": "",
+    "brands": "Star",
+    "categories": "Condiments,Sels,Sels de table,en:groceries",
+    "code": "6111184001562",
+    "ingredients_text": "Sel, iodate de potassium et anti-agglomérants",
+    "product_name": "Star Branded Iodized Salt",
+    "unique_scans_n": 685
+  },
+  {
+    "allergens": "",
+    "brands": "Star",
+    "categories": "en:Condiments, en:Sauces, en:Tomato sauces, en:Ketchup, en:Groceries",
+    "code": "6111184004730",
+    "ingredients_text": "نشا: مشخن المائدة، خل الطماطلخ مركز سكر، ماء، المکونات: وتوابل.حافظة (E202.E211) ملح،مواد معدل",
+    "product_name": "Ketchup star 310 g",
+    "unique_scans_n": 683
+  },
+  {
+    "allergens": "",
+    "brands": "COSUMAR",
+    "categories": "en:Sweeteners, en:Sugars",
+    "code": "6111029000118",
+    "ingredients_text": "Sugar",
+    "product_name": "Cosumar Sucre En Lingot Pour Le Thé 1 kg",
+    "unique_scans_n": 678
+  },
+  {
+    "allergens": "en:nuts",
+    "brands": "Alesto",
+    "categories": "Pflanzliche Lebensmittel und Getränke,Pflanzliche Lebensmittel,Nüsse und Nussprodukte,Nüsse,Cashewnüsse",
+    "code": "20267605",
+    "ingredients_text": "Cashewkerne 100%",
+    "product_name": "Cashewkerne",
+    "unique_scans_n": 677
+  },
+  {
+    "allergens": "en:milk,en:nuts,en:soybeans",
+    "brands": "Ferrero,Nutella",
+    "categories": "Pequenos alomoços,Produtos para barrar,Doces para barrar,fr:Pâtes à tartiner,Creme para barrar de avelã,Creme para barrar de chocolate,Creme para barrar de avelã e cacau",
+    "code": "80177173",
+    "ingredients_text": "Sugar, palm oil, _hazelnuts_ (13%), skimmed _milk_ powder (8,7%), fat-reduced cocoa (7,4%), emulsifier: lecithins (_soya_), vanillin.",
+    "product_name": "Nutella 350g",
+    "unique_scans_n": 669
+  },
+  {
+    "allergens": "en:gluten",
+    "brands": "Henry's",
+    "categories": "Snacks,Snacks sucrés,Biscuits et gâteaux,Biscuits",
+    "code": "3362600011044",
+    "ingredients_text": "Farine de froment, sucre, graisse végétale, sucre inverti, agents levants ( bicarbonate d'ammonium - bicarbonate de sodium), sel, arome.",
+    "product_name": "Henry’s",
+    "unique_scans_n": 666
+  },
+  {
+    "allergens": "",
+    "brands": "Danone",
+    "categories": "Dairies,Fermented foods,Fermented milk products,Desserts,Dairy desserts,Fermented dairy desserts,Yogurts",
+    "code": "6111032001003",
+    "ingredients_text": "ليوغور م.د,%2. مصنوع إخط قد يمكن أن يحتوي على الگلوتين، الجوز والبندق. 2.",
+    "product_name": "Assil",
+    "unique_scans_n": 665
+  },
+  {
+    "allergens": "",
+    "brands": "Salim",
+    "categories": "Dairies,Milks",
+    "code": "6111032000600",
+    "ingredients_text": "gluten free",
+    "product_name": "Salim",
+    "unique_scans_n": 659
+  },
+  {
+    "allergens": "",
+    "brands": "Coca-Cola",
+    "categories": "Bevande e preparati per bevande,Bevande,Bevande effervescente,Bibite gassate,Bibite gassate senza succo di frutta,Cola,Bibite gassate zuccherate senza succo di frutta,Bevande zuccherate",
+    "code": "5449000214911",
+    "ingredients_text": "Eau gazéifiée, sucre, colorant: E150d, acidifiant: acide phosphorique, arômes naturels, arôme caféine.",
+    "product_name": "Coca-Cola",
+    "unique_scans_n": 655
+  },
+  {
+    "allergens": "en:milk",
+    "brands": "jaouda",
+    "categories": "Produits laitiers,Produits fermentés,Produits laitiers fermentés,Desserts,Desserts lactés,Desserts lactés fermentés,Yaourts",
+    "code": "6111242100305",
+    "ingredients_text": "Lait frais, sucre, poudre de lait écrémé, texturant : amidon, crème, arôme, ferments lactiques sélectionnés, matière grasse 3%",
+    "product_name": "Cremy",
+    "unique_scans_n": 653
+  },
+  {
+    "allergens": "",
+    "brands": "THE COCA-COLA COMPANY",
+    "categories": "Boissons,Eaux,Boissons sans alcool",
+    "code": "5449000061515",
+    "ingredients_text": "eau minérale, calcium, magnésium, sodium, potassium, bicarbonates, chlorures, sulfates, nitrates",
+    "product_name": "Ciel",
+    "unique_scans_n": 651
+  },
+  {
+    "allergens": "",
+    "brands": "Ciel",
+    "categories": "Boissons, Eaux, Eaux de sources, Eaux minérales, Eaux de table",
+    "code": "42104964",
+    "ingredients_text": "ماء مصفى (معالج ومنضح) وأملاح معدنية (ماغنسيوم)",
+    "product_name": "Ciel 33cl",
+    "unique_scans_n": 641
+  },
+  {
+    "allergens": "",
+    "brands": "Danone",
+    "categories": "Boissons et préparations de boissons,Boissons,Eaux,Eaux de sources,Eaux minérales",
+    "code": "6111128000088",
+    "ingredients_text": "Eau.",
+    "product_name": "ain saiss 50cl",
+    "unique_scans_n": 638
+  },
+  {
+    "allergens": "",
+    "brands": "Original",
+    "categories": "Dairies, Fermented foods, Fermented milk products, Cheeses, Cream cheeses",
+    "code": "6111246721278",
+    "ingredients_text": "Lait de Vache pasteurisé, Crème fraiche pasteurisée\nferments lactiques, Présure,Sel.",
+    "product_name": "Cream cheese",
+    "unique_scans_n": 638
+  },
+  {
+    "allergens": "en:milk",
+    "brands": "Lurpak",
+    "categories": "Dairies,Fats,Spreads,Spreadable fats,Animal fats,Dairy spreads,Milkfat,Butters",
+    "code": "5740900404465",
+    "ingredients_text": "butter (64%) (milk), rapeseed oil, water, lactic culture (milk), salt",
+    "product_name": "Spreadable Slightly Salted",
+    "unique_scans_n": 634
+  },
+  {
+    "allergens": "",
+    "brands": "Oulmès",
+    "categories": "Boissons,Boissons gazeuses,Eaux,Eaux de sources,Eaux minérales,Eaux gazeuses,Eaux minérales gazeuses",
+    "code": "6111035003004",
+    "ingredients_text": "oulmes eau gazeuse.                                      oulmes eau.                                                       oulmes.                                                                eau drink.",
+    "product_name": "Oulmes Eau Gazeuse",
+    "unique_scans_n": 615
+  },
+  {
+    "allergens": "",
+    "brands": "Green & Black's",
+    "categories": "Snacks,Snacks sucrés,Cacao et dérivés,Chocolats,Chocolats noirs,Chocolat noir en tablette extra dégustation à 70% de cacao minimum",
+    "code": "7622210578464",
+    "ingredients_text": "cocoa mass #, cane sugar #, cocoa butter #, vanilla extract #, may contain nuts, milk,",
+    "product_name": "Organic 70% Dark Chocolate Bar",
+    "unique_scans_n": 612
+  },
+  {
+    "allergens": "",
+    "brands": "jibal",
+    "categories": "Chees",
+    "code": "6111246954461",
+    "ingredients_text": "تخصص جبن بالقشدة المكونات : حليب كامل الدسم، قشدة (40%)، نشا، مثبتات (E1442 و E1450)، ملح، خمائر حليبية، مادة حافظة : سوريات البوتاسيوم يحفظ على الأكثر في 6 درجات تاريخ الإنتاج - تاريخ انتهاء الصلاحية - 30 يوما يستهلك إلى غاية : انظر جانب العلبة",
+    "product_name": "jibal jben",
+    "unique_scans_n": 612
+  },
+  {
+    "allergens": "",
+    "brands": "Excelo",
+    "categories": "Snacks,Sweet snacks,Biscuits and cakes,Biscuits and crackers,Biscuits,Drop cookies",
+    "code": "6111259343108",
+    "ingredients_text": "دقيقالقمح،رقائق الشوكولاته20%[عجينة زيت النخلة.الكاكاو،سكر،دكستروز و مستحلب",
+    "product_name": "KING COOKIES",
+    "unique_scans_n": 611
+  },
+  {
+    "allergens": "",
+    "brands": "Nestlé",
+    "categories": "Boissons et préparations de boissons,Aliments et boissons à base de végétaux,Boissons,Aliments d'origine végétale,Préparations pour boissons,Cafés,Boissons instantanées,Café Arabica,Cafés solubles,Café au lait en poudre soluble",
+    "code": "6111018903161",
+    "ingredients_text": "Good Food Godf Neste. تحدث إلي نستله 080 105 10 10 82 100 800 ig صنع من طرف نستله المغرب الطقة الصناعية الجديدة 2440 ONSSAN CTC 53-05-13 vasi ستورد من طرف نستله تونس لتوزيع، ب زغوان - تونس تورد من طرف نستله الجزائرش. درة الزوار - 1531 الجزائر www.nestlemaghreb.com NUTRITIONAL COMPASS علامة تجارية مسجلة لشركة",
+    "product_name": "Nescafé Classic",
+    "unique_scans_n": 610
+  },
+  {
+    "allergens": "en:milk",
+    "brands": "Danone",
+    "categories": "Beverages and beverages preparations,Beverages,Dairies,Fermented foods,Fermented milk products,Desserts,Dairy desserts,Dairy drinks,Fermented dairy desserts,Fermented drinks,Fermented dairy desserts with fruits,Fermented milk drinks,Yogurts,Fruit yogurts,Yogurt drinks",
+    "code": "6111032006619",
+    "ingredients_text": "Lait sans crème, sucre, crème, poudre de lait sans crème, protéines du lait, matière grasse laitiere, colorant naturel",
+    "product_name": "Jamila رايبي",
+    "unique_scans_n": 609
+  },
+  {
+    "allergens": "",
+    "brands": "Aïn lfrane",
+    "categories": "Boissons,Eaux,Eaux de sources,Eaux minérales,Eaux minérales naturelles",
+    "code": "6111251420166",
+    "ingredients_text": "Eau minérale naturelle",
+    "product_name": "Eau",
+    "unique_scans_n": 608
+  },
+  {
+    "allergens": "",
+    "brands": "Aquafina",
+    "categories": "Boissons,Eaux,Eaux de table",
+    "code": "6111252421575",
+    "ingredients_text": "eau",
+    "product_name": "Aquafina 50cl",
+    "unique_scans_n": 603
+  },
+  {
+    "allergens": "",
+    "brands": "solis",
+    "categories": "Sauces tomate",
+    "code": "8445290615350",
+    "ingredients_text": "Tomato, tomato concentrate, water, non-hydrogenated sunflower oil, sugar, modified corn starch, salt, natural onion flavor, onion, garlic, white pepper",
+    "product_name": "sauce tomate cuisinée",
+    "unique_scans_n": 595
+  },
+  {
+    "allergens": "fr:Aspartame",
+    "brands": "Coca-Cola",
+    "categories": "Beverages and beverages preparations,Beverages,Carbonated drinks,Artificially sweetened beverages,Sodas,Diet beverages,Non-alcoholic beverages,Colas,Diet sodas,Diet cola soft drink,kosher",
+    "code": "5449000214799",
+    "ingredients_text": "carbonated water, colouring (e150d), acidifier (phosphoric acid), sweeteners (aspartame, acesulfame-k), natural flavors, caffeine aroma, acidity regulator (sodium citrates)",
+    "product_name": "Coke Zero",
+    "unique_scans_n": 593
+  },
+  {
+    "allergens": "en:gluten,en:milk",
+    "brands": "Henry's",
+    "categories": "Snacks,Snacks sucrés,Biscuits et gâteaux,Biscuits,Biscuits sablés,Sablés à la noix de coco",
+    "code": "3362600011228",
+    "ingredients_text": "Farine de _froment_, sucre, graisse végétale, noix de coco râpée, poudre de _lait_, poudre de _lactosérum_, sucre inverti, agents levants (bicarbonate d'ammonium - bicarbonate de Sodium), sel, arômes.",
+    "product_name": "Sable coco Henry s 42g",
+    "unique_scans_n": 590
+  },
+  {
+    "allergens": "en:nuts",
+    "brands": "alpro",
+    "categories": "en:Beverages and beverages preparations,Alimentos e bebidas à base de plantas,Bebidas,Alimentos à base de plantas,en:Dairy substitutes,Substitutos do leite,Nozes e seus produtos,Bebidas à base de plantas,Leites de planta,Leites de frutos secos,Bebidas de amêndoa",
+    "code": "5411188112709",
+    "ingredients_text": "Wasser, _Mandeln_ (2,3%), Calcium (Calciumcarbonat), Meersalz, Stabilisatoren (Guarkernmehl, Gellan), Emulgator (Lecithine), natürliches Aroma, Vitamine B12, D2, E.",
+    "product_name": "Geröstete Mandel Ohne Zucker",
+    "unique_scans_n": 579
+  },
+  {
+    "allergens": "",
+    "brands": "Aïn Atlas",
+    "categories": "Boissons,Eaux,Eaux de sources,Eaux minérales",
+    "code": "6111035001673",
+    "ingredients_text": "eau minerale",
+    "product_name": "Aïn Atlas 50cl",
+    "unique_scans_n": 579
+  },
+  {
+    "allergens": "en:gluten",
+    "brands": "Oatly",
+    "categories": "Beverages and beverages preparations, Plant-based foods and beverages, Beverages, Plant-based foods, Cereals and potatoes, Dairy substitutes, Cereals and their products, Milk substitutes, Plant-based beverages, Plant-based milk alternatives, Cereal-based drinks, Oat-based drinks",
+    "code": "7394376616228",
+    "ingredients_text": "water,  oats  10%, rapeseed oil, acidity regulator (dipotassium phosphate), minerals (calcium carbonate, potassium iodide), salt, vitamins (d2, riboflavin and b12),",
+    "product_name": "Oat Drink Barista Edition",
+    "unique_scans_n": 570
+  },
+  {
+    "allergens": "",
+    "brands": "Dost",
+    "categories": "Produits laitiers, Laits, Laits homogénéisés, Laits UHT, Laits entiers, Laits de vache",
+    "code": "6111250470742",
+    "ingredients_text": "lait",
+    "product_name": "Lait U.H.T entier",
+    "unique_scans_n": 568
+  },
+  {
+    "allergens": "en:soybeans",
+    "brands": "la Prairie",
+    "categories": "Plant-based foods and beverages, Plant-based foods, Fats, Spreads, Plant-based spreads, Spreadable fats, Vegetable fats, Margarines, en:salted-spreads",
+    "code": "6111203001467",
+    "ingredients_text": "Corps gras végétal, eau, sucre, sel, mono-diglycérides végétales, lécithine de soja, calcium, amidon, sorbate de potassium, antioxydant, acide citrique, arôme, β-carotène, 7 vitamines : A, B6, B2, B1, E, D et B12.",
+    "product_name": "margarine la prairie 225g",
+    "unique_scans_n": 566
+  },
+  {
+    "allergens": "en:nuts",
+    "brands": "Alesto",
+    "categories": "Plant-based foods and beverages,Plant-based foods,Nuts and their products,Nuts,Shelled nuts,Walnuts,Walnut kernels",
+    "code": "20005733",
+    "ingredients_text": "Noix",
+    "product_name": "Cerneaux de Noix",
+    "unique_scans_n": 565
+  },
+  {
+    "allergens": "en:gluten,en:milk,en:nuts,en:soybeans",
+    "brands": "nutella",
+    "categories": "Biscoitos recheados",
+    "code": "8000500310427",
+    "ingredients_text": "Pâte à tartiner aux NOISETTES et au cacao 40% (sucre, huile de palme, NOISETTES 13%**, LAIT écrémé en poudre 8,7%**, cacao maigre 7,4%**, émulsifiants : lécithines [SOJA]; vanilline), farine de FROMENT 32,5%, graisses végétales (palme, palmiste), sucre de canne (contient BLE) 8,5%, LACTOSE, son de BLE, LAIT en poudre, miel, poudres à lever (diphosphate disodique, carbonate acide de sodium, carbonate acide d'ammonium), farine d'ORGE malté, cacao maigre en poudre, sel, extrait en poudre de malt d'ORGE et de maïs, amidon de FROMENT, émulsifiants: lécithines [SOJA]; vanilline.",
+    "product_name": "Biscuits croquants au coeur onctueux de Nutella®",
+    "unique_scans_n": 562
+  },
+  {
+    "allergens": "en:gluten",
+    "brands": "wasa",
+    "categories": "Aliments d'origine végétale,Snacks,Céréales et pommes de terre,Pains,Pains croustillants,Petit-déjeuners",
+    "code": "7300400481595",
+    "ingredients_text": "Farine complète de SEIGLE (77 g*), farine de SEIGLE (28 g*), levure, sel. Peut contenir des traces de LUPIN, LAIT, MOUTARDE, GRAINES DE SÉSAME et SOJA. *en g pour 100 g de produit.",
+    "product_name": "Tartine croustillante Authentique",
+    "unique_scans_n": 557
+  },
+  {
+    "allergens": "",
+    "brands": "Lindt",
+    "categories": "Produits fermentés,Snacks,Snacks sucrés,Cacao et dérivés,Chocolats,Chocolats noirs,Chocolats noirs en tablette,Chocolat noir en tablette extra dégustation à 70% de cacao minimum",
+    "code": "3046920022651",
+    "ingredients_text": "Pâte de cacao, sucre, beurre de cacao, vanille.\r\n\r\nPeut contenir des fruits à coque, du lait, du soja et des graines de sésame.",
+    "product_name": "Excellence Noir Intense 70% Cacao",
+    "unique_scans_n": 552
+  },
+  {
+    "allergens": "en:soybeans",
+    "brands": "",
+    "categories": "Aliments et boissons à base de végétaux, Produits laitiers, Aliments d'origine végétale, Matières grasses, Produits à tartiner, Pâtes à tartiner végétales, Matières grasses à tartiner, Matières grasses végétales, Matières grasses animales, Matière grasse laitière, en:dairy-spread, Margarines, Beurres",
+    "code": "6111037000599",
+    "ingredients_text": "Margarine allégée (60%M.G.):Corps gras et huiles 100% végétales, eau, sel (1%), lécithine (E322), Monoglycéride (E471), Amidon, Sorbate de potassium (E202), Acide citrique (E330), Arôme, Antioxydant (E321), Colorant, Vitamines. Contient du soja.",
+    "product_name": "Familia 200g",
+    "unique_scans_n": 547
+  },
+  {
+    "allergens": "",
+    "brands": "Star",
+    "categories": "Condiments,Vinaigres,Vinaigres blancs",
+    "code": "6111184001661",
+    "ingredients_text": "vinaigre de table",
+    "product_name": "Star vinaigre de table BLANC",
+    "unique_scans_n": 546
+  },
+  {
+    "allergens": "en:milk,en:nuts,en:soybeans",
+    "brands": "Rigoni Di Asiago",
+    "categories": "Petit-déjeuners,Produits à tartiner,Produits à tartiner sucrés,Pâtes à tartiner,Pâtes à tartiner aux noisettes,Pâtes à tartiner au chocolat,Pâtes à tartiner aux noisettes et au cacao",
+    "code": "8052575090230",
+    "ingredients_text": "raw sugar, hazelnut paste 18,5%, sunflower oil, skimmed milk powder, low-fat cocoa powder 6,5%, cocoa butter, emulsifier: soy lecithin, vanilla extract",
+    "product_name": "Nocciolata",
+    "unique_scans_n": 540
+  },
+  {
+    "allergens": "en:milk,en:nuts",
+    "brands": "Bonne Maman",
+    "categories": "Breakfasts,Spreads,Sweet spreads,fr:Pâtes à tartiner,Hazelnut spreads,Chocolate spreads,Cocoa and hazelnuts spreads",
+    "code": "3608580065340",
+    "ingredients_text": "sucre, _noisettes_ 20%, huiles végétales (tournesol, colza), _lait_ écrémé en poudre, cacao maigre en poudre 5,5%, beurre de cacao, émulsifiant : lécithine de tournesol, extrait de vanille, Peut contenir d'autres _fruits à coque_,",
+    "product_name": "Pâte à tartiner noisettes et cacao",
+    "unique_scans_n": 537
+  },
+  {
+    "allergens": "en:gluten",
+    "brands": "Weetabix",
+    "categories": "Plant-based foods and beverages,Plant-based foods,Breakfasts,Cereals and potatoes,Cereals and their products,Breakfast cereals",
+    "code": "5010029000016",
+    "ingredients_text": "Wholegrain Wheat (95%), Malted Barley Extract, Sugar, Salt, Niacin, Iron, Riboflavin (B2), Thiamin (B1), Folic Acid.",
+    "product_name": "Weetabix",
+    "unique_scans_n": 536
+  },
+  {
+    "allergens": "",
+    "brands": "Tyrrell's",
+    "categories": "Plant-based foods and beverages,Plant-based foods,Snacks,Cereals and potatoes,Salty snacks,Appetizers,Chips and fries,Crisps,Potato crisps,Potato crisps in sunflower oil,fr:Chips de pommes de terre classiques",
+    "code": "5060042641000",
+    "ingredients_text": "Kartoffeln, Sonnenblumenöl, Meersalz.",
+    "product_name": "Lightly sea salted crisps",
+    "unique_scans_n": 536
+  },
+  {
+    "allergens": "",
+    "brands": "Green and black",
+    "categories": "Snacks,Snacks sucrés,Cacao et dérivés,Confiseries,Confiseries chocolatées,Chocolats,Chocolats noirs",
+    "code": "7622210584724",
+    "ingredients_text": "pâte de cacao*, beurre de cacao*, cacao maigre en poudre*, sucre de canne*, extrait de vanille*, * ingrédients issus de l'agriculture biologique",
+    "product_name": "Dark chocolate",
+    "unique_scans_n": 527
+  },
+  {
+    "allergens": "",
+    "brands": "Volvic",
+    "categories": "beverages-and-beverages-preparations, beverages, waters, spring-waters, mineral-waters, natural-mineral-waters, getränke, de:mineralwasser, natürliches-mineralwasser, de:quellwasser, de:wasser",
+    "code": "3057640257773",
+    "ingredients_text": "Eau minerale naturelle",
+    "product_name": "Eau Minérale Naturelle",
+    "unique_scans_n": 526
+  },
+  {
+    "allergens": "en:fish",
+    "brands": "joly",
+    "categories": "Produits de la mer,Poissons et dérivés,Poissons,Poissons gras,Filets de poissons,Maquereaux,Filets de maquereaux,Filets de maquereaux à l'huile",
+    "code": "6111162001218",
+    "ingredients_text": "Maquereaux, huile végétale, sel.",
+    "product_name": "Filets de maquereau",
+    "unique_scans_n": 519
+  },
+  {
+    "allergens": "",
+    "brands": "Lindt",
+    "categories": "Snacks,Snacks sucrés,Cacao et dérivés,Chocolats,Chocolats noirs,Chocolats noirs en tablette",
+    "code": "3046920022606",
+    "ingredients_text": "Pâte de cacao, cacao maigre, beurre de cacao, cassonade, vanille.\n\nPeut contenir du lait, des fruits à coque, du soja et des graines de sésame.",
+    "product_name": "Excellence Noir Puissant 85% Cacao",
+    "unique_scans_n": 516
+  },
+  {
+    "allergens": "",
+    "brands": "Primevère",
+    "categories": "Aliments et boissons à base de végétaux, Aliments d'origine végétale, Matières grasses, Produits à tartiner, Pâtes à tartiner végétales, Produits à tartiner salés, Matières grasses à tartiner, Matières grasses végétales, Margarines, Margarines allégées",
+    "code": "3155251205296",
+    "ingredients_text": "Huiles végétales non hydrogénées 54% (colza origine France, coco, palme, palmiste, lin), eau, émulsifiants (mono et diglycérides d'acides gras, lécithine de tournesol), sel, arômes naturels, antioxydant (extrait de romarin), jus de citron concentré, colorant (bêta-carotène), vitamine B1,",
+    "product_name": "Tartine Doux",
+    "unique_scans_n": 514
+  },
+  {
+    "allergens": "",
+    "brands": "sos",
+    "categories": "en:tomato-sauces",
+    "code": "6111251753912",
+    "ingredients_text": "PROTEGE Tetra Pak CE QUI EST BON olla المكونات : لب طماطم (160غ لإنتاج 100غ من المنتج) ، زيت عباد الشمس، سكر ، نشا الذرة معدل، ملح، نكهة الخضر. 7% من مواد جافة \n\nIngrédients: Purée de tomate (160 g pour produire 100 g de produit), huile de tournesol, sucre, amidon de mais modifié, sel, arôme de légumes. 7% de matières sèches. \n\nIngredientes: Puré de tomate (160 g para elaborar 100 g de producto), aceite de girasol, azúcar, almidón modificado de maíz, sal, aroma de verduras. 7% de materia seca. VALEURS NUTRITIONNELLES (Pour 100 g de produit) القيمة الغذائية (لكل 100غ من المنتج Valeur Energétique",
+    "product_name": "611251753912",
+    "unique_scans_n": 510
+  },
+  {
+    "allergens": "",
+    "brands": "سلطان",
+    "categories": "Beverages and beverages preparations,Plant-based foods and beverages,Beverages,Plant-based foods,Fruits and vegetables based foods,Fruits based foods,Fruits,Waters,Spring waters,Mineral waters,Unsweetened beverages,Natural mineral waters,Non-carbonated natural mineral waters",
+    "code": "6111248360130",
+    "ingredients_text": "Minéralisation en mg/t كالسيوم بيكربونات صوديوم كلورير نترات بوتاسيوم سلفات Magnésium 44 Calcium 70-&gt; Bicarbonates 402 • Sodium 4 Chlorures 7.1 Nitrates 16 Potassium 1 Sulfates 3.7",
+    "product_name": "Aïn Soltane",
+    "unique_scans_n": 509
+  },
+  {
+    "allergens": "en:gluten,en:milk,en:soybeans",
+    "brands": "Bjorg",
+    "categories": "Snacks, Sweet snacks, Biscuits and cakes, Biscuits and crackers, Biscuits, Chocolate biscuits, Filled biscuits, Dark chocolate biscuits, Sandwich biscuits",
+    "code": "3229820100234",
+    "ingredients_text": "Farine de blé* 39%, Chocolat noir* 25% (pâte de cacao*, sucre de canne*, beurre de cacao*) Sucre de canne* roux non raffiné,  Farine complète de blé* 15%, Huile de tournesol oléique*,  Arôme naturel de vanille,  Lait* écrémé en poudre, Sel de mer.\r\nPoudres à lever (carbonates d'ammonium, carbonates de sodium). Épaississant (gomme d'acacia). Antioxydant (extraits de romarin).",
+    "product_name": "Fourrés Chocolat Noir",
+    "unique_scans_n": 502
+  },
+  {
+    "allergens": "",
+    "brands": "El Baraka",
+    "categories": "Aliments et boissons à base de végétaux,Aliments d'origine végétale,Petit-déjeuners,Produits à tartiner,Pâtes à tartiner végétales,Produits à tartiner sucrés,Confitures et marmelades,Confitures,Confitures de fruits rouges,Confitures de fraises",
+    "code": "6111184001074",
+    "ingredients_text": "Fraises (56%), Sucre, gélifiant (E-440) et acidifiant (E-330).",
+    "product_name": "Confiture De Fraises 430 G",
+    "unique_scans_n": 499
+  },
+  {
+    "allergens": "en:soybeans",
+    "brands": "fin CARRÉ",
+    "categories": "snacks, sweet-snacks, cocoa-and-its-products, chocolates, dark-chocolates, cacao-et-derives, fr:chocolats, fr:chocolats-noirs, fr:chocolats-noirs-extra-fin",
+    "code": "20022464",
+    "ingredients_text": "cocoa mass, sugar, cocoa butter, fat reduced cocoa powder, emulsifier: lecithins (soya), natural vanilla flavouring, dark chocolate contains: cocoa solids 74% minimum,",
+    "product_name": "NOIR INTENSE 74% CACAO",
+    "unique_scans_n": 495
+  },
+  {
+    "allergens": "",
+    "brands": "Ciel",
+    "categories": "Boissons et préparations de boissons,Boissons,Eaux,Eaux de sources,Eaux de table",
+    "code": "5449000206770",
+    "ingredients_text": "Eau de Table",
+    "product_name": "Eau de table",
+    "unique_scans_n": 492
+  }
+]

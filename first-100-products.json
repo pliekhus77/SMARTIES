@@ -1,0 +1,802 @@
+[
+  {
+    "code": "3017620422000",
+    "product_name": "Nutella 1",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951001",
+    "product_name": "Oreo Original 2",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835002",
+    "product_name": "Coca-Cola 3",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422003",
+    "product_name": "Nutella 4",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951004",
+    "product_name": "Oreo Original 5",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835005",
+    "product_name": "Coca-Cola 6",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422006",
+    "product_name": "Nutella 7",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951007",
+    "product_name": "Oreo Original 8",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835008",
+    "product_name": "Coca-Cola 9",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422009",
+    "product_name": "Nutella 10",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951010",
+    "product_name": "Oreo Original 11",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835011",
+    "product_name": "Coca-Cola 12",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422012",
+    "product_name": "Nutella 13",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951013",
+    "product_name": "Oreo Original 14",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835014",
+    "product_name": "Coca-Cola 15",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422015",
+    "product_name": "Nutella 16",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951016",
+    "product_name": "Oreo Original 17",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835017",
+    "product_name": "Coca-Cola 18",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422018",
+    "product_name": "Nutella 19",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951019",
+    "product_name": "Oreo Original 20",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835020",
+    "product_name": "Coca-Cola 21",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422021",
+    "product_name": "Nutella 22",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951022",
+    "product_name": "Oreo Original 23",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835023",
+    "product_name": "Coca-Cola 24",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422024",
+    "product_name": "Nutella 25",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951025",
+    "product_name": "Oreo Original 26",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835026",
+    "product_name": "Coca-Cola 27",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422027",
+    "product_name": "Nutella 28",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951028",
+    "product_name": "Oreo Original 29",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835029",
+    "product_name": "Coca-Cola 30",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422030",
+    "product_name": "Nutella 31",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951031",
+    "product_name": "Oreo Original 32",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835032",
+    "product_name": "Coca-Cola 33",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422033",
+    "product_name": "Nutella 34",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951034",
+    "product_name": "Oreo Original 35",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835035",
+    "product_name": "Coca-Cola 36",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422036",
+    "product_name": "Nutella 37",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951037",
+    "product_name": "Oreo Original 38",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835038",
+    "product_name": "Coca-Cola 39",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422039",
+    "product_name": "Nutella 40",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951040",
+    "product_name": "Oreo Original 41",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835041",
+    "product_name": "Coca-Cola 42",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422042",
+    "product_name": "Nutella 43",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951043",
+    "product_name": "Oreo Original 44",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835044",
+    "product_name": "Coca-Cola 45",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422045",
+    "product_name": "Nutella 46",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951046",
+    "product_name": "Oreo Original 47",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835047",
+    "product_name": "Coca-Cola 48",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422048",
+    "product_name": "Nutella 49",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951049",
+    "product_name": "Oreo Original 50",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835050",
+    "product_name": "Coca-Cola 51",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422051",
+    "product_name": "Nutella 52",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951052",
+    "product_name": "Oreo Original 53",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835053",
+    "product_name": "Coca-Cola 54",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422054",
+    "product_name": "Nutella 55",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951055",
+    "product_name": "Oreo Original 56",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835056",
+    "product_name": "Coca-Cola 57",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422057",
+    "product_name": "Nutella 58",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951058",
+    "product_name": "Oreo Original 59",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835059",
+    "product_name": "Coca-Cola 60",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422060",
+    "product_name": "Nutella 61",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951061",
+    "product_name": "Oreo Original 62",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835062",
+    "product_name": "Coca-Cola 63",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422063",
+    "product_name": "Nutella 64",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951064",
+    "product_name": "Oreo Original 65",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835065",
+    "product_name": "Coca-Cola 66",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422066",
+    "product_name": "Nutella 67",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951067",
+    "product_name": "Oreo Original 68",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835068",
+    "product_name": "Coca-Cola 69",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422069",
+    "product_name": "Nutella 70",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951070",
+    "product_name": "Oreo Original 71",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835071",
+    "product_name": "Coca-Cola 72",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422072",
+    "product_name": "Nutella 73",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951073",
+    "product_name": "Oreo Original 74",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835074",
+    "product_name": "Coca-Cola 75",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422075",
+    "product_name": "Nutella 76",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951076",
+    "product_name": "Oreo Original 77",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835077",
+    "product_name": "Coca-Cola 78",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422078",
+    "product_name": "Nutella 79",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951079",
+    "product_name": "Oreo Original 80",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835080",
+    "product_name": "Coca-Cola 81",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422081",
+    "product_name": "Nutella 82",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951082",
+    "product_name": "Oreo Original 83",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835083",
+    "product_name": "Coca-Cola 84",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422084",
+    "product_name": "Nutella 85",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951085",
+    "product_name": "Oreo Original 86",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835086",
+    "product_name": "Coca-Cola 87",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422087",
+    "product_name": "Nutella 88",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951088",
+    "product_name": "Oreo Original 89",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835089",
+    "product_name": "Coca-Cola 90",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422090",
+    "product_name": "Nutella 91",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951091",
+    "product_name": "Oreo Original 92",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835092",
+    "product_name": "Coca-Cola 93",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422093",
+    "product_name": "Nutella 94",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951094",
+    "product_name": "Oreo Original 95",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835095",
+    "product_name": "Coca-Cola 96",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422096",
+    "product_name": "Nutella 97",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  },
+  {
+    "code": "7622210951097",
+    "product_name": "Oreo Original 98",
+    "ingredients_text": "Wheat flour, sugar, palm oil, cocoa powder, glucose-fructose syrup, wheat starch, raising agents, salt, emulsifiers, flavouring",
+    "allergens": "en:gluten",
+    "categories": "en:biscuits-and-cakes, en:biscuits",
+    "brands": "Oreo"
+  },
+  {
+    "code": "8901030835098",
+    "product_name": "Coca-Cola 99",
+    "ingredients_text": "Carbonated water, sugar, caramel color, phosphoric acid, natural flavor, caffeine",
+    "allergens": "",
+    "categories": "en:beverages, en:carbonated-drinks",
+    "brands": "Coca-Cola"
+  },
+  {
+    "code": "3017620422099",
+    "product_name": "Nutella 100",
+    "ingredients_text": "Sugar, palm oil, hazelnuts, cocoa, skim milk powder, lecithin, vanillin",
+    "allergens": "en:milk, en:nuts",
+    "categories": "en:spreads, en:sweet-spreads",
+    "brands": "Ferrero"
+  }
+]
