@@ -25,7 +25,7 @@ graph TB
     end
     
     subgraph "AWS Cloud Storage"
-        ATLAS[(MongoDB Atlas on AWS<br/>M10+ Tier with Vector Search)]
+        ATLAS[(MongoDB Atlas on AWS<br/>M0 Free Tier with Vector Search)]
         VECTOR[Vector Search Indexes<br/>Cosine Similarity]
         NETWORK[IP Whitelisting<br/>Hackathon Venue Access]
     end
@@ -478,11 +478,12 @@ db.products.aggregate([
 ### MongoDB Atlas on AWS Configuration
 
 **Cluster Specifications**:
-- **Tier**: M10 minimum (for Vector Search support) - $0.08/hour = ~$58/month
-- **Cloud Provider**: AWS (us-east-1 or preferred region)
-- **Storage**: 10GB initial (sufficient for curated dataset)
-- **Network Security**: IP whitelisting for hackathon venue
-- **Backup**: Standard backup with point-in-time recovery
+- **Tier**: M0 Free Tier (Vector Search supported since 2024) - $0/month
+- **Cloud Provider**: AWS (us-east-1 region)
+- **Storage**: 512MB maximum (requires selective data import)
+- **Connection**: Existing cluster `cluster0.31pwc7s.mongodb.net`
+- **Database**: `smarties_db` with optimized schema for storage limits
+- **Network Security**: IP whitelisting configured for development access
 
 **Vector Search Configuration**:
 - Maximum 10 vector indexes per collection

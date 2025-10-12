@@ -19,6 +19,9 @@
     "test:all": "npm run test:unit && npm run test:integration && npm run test:platform",
     "validate-setup": "node scripts/validate-setup.js",
     "setup:collections": "node src/scripts/setup-collections.js",
+    "setup:mongodb": "npx ts-node src/scripts/setup-mongodb-atlas.ts",
+    "test:mongodb": "npx ts-node src/scripts/setup-mongodb-atlas.ts test",
+    "test:mongodb-setup": "npx ts-node src/scripts/test-mongodb-setup.ts",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "build": "react-native bundle",
     "ci:validate": "node scripts/validate-ci.js",
@@ -36,6 +39,7 @@
     "@types/node": "^20.0.0",
     "jest": "^29.0.0",
     "ts-jest": "^29.0.0",
+    "ts-node": "^10.9.0",
     "typescript": "^5.0.0"
   },
   "jest": {

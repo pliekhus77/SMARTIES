@@ -29,53 +29,170 @@ export interface NutritionalInfo {
 }
 
 /**
- * Core Product interface for SMARTIES application
- * Supports efficient storage and retrieval of product information
- * with proper relationships and indexing for sub-100ms query performance
+ * Core Product interface for SMARTIES application with Vector Search capabilities
+ * Supports efficient storage and retrieval of product information with AI-powered semantic search
+ * Implements Requirements 1.1, 1.2, and 1.5 from data schema specification
  */
 export interface Product {
   _id?: string;                   // MongoDB ObjectId as string
-  upc: string;                    // Unique product identifier (required)
-  name: string;                   // Product display name (required)
-  brand?: string;                 // Manufacturer/brand name
-  ingredients: string[];          // List of ingredients (required)
-  allergens: string[];           // Detected allergens (required)
-  dietaryFlags: DietaryFlags;    // Religious/lifestyle compliance
-  nutritionalInfo?: NutritionalInfo; // Basic nutrition data
-  imageUrl?: string;             // Product image URL
-  source: ProductSource;         // Data source (required)
-  lastUpdated: Date;             // Last update timestamp (required)
-  confidence: number;            // Data quality score 0-1 (required)
-}
-
-/**
- * Product creation input (excludes auto-generated fields)
- */
-export interface CreateProductInput {
-  upc: string;
-  name: string;
-  brand?: string;
-  ingredients: string[];
-  allergens: string[];
-  dietaryFlags: DietaryFlags;
+  
+  // Core product identification (Requirements 1.1)
+  code: string;                   // UPC/barcode identifier (renamed from upc for OpenFoodFacts compatibility)
+  product_name: string;           // Product display name (OpenFoodFacts format)
+  brands_tags?: string[];         // Brand information as tags
+  categories_tags?: string[];     // Product categories
+  
+  // Ingredient and allergen information (Requirements 1.1)
+  ingredients_text: string;       // Raw ingredients text for embedding generation
+  ingredients_tags?: string[];    // Structured ingredient tags
+  ingredients_analysis_tags?: string[]; // Analysis results (vegan, vegetarian, etc.)
+  allergens_tags: string[];       // Allergen tags in OpenFoodFacts format
+  allergens_hierarchy?: string[]; // Allergen hierarchy information
+  traces_tags?: string[];         // Cross-contamination traces
+  
+  // Dietary and certification labels (Requirements 1.1)
+  labels_tags?: string[];         // Certification labels (organic, kosher, halal, etc.)
+  
+  // Vector embeddings for AI-powered search (Requirements 1.2)
+  ingredients_embedding: number[]; // 384-dimension vector for ingredient similarity
+  product_name_embedding: number[]; // 384-dimension vector for product name matching
+  allergens_embedding: number[];   // 384-dimension vector for allergen profile analysis
+  
+  // Derived dietary compliance flags (Requirements 1.1)
+  dietary_flags: {
+    vegan: boolean;
+    vegetarian: boolean;
+    gluten_free: boolean;
+    kosher: boolean;
+    halal: boolean;
+    organic?: boolean;
+  };
+  
+  // Data quality and metadata (Requirements 1.5)
+  data_quality_score: number;     // Data completeness and accuracy (0.0-1.0)
+  popularity_score?: number;      // Product popularity for ranking
+  completeness_score?: number;    // Data completeness metric
+  last_updated: Date;             // Last update timestamp
+  source: ProductSource;          // Data source tracking
+  
+  // Legacy fields for backward compatibility
+  /** @deprecated Use code instead */
+  upc?: string;
+  /** @deprecated Use product_name instead */
+  name?: string;
+  /** @deprecated Use ingredients_text instead */
+  ingredients?: string[];
+  /** @deprecated Use allergens_tags instead */
+  allergens?: string[];
+  /** @deprecated Use dietary_flags instead */
+  dietaryFlags?: DietaryFlags;
+  /** @deprecated Use data_quality_score instead */
+  confidence?: number;
+  /** @deprecated Use last_updated instead */
+  lastUpdated?: Date;
+  
+  // Optional fields
   nutritionalInfo?: NutritionalInfo;
   imageUrl?: string;
-  source: ProductSource;
-  confidence: number;
 }
 
 /**
- * Product update input (all fields optional except those that shouldn't change)
+ * Product creation input for new vector-enabled schema
+ * Excludes auto-generated fields like _id, embeddings, and timestamps
+ */
+export interface CreateProductInput {
+  // Core identification
+  code: string;                   // UPC/barcode
+  product_name: string;           // Product name
+  brands_tags?: string[];         // Brand tags
+  categories_tags?: string[];     // Category tags
+  
+  // Ingredient and allergen data
+  ingredients_text: string;       // Raw ingredients text
+  ingredients_tags?: string[];    // Structured ingredients
+  ingredients_analysis_tags?: string[]; // Analysis tags
+  allergens_tags: string[];       // Allergen tags
+  allergens_hierarchy?: string[]; // Allergen hierarchy
+  traces_tags?: string[];         // Trace allergens
+  
+  // Labels and certifications
+  labels_tags?: string[];         // Certification labels
+  
+  // Derived flags (will be computed if not provided)
+  dietary_flags?: {
+    vegan: boolean;
+    vegetarian: boolean;
+    gluten_free: boolean;
+    kosher: boolean;
+    halal: boolean;
+    organic?: boolean;
+  };
+  
+  // Quality metrics
+  data_quality_score: number;     // Data quality (0.0-1.0)
+  popularity_score?: number;      // Popularity ranking
+  completeness_score?: number;    // Completeness metric
+  source: ProductSource;          // Data source
+  
+  // Optional fields
+  nutritionalInfo?: NutritionalInfo;
+  imageUrl?: string;
+  
+  // Legacy support (will be mapped to new fields)
+  upc?: string;                   // Maps to code
+  name?: string;                  // Maps to product_name
+  ingredients?: string[];         // Maps to ingredients_text
+  allergens?: string[];           // Maps to allergens_tags
+  dietaryFlags?: DietaryFlags;    // Maps to dietary_flags
+  confidence?: number;            // Maps to data_quality_score
+}
+
+/**
+ * Product update input for vector-enabled schema
+ * All fields optional except code which shouldn't change
  */
 export interface UpdateProductInput {
+  // Core fields (code should not be updated)
+  product_name?: string;
+  brands_tags?: string[];
+  categories_tags?: string[];
+  
+  // Ingredient and allergen updates
+  ingredients_text?: string;
+  ingredients_tags?: string[];
+  ingredients_analysis_tags?: string[];
+  allergens_tags?: string[];
+  allergens_hierarchy?: string[];
+  traces_tags?: string[];
+  
+  // Labels and certifications
+  labels_tags?: string[];
+  
+  // Derived flags
+  dietary_flags?: {
+    vegan?: boolean;
+    vegetarian?: boolean;
+    gluten_free?: boolean;
+    kosher?: boolean;
+    halal?: boolean;
+    organic?: boolean;
+  };
+  
+  // Quality metrics
+  data_quality_score?: number;
+  popularity_score?: number;
+  completeness_score?: number;
+  source?: ProductSource;
+  
+  // Optional fields
+  nutritionalInfo?: NutritionalInfo;
+  imageUrl?: string;
+  
+  // Legacy support
   name?: string;
-  brand?: string;
   ingredients?: string[];
   allergens?: string[];
   dietaryFlags?: DietaryFlags;
-  nutritionalInfo?: NutritionalInfo;
-  imageUrl?: string;
-  source?: ProductSource;
   confidence?: number;
 }
 

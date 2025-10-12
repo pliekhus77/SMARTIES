@@ -1,0 +1,30 @@
+# SMARTIES Data Processing Pipeline - Python Dependencies
+# Hugging Face Sentence Transformers Environment
+
+# Core ML/AI Dependencies
+sentence-transformers==5.1.1
+torch==2.8.0
+transformers==4.57.0
+huggingface-hub==0.35.3
+
+# Data Processing
+numpy==2.3.3
+pandas==2.3.3
+scipy==1.16.2
+scikit-learn==1.7.2
+
+# Utilities
+tqdm==4.67.1
+requests==2.32.5
+pyyaml==6.0.3
+
+# Image Processing (for future OCR capabilities)
+Pillow==11.3.0
+
+# Development and Testing
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+
+# Optional: For enhanced performance
+# torch-audio  # Uncomment if audio processing needed
+# accelerate   # Uncomment for GPU acceleration
