@@ -67,7 +67,13 @@
     "test:android-build": "node scripts/test-android-build.js",
     "test:android-compatibility": "node scripts/test-android-compatibility.js",
     "test:android-navigation": "node scripts/test-android-navigation.js",
-    "test:android-functionality": "node scripts/test-android-functionality.js"
+    "test:android-functionality": "node scripts/test-android-functionality.js",
+    "test:performance": "node scripts/run-performance-tests.js",
+    "test:performance:database": "jest --testPathPattern=performance/database-performance.test.ts --verbose",
+    "test:performance:startup": "jest --testPathPattern=performance/app-startup-performance.test.ts --verbose",
+    "test:performance:navigation": "jest --testPathPattern=performance/navigation-performance.test.ts --verbose",
+    "test:performance:memory": "jest --testPathPattern=performance/memory-performance.test.ts --verbose",
+    "validate:performance": "node scripts/validate-performance-requirements.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.9.1",

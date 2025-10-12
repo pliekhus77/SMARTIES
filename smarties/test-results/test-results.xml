@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="2" failures="0" errors="0" time="130.283">
-  <testsuite name="__tests__/App.test.tsx" errors="0" failures="0" skipped="0" timestamp="2025-10-11T23:09:12" time="125.855" tests="2">
-    <testcase classname="App" name="should render without crashing" time="13.61">
+<testsuites name="jest tests" tests="14" failures="0" errors="0" time="2.88">
+  <testsuite name="__tests__\performance\database-performance.test.ts" errors="0" failures="0" skipped="0" timestamp="2025-10-12T01:01:30" time="2.813" tests="14">
+    <testcase classname="Database Performance Tests › Query Response Time Requirements (Sub-100ms)" name="should perform product lookup by UPC in under 100ms" time="0.065">
     </testcase>
-    <testcase classname="App" name="should render navigation container" time="0.012">
+    <testcase classname="Database Performance Tests › Query Response Time Requirements (Sub-100ms)" name="should perform user profile lookup in under 100ms" time="0.05">
+    </testcase>
+    <testcase classname="Database Performance Tests › Query Response Time Requirements (Sub-100ms)" name="should perform scan history query in under 100ms" time="0.05">
+    </testcase>
+    <testcase classname="Database Performance Tests › Query Response Time Requirements (Sub-100ms)" name="should perform allergen-based product filtering in under 100ms" time="0.049">
+    </testcase>
+    <testcase classname="Database Performance Tests › Query Response Time Requirements (Sub-100ms)" name="should perform database health check in under 100ms" time="0.046">
+    </testcase>
+    <testcase classname="Database Performance Tests › Performance Under Load" name="should maintain performance with concurrent queries" time="0.04">
+    </testcase>
+    <testcase classname="Database Performance Tests › Performance Under Load" name="should handle batch operations efficiently" time="0.039">
+    </testcase>
+    <testcase classname="Database Performance Tests › Performance Degradation Scenarios" name="should handle slow network conditions gracefully" time="0.221">
+    </testcase>
+    <testcase classname="Database Performance Tests › Performance Degradation Scenarios" name="should timeout appropriately for very slow queries" time="1.018">
+    </testcase>
+    <testcase classname="Database Performance Tests › Index Performance Validation" name="should perform indexed UPC lookups efficiently" time="0.046">
+    </testcase>
+    <testcase classname="Database Performance Tests › Index Performance Validation" name="should perform indexed user queries efficiently" time="0.042">
+    </testcase>
+    <testcase classname="Database Performance Tests › Index Performance Validation" name="should perform compound index queries efficiently" time="0.044">
+    </testcase>
+    <testcase classname="Database Performance Tests › Connection Performance" name="should establish connection quickly" time="0.031">
+    </testcase>
+    <testcase classname="Database Performance Tests › Connection Performance" name="should perform connection health checks quickly" time="0.047">
     </testcase>
   </testsuite>
 </testsuites>
