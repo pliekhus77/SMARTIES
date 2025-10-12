@@ -62,7 +62,12 @@
     "test:ios": "node scripts/ios-validation-suite.js",
     "test:ios-compatibility": "node scripts/test-ios-compatibility.js",
     "test:ios-navigation": "node scripts/test-ios-navigation.js",
-    "test:ios-functionality": "node scripts/test-ios-functionality.js"
+    "test:ios-functionality": "node scripts/test-ios-functionality.js",
+    "test:android": "node scripts/android-validation-suite.js",
+    "test:android-build": "node scripts/test-android-build.js",
+    "test:android-compatibility": "node scripts/test-android-compatibility.js",
+    "test:android-navigation": "node scripts/test-android-navigation.js",
+    "test:android-functionality": "node scripts/test-android-functionality.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.9.1",
