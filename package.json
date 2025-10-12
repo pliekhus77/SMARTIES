@@ -27,7 +27,13 @@
     "ci:validate": "node scripts/validate-ci.js",
     "upload:openfoodfacts": "node scripts/upload-openfoodfacts-vector.js",
     "upload:top10k": "MAX_PRODUCTS=10000 node scripts/upload-openfoodfacts-vector.js",
-    "upload:test": "MAX_PRODUCTS=1000 node scripts/upload-openfoodfacts-vector.js"
+    "upload:test": "MAX_PRODUCTS=1000 node scripts/upload-openfoodfacts-vector.js",
+    "create-vector-indexes": "npx ts-node src/scripts/create-vector-indexes.ts",
+    "test-query-optimization": "npx ts-node src/scripts/test-query-optimization.ts",
+    "test:integration:database": "npx ts-node src/scripts/run-integration-tests.ts",
+    "test:database:performance": "jest src/services/__tests__/DatabasePerformance.test.ts",
+    "test:database:integration": "jest src/services/__tests__/DatabaseIntegration.test.ts",
+    "analyze:size": "node scripts/analyze-record-size.js"
   },
   "dependencies": {
     "mongodb": "^6.20.0",

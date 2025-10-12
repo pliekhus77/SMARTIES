@@ -60,7 +60,7 @@ export interface CollectionInterface {
   createIndex(keys: any, options?: any): Promise<string>;
   indexes(): Promise<any[]>;
   dropIndex(indexName: string): Promise<any>;
-}
+  aggregate(pipeline: any[]): { toArray(): Promise<any[]> };}
 
 /**
  * MongoDB admin interface for health checks
@@ -990,8 +990,52 @@ export class DatabaseService {
     return this.readOne<Product>('products', { upc });
   }
 
-  async getUserByProfileId(profileId: string): Promise<DatabaseResult<User | null>> {
-    return this.readOne<User>('users', { profileId });
+  /**
+   * Optimized UPC lookup for sub-100ms performance requirement
+   * Uses direct MongoDB query with minimal overhead
+   */
+  async findProductByUPC(upc: string): Promise<Product | null> {
+    try {
+      // Skip offline handling for performance-critical UPC lookup
+      if (this.connectionState !== ConnectionState.CONNECTED) {
+        return null;
+      }
+
+      const collection = this.getCollection('products');
+      const startTime = Date.now();
+      
+      // Direct findOne with UPC index for optimal performance
+      const product = await collection.findOne({ upc });
+      
+      const responseTime = Date.now() - startTime;
+      if (responseTime > 50) { // Log if over 50ms (half the target)
+        console.warn(`UPC lookup took ${responseTime}ms for UPC: ${upc}`);
+      }
+
+      return product as Product | null;
+    } catch (error) {
+      console.error('Fast UPC lookup failed:', error);
+      return null;
+    }
+  }  async getUserByProfileId(profileId: string): Promise<DatabaseResult<User | null>> {
+  /**
+   * Execute aggregation pipeline on products collection
+   */
+  async aggregateProducts(pipeline: any[]): Promise<any[]> {
+    try {
+      if (this.connectionState !== ConnectionState.CONNECTED) {
+        return [];
+      }
+
+      const collection = this.getCollection('products');
+      const results = await collection.aggregate(pipeline).toArray();
+      
+      return results;
+    } catch (error) {
+      console.error('Product aggregation failed:', error);
+      return [];
+    }
+  }    return this.readOne<User>('users', { profileId });
   }
 
   async getUserScanHistory(userId: string, limit: number = 50): Promise<DatabaseResult<ScanResult[]>> {
