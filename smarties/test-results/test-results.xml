@@ -1,33 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="14" failures="0" errors="0" time="2.88">
-  <testsuite name="__tests__\performance\database-performance.test.ts" errors="0" failures="0" skipped="0" timestamp="2025-10-12T01:01:30" time="2.813" tests="14">
-    <testcase classname="Database Performance Tests › Query Response Time Requirements (Sub-100ms)" name="should perform product lookup by UPC in under 100ms" time="0.065">
+<testsuites name="jest tests" tests="27" failures="0" errors="0" time="1.25">
+  <testsuite name="__tests__\cross-platform\UIConsistency.test.tsx" errors="0" failures="0" skipped="0" timestamp="2025-10-12T01:19:23" time="1.178" tests="27">
+    <testcase classname="UI Consistency Tests › Component Styling Consistency" name="should apply platform-specific styles correctly" time="0.002">
     </testcase>
-    <testcase classname="Database Performance Tests › Query Response Time Requirements (Sub-100ms)" name="should perform user profile lookup in under 100ms" time="0.05">
+    <testcase classname="UI Consistency Tests › Component Styling Consistency" name="should handle button styling consistently" time="0.421">
     </testcase>
-    <testcase classname="Database Performance Tests › Query Response Time Requirements (Sub-100ms)" name="should perform scan history query in under 100ms" time="0.05">
+    <testcase classname="UI Consistency Tests › Component Styling Consistency" name="should handle card styling consistently" time="0.003">
     </testcase>
-    <testcase classname="Database Performance Tests › Query Response Time Requirements (Sub-100ms)" name="should perform allergen-based product filtering in under 100ms" time="0.049">
+    <testcase classname="UI Consistency Tests › Layout Consistency" name="should handle flexbox layouts consistently" time="0">
     </testcase>
-    <testcase classname="Database Performance Tests › Query Response Time Requirements (Sub-100ms)" name="should perform database health check in under 100ms" time="0.046">
+    <testcase classname="UI Consistency Tests › Layout Consistency" name="should handle safe area layouts consistently" time="0">
     </testcase>
-    <testcase classname="Database Performance Tests › Performance Under Load" name="should maintain performance with concurrent queries" time="0.04">
+    <testcase classname="UI Consistency Tests › Layout Consistency" name="should handle responsive layouts consistently" time="0">
     </testcase>
-    <testcase classname="Database Performance Tests › Performance Under Load" name="should handle batch operations efficiently" time="0.039">
+    <testcase classname="UI Consistency Tests › Touch Interaction Consistency" name="should handle touch feedback consistently" time="0.001">
     </testcase>
-    <testcase classname="Database Performance Tests › Performance Degradation Scenarios" name="should handle slow network conditions gracefully" time="0.221">
+    <testcase classname="UI Consistency Tests › Touch Interaction Consistency" name="should handle gesture recognition consistently" time="0.002">
     </testcase>
-    <testcase classname="Database Performance Tests › Performance Degradation Scenarios" name="should timeout appropriately for very slow queries" time="1.018">
+    <testcase classname="UI Consistency Tests › Touch Interaction Consistency" name="should handle long press consistently" time="0">
     </testcase>
-    <testcase classname="Database Performance Tests › Index Performance Validation" name="should perform indexed UPC lookups efficiently" time="0.046">
+    <testcase classname="UI Consistency Tests › Typography Consistency" name="should handle font families consistently" time="0.001">
     </testcase>
-    <testcase classname="Database Performance Tests › Index Performance Validation" name="should perform indexed user queries efficiently" time="0.042">
+    <testcase classname="UI Consistency Tests › Typography Consistency" name="should handle text scaling consistently" time="0">
     </testcase>
-    <testcase classname="Database Performance Tests › Index Performance Validation" name="should perform compound index queries efficiently" time="0.044">
+    <testcase classname="UI Consistency Tests › Typography Consistency" name="should handle text alignment consistently" time="0.001">
     </testcase>
-    <testcase classname="Database Performance Tests › Connection Performance" name="should establish connection quickly" time="0.031">
+    <testcase classname="UI Consistency Tests › Color and Theme Consistency" name="should handle color schemes consistently" time="0">
     </testcase>
-    <testcase classname="Database Performance Tests › Connection Performance" name="should perform connection health checks quickly" time="0.047">
+    <testcase classname="UI Consistency Tests › Color and Theme Consistency" name="should handle theme switching consistently" time="0">
+    </testcase>
+    <testcase classname="UI Consistency Tests › Color and Theme Consistency" name="should handle system theme detection consistently" time="0.001">
+    </testcase>
+    <testcase classname="UI Consistency Tests › Animation Consistency" name="should handle animation timing consistently" time="0">
+    </testcase>
+    <testcase classname="UI Consistency Tests › Animation Consistency" name="should handle transition animations consistently" time="0">
+    </testcase>
+    <testcase classname="UI Consistency Tests › Animation Consistency" name="should handle loading animations consistently" time="0.002">
+    </testcase>
+    <testcase classname="UI Consistency Tests › Component State Consistency" name="should handle component mounting consistently" time="0.001">
+    </testcase>
+    <testcase classname="UI Consistency Tests › Component State Consistency" name="should handle component updates consistently" time="0.001">
+    </testcase>
+    <testcase classname="UI Consistency Tests › Component State Consistency" name="should handle error states consistently" time="0.002">
+    </testcase>
+    <testcase classname="UI Consistency Tests › Offline Banner Consistency" name="should render offline banner consistently" time="0.001">
+    </testcase>
+    <testcase classname="UI Consistency Tests › Offline Banner Consistency" name="should handle visibility changes consistently" time="0.001">
+    </testcase>
+    <testcase classname="UI Consistency Tests › Loading Screen Consistency" name="should render loading screen consistently" time="0.001">
+    </testcase>
+    <testcase classname="UI Consistency Tests › Loading Screen Consistency" name="should handle message updates consistently" time="0.001">
+    </testcase>
+    <testcase classname="UI Consistency Tests › Error Boundary Consistency" name="should handle errors consistently across platforms" time="0.001">
+    </testcase>
+    <testcase classname="UI Consistency Tests › Error Boundary Consistency" name="should provide consistent error recovery" time="0.001">
     </testcase>
   </testsuite>
 </testsuites>

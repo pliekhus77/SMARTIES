@@ -21,10 +21,13 @@
     "setup:collections": "node src/scripts/setup-collections.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "build": "react-native bundle",
-    "ci:validate": "node scripts/validate-ci.js"
+    "ci:validate": "node scripts/validate-ci.js",
+    "upload:openfoodfacts": "node scripts/upload-openfoodfacts-vector.js",
+    "upload:test": "MAX_PRODUCTS=1000 node scripts/upload-openfoodfacts-vector.js"
   },
   "dependencies": {
     "mongodb": "^6.20.0",
+    "openai": "^4.20.1",
     "zod": "^3.22.0"
   },
   "devDependencies": {

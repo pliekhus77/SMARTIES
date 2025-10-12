@@ -1,0 +1,901 @@
+{
+  "timestamp": "2025-10-12T01:19:24.499Z",
+  "totalExecutionTime": "28147ms",
+  "summary": {
+    "totalTests": 5,
+    "passedTests": 2,
+    "failedTests": 0
+  },
+  "testResults": {
+    "platformCompatibility": null,
+    "uiConsistency": {
+      "success": true,
+      "results": {
+        "numFailedTestSuites": 0,
+        "numFailedTests": 0,
+        "numPassedTestSuites": 1,
+        "numPassedTests": 27,
+        "numPendingTestSuites": 0,
+        "numPendingTests": 0,
+        "numRuntimeErrorTestSuites": 0,
+        "numTodoTests": 0,
+        "numTotalTestSuites": 1,
+        "numTotalTests": 27,
+        "openHandles": [],
+        "snapshot": {
+          "added": 0,
+          "didUpdate": false,
+          "failure": false,
+          "filesAdded": 0,
+          "filesRemoved": 0,
+          "filesRemovedList": [],
+          "filesUnmatched": 0,
+          "filesUpdated": 0,
+          "matched": 0,
+          "total": 0,
+          "unchecked": 0,
+          "uncheckedKeysByFile": [],
+          "unmatched": 0,
+          "updated": 0
+        },
+        "startTime": 1760231963156,
+        "success": true,
+        "testResults": [
+          {
+            "assertionResults": [
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Component Styling Consistency"
+                ],
+                "duration": 2,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Component Styling Consistency should apply platform-specific styles correctly",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should apply platform-specific styles correctly"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Component Styling Consistency"
+                ],
+                "duration": 421,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Component Styling Consistency should handle button styling consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle button styling consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Component Styling Consistency"
+                ],
+                "duration": 3,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Component Styling Consistency should handle card styling consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle card styling consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Layout Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Layout Consistency should handle flexbox layouts consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 3,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle flexbox layouts consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Layout Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Layout Consistency should handle safe area layouts consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle safe area layouts consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Layout Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Layout Consistency should handle responsive layouts consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 4,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle responsive layouts consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Touch Interaction Consistency"
+                ],
+                "duration": 1,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Touch Interaction Consistency should handle touch feedback consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 1,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle touch feedback consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Touch Interaction Consistency"
+                ],
+                "duration": 2,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Touch Interaction Consistency should handle gesture recognition consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 1,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle gesture recognition consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Touch Interaction Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Touch Interaction Consistency should handle long press consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 1,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle long press consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Typography Consistency"
+                ],
+                "duration": 1,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Typography Consistency should handle font families consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle font families consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Typography Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Typography Consistency should handle text scaling consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle text scaling consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Typography Consistency"
+                ],
+                "duration": 1,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Typography Consistency should handle text alignment consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 3,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle text alignment consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Color and Theme Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Color and Theme Consistency should handle color schemes consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle color schemes consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Color and Theme Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Color and Theme Consistency should handle theme switching consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle theme switching consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Color and Theme Consistency"
+                ],
+                "duration": 1,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Color and Theme Consistency should handle system theme detection consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 1,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle system theme detection consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Animation Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Animation Consistency should handle animation timing consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle animation timing consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Animation Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Animation Consistency should handle transition animations consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 1,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle transition animations consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Animation Consistency"
+                ],
+                "duration": 2,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Animation Consistency should handle loading animations consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 1,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle loading animations consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Component State Consistency"
+                ],
+                "duration": 1,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Component State Consistency should handle component mounting consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 1,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle component mounting consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Component State Consistency"
+                ],
+                "duration": 1,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Component State Consistency should handle component updates consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 1,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle component updates consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Component State Consistency"
+                ],
+                "duration": 2,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Component State Consistency should handle error states consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 1,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle error states consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Offline Banner Consistency"
+                ],
+                "duration": 1,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Offline Banner Consistency should render offline banner consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should render offline banner consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Offline Banner Consistency"
+                ],
+                "duration": 1,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Offline Banner Consistency should handle visibility changes consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle visibility changes consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Loading Screen Consistency"
+                ],
+                "duration": 1,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Loading Screen Consistency should render loading screen consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should render loading screen consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Loading Screen Consistency"
+                ],
+                "duration": 1,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Loading Screen Consistency should handle message updates consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 1,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle message updates consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Error Boundary Consistency"
+                ],
+                "duration": 1,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Error Boundary Consistency should handle errors consistently across platforms",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle errors consistently across platforms"
+              },
+              {
+                "ancestorTitles": [
+                  "UI Consistency Tests",
+                  "Error Boundary Consistency"
+                ],
+                "duration": 1,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "UI Consistency Tests Error Boundary Consistency should provide consistent error recovery",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 1,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should provide consistent error recovery"
+              }
+            ],
+            "endTime": 1760231964401,
+            "message": "",
+            "name": "C:\\git\\SMARTIES\\smarties\\__tests__\\cross-platform\\UIConsistency.test.tsx",
+            "startTime": 1760231963223,
+            "status": "passed",
+            "summary": ""
+          }
+        ],
+        "wasInterrupted": false
+      },
+      "output": "\n> smarties@1.0.0 test\n> jest --testPathPattern=__tests__/cross-platform/UIConsistency.test.tsx --verbose --json --outputFile=test-results/uiConsistency-results.json\n\n",
+      "timestamp": "2025-10-12T01:19:24.499Z"
+    },
+    "performanceBenchmarks": null,
+    "navigationConsistency": null,
+    "simplePlatformCompatibility": {
+      "success": true,
+      "results": {
+        "numFailedTestSuites": 0,
+        "numFailedTests": 0,
+        "numPassedTestSuites": 1,
+        "numPassedTests": 20,
+        "numPendingTestSuites": 0,
+        "numPendingTests": 0,
+        "numRuntimeErrorTestSuites": 0,
+        "numTodoTests": 0,
+        "numTotalTestSuites": 1,
+        "numTotalTests": 20,
+        "openHandles": [],
+        "snapshot": {
+          "added": 0,
+          "didUpdate": false,
+          "failure": false,
+          "filesAdded": 0,
+          "filesRemoved": 0,
+          "filesRemovedList": [],
+          "filesUnmatched": 0,
+          "filesUpdated": 0,
+          "matched": 0,
+          "total": 0,
+          "unchecked": 0,
+          "uncheckedKeysByFile": [],
+          "unmatched": 0,
+          "updated": 0
+        },
+        "startTime": 1760231949486,
+        "success": true,
+        "testResults": [
+          {
+            "assertionResults": [
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Platform Detection and Adaptation"
+                ],
+                "duration": 16,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Platform Detection and Adaptation should detect iOS platform correctly",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should detect iOS platform correctly"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Platform Detection and Adaptation"
+                ],
+                "duration": 1,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Platform Detection and Adaptation should detect Android platform correctly",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should detect Android platform correctly"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Platform Detection and Adaptation"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Platform Detection and Adaptation should handle platform-specific styling",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle platform-specific styling"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Screen Dimensions and Layout"
+                ],
+                "duration": 28,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Screen Dimensions and Layout should handle different screen sizes consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 16,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle different screen sizes consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Screen Dimensions and Layout"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Screen Dimensions and Layout should handle orientation changes",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle orientation changes"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "StyleSheet Consistency"
+                ],
+                "duration": 45,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests StyleSheet Consistency should create styles consistently across platforms",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 3,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should create styles consistently across platforms"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "StyleSheet Consistency"
+                ],
+                "duration": 1,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests StyleSheet Consistency should handle responsive styles",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 4,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle responsive styles"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Platform-Specific Functionality"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Platform-Specific Functionality should handle platform-specific constants",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 4,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle platform-specific constants"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Platform-Specific Functionality"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Platform-Specific Functionality should handle platform-specific APIs",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 3,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle platform-specific APIs"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Performance Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Performance Consistency should maintain consistent performance patterns",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should maintain consistent performance patterns"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Performance Consistency"
+                ],
+                "duration": 1,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Performance Consistency should handle memory usage consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle memory usage consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Error Handling Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Error Handling Consistency should handle platform detection errors gracefully",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 1,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle platform detection errors gracefully"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Error Handling Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Error Handling Consistency should handle dimension errors gracefully",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle dimension errors gracefully"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Accessibility Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Accessibility Consistency should provide consistent accessibility features",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 3,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should provide consistent accessibility features"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Accessibility Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Accessibility Consistency should handle platform-specific accessibility",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 1,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle platform-specific accessibility"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Internationalization Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Internationalization Consistency should handle text direction consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle text direction consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Internationalization Consistency"
+                ],
+                "duration": 15,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Internationalization Consistency should handle locale-specific formatting",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 1,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle locale-specific formatting"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Internationalization Consistency"
+                ],
+                "duration": 3,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Internationalization Consistency should handle date formatting consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 1,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle date formatting consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Theme and Color Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Theme and Color Consistency should handle color schemes consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle color schemes consistently"
+              },
+              {
+                "ancestorTitles": [
+                  "Simple Cross-Platform Compatibility Tests",
+                  "Theme and Color Consistency"
+                ],
+                "duration": 0,
+                "failureDetails": [],
+                "failureMessages": [],
+                "fullName": "Simple Cross-Platform Compatibility Tests Theme and Color Consistency should handle theme switching consistently",
+                "invocations": 1,
+                "location": null,
+                "numPassingAsserts": 2,
+                "retryReasons": [],
+                "status": "passed",
+                "title": "should handle theme switching consistently"
+              }
+            ],
+            "endTime": 1760231950197,
+            "message": "",
+            "name": "C:\\git\\SMARTIES\\smarties\\__tests__\\cross-platform\\SimplePlatformCompatibility.test.tsx",
+            "startTime": 1760231949546,
+            "status": "passed",
+            "summary": ""
+          }
+        ],
+        "wasInterrupted": false
+      },
+      "output": "\n> smarties@1.0.0 test\n> jest --testPathPattern=__tests__/cross-platform/SimplePlatformCompatibility.test.tsx --verbose --json --outputFile=test-results/simplePlatformCompatibility-results.json\n\n",
+      "timestamp": "2025-10-12T01:19:10.242Z"
+    }
+  },
+  "platformInfo": {
+    "nodeVersion": "v22.20.0",
+    "platform": "win32",
+    "arch": "x64"
+  },
+  "recommendations": [
+    {
+      "category": "platformCompatibility",
+      "severity": "high",
+      "message": "platformCompatibility tests failed. Review implementation for cross-platform compatibility issues.",
+      "action": "Investigate and fix issues in platformCompatibility test suite."
+    },
+    {
+      "category": "performanceBenchmarks",
+      "severity": "high",
+      "message": "performanceBenchmarks tests failed. Review implementation for cross-platform compatibility issues.",
+      "action": "Investigate and fix issues in performanceBenchmarks test suite."
+    },
+    {
+      "category": "navigationConsistency",
+      "severity": "high",
+      "message": "navigationConsistency tests failed. Review implementation for cross-platform compatibility issues.",
+      "action": "Investigate and fix issues in navigationConsistency test suite."
+    },
+    {
+      "category": "general",
+      "severity": "info",
+      "message": "Regularly run cross-platform tests to catch compatibility issues early.",
+      "action": "Integrate cross-platform tests into CI/CD pipeline."
+    },
+    {
+      "category": "performance",
+      "severity": "info",
+      "message": "Monitor performance benchmarks across different devices and OS versions.",
+      "action": "Set up performance monitoring and alerting for production apps."
+    }
+  ]
+}

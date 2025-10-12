@@ -73,7 +73,14 @@
     "test:performance:startup": "jest --testPathPattern=performance/app-startup-performance.test.ts --verbose",
     "test:performance:navigation": "jest --testPathPattern=performance/navigation-performance.test.ts --verbose",
     "test:performance:memory": "jest --testPathPattern=performance/memory-performance.test.ts --verbose",
-    "validate:performance": "node scripts/validate-performance-requirements.js"
+    "validate:performance": "node scripts/validate-performance-requirements.js",
+    "test:cross-platform": "jest --config=jest.cross-platform.config.js --ci --coverage --watchAll=false",
+    "test:cross-platform:watch": "jest --config=jest.cross-platform.config.js --watch",
+    "test:cross-platform:full": "node scripts/run-cross-platform-tests.js",
+    "test:cross-platform:compatibility": "jest --testPathPattern=cross-platform/PlatformCompatibility.test.tsx --verbose",
+    "test:cross-platform:ui": "jest --testPathPattern=cross-platform/UIConsistency.test.tsx --verbose",
+    "test:cross-platform:performance": "jest --testPathPattern=cross-platform/PerformanceBenchmarks.test.tsx --verbose",
+    "test:cross-platform:navigation": "jest --testPathPattern=cross-platform/NavigationConsistency.test.tsx --verbose"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.9.1",
