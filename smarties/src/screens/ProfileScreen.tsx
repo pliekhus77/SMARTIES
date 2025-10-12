@@ -55,12 +55,8 @@ export const ProfileScreen: React.FC = () => {
         lifestyle: [],
       },
       preferences: {
-        strictMode: true,
-        notifications: {
-          enabled: true,
-          pushNotifications: true,
-          emailAlerts: false,
-        },
+        alertLevel: 'strict',
+        notifications: true,
         language: 'en',
         units: 'metric',
       },
@@ -134,7 +130,7 @@ export const ProfileScreen: React.FC = () => {
             <>
               <Text style={styles.subtitle}>Profile Active</Text>
               <Text style={styles.profileInfo}>
-                Created: {new Date(userProfile.metadata.createdAt).toLocaleDateString()}
+                Created: {new Date(userProfile.createdAt).toLocaleDateString()}
               </Text>
               <Text style={styles.profileInfo}>
                 Allergies: {userProfile.dietaryRestrictions.allergies.length}

@@ -30,8 +30,15 @@
     ],
     "ios": {
       "supportsTablet": true,
+      "bundleIdentifier": "com.smarties.app",
+      "buildNumber": "1.0.0",
       "infoPlist": {
-        "NSCameraUsageDescription": "This app uses the camera to scan barcodes for dietary compliance checking."
+        "NSCameraUsageDescription": "This app uses the camera to scan barcodes for dietary compliance checking.",
+        "NSLocationWhenInUseUsageDescription": "This app uses location to provide location-based dietary recommendations.",
+        "NSUserTrackingUsageDescription": "This app uses tracking to provide personalized dietary recommendations."
+      },
+      "config": {
+        "usesNonExemptEncryption": false
       }
     },
     "android": {

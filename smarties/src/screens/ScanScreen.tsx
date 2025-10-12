@@ -14,7 +14,7 @@ export const ScanScreen: React.FC = () => {
   const [lastScannedBarcode, setLastScannedBarcode] = useState<string | null>(null);
   
   const barcodeService = new BarcodeScannerService();
-  const { executeOperation } = useDatabase();
+  // const { executeOperation } = useDatabase(); // TODO: Implement database operations
 
   const handleScanPress = () => {
     setIsScanning(true);

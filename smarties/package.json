@@ -58,7 +58,11 @@
     "deploy:monitor": "node scripts/deployment-monitor.js",
     "deploy:report": "node scripts/deployment-monitor.js report",
     "deploy:status": "node scripts/deployment-status.js",
-    "deploy:watch": "node scripts/deployment-status.js watch"
+    "deploy:watch": "node scripts/deployment-status.js watch",
+    "test:ios": "node scripts/ios-validation-suite.js",
+    "test:ios-compatibility": "node scripts/test-ios-compatibility.js",
+    "test:ios-navigation": "node scripts/test-ios-navigation.js",
+    "test:ios-functionality": "node scripts/test-ios-functionality.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.9.1",

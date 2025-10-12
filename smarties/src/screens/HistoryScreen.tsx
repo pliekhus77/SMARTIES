@@ -39,7 +39,7 @@ export const HistoryScreen: React.FC = () => {
   const calculateStats = (scans: ScanResult[]) => {
     const totalScans = scans.length;
     const safeProducts = scans.filter(scan => scan.complianceStatus === 'safe').length;
-    const warnings = scans.filter(scan => scan.complianceStatus === 'violation' || scan.complianceStatus === 'warning').length;
+    const warnings = scans.filter(scan => scan.complianceStatus === 'caution').length;
     
     setStats({ totalScans, safeProducts, warnings });
   };
@@ -69,13 +69,13 @@ export const HistoryScreen: React.FC = () => {
           styles.statusBadge,
           item.complianceStatus === 'safe' && styles.safeBadge,
           item.complianceStatus === 'violation' && styles.violationBadge,
-          item.complianceStatus === 'warning' && styles.warningBadge,
+          item.complianceStatus === 'caution' && styles.warningBadge,
         ]}>
           <Text style={styles.statusText}>{item.complianceStatus.toUpperCase()}</Text>
         </View>
       </View>
       <Text style={styles.scanInfo}>Product ID: {item.productId}</Text>
-      <Text style={styles.scanInfo}>Confidence: {(item.confidence * 100).toFixed(1)}%</Text>
+      <Text style={styles.scanInfo}>Status: {item.complianceStatus}</Text>
       {item.violations.length > 0 && (
         <Text style={styles.violationText}>
           {item.violations.length} violation(s) detected
@@ -83,7 +83,7 @@ export const HistoryScreen: React.FC = () => {
       )}
       <TouchableOpacity 
         style={styles.detailsButton} 
-        onPress={() => handleViewDetails(item._id)}
+        onPress={() => handleViewDetails(item._id || '')}
       >
         <Text style={styles.detailsButtonText}>View Details</Text>
       </TouchableOpacity>
@@ -154,7 +154,7 @@ export const HistoryScreen: React.FC = () => {
             <FlatList
               data={scanHistory}
               renderItem={renderScanItem}
-              keyExtractor={(item) => item._id}
+              keyExtractor={(item) => item._id || item.upc + item.scanTimestamp.toString()}
               scrollEnabled={false}
             />
           )}
