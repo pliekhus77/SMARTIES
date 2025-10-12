@@ -22,7 +22,7 @@ export function getDatabaseService(): DatabaseService {
     const dbConfig: DatabaseConfig = {
       connectionString: atlasConfig.connectionString,
       databaseName: atlasConfig.databaseName,
-      dataApiKey: process.env.MONGODB_DATA_API_KEY || '',
+      dataApiKey: '',
       retryAttempts: atlasConfig.options.retryAttempts,
       retryDelay: atlasConfig.options.retryDelay,
       timeout: atlasConfig.options.timeout,

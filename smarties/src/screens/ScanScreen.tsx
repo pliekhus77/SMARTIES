@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, Image, ScrollView, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { BarcodeScanner as BarcodeScannerService } from '../services/barcode';
+import { ProductSearchService } from '../services/ProductSearchService';
 
 // Conditional import for expo-barcode-scanner with fallback
 let BarCodeScanner: any = null;
@@ -22,9 +23,11 @@ export const ScanScreen: React.FC = () => {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
   const [isNativeAvailable, setIsNativeAvailable] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
   const navigation = useNavigation();
 
   const barcodeService = new BarcodeScannerService();
+  const productSearchService = new ProductSearchService();
 
   useEffect(() => {
     const checkNativeModule = async () => {
@@ -53,17 +56,17 @@ export const ScanScreen: React.FC = () => {
       setScanned(false);
     } else {
       // Mock barcode scanning for development
-      const mockBarcode = '123456789012';
+      const mockBarcode = '6111037000599';
       handleBarcodeScanned(mockBarcode);
     }
   };
 
-  const handleBarCodeScanned = ({ type, data }: { type: string; data: string }) => {
+  const handleBarCodeScanned = ({ data }: { type: string; data: string }) => {
     setScanned(true);
     handleBarcodeScanned(data);
   };
 
-  const handleBarcodeScanned = (barcode: string) => {
+  const handleBarcodeScanned = async (barcode: string) => {
     try {
       // Process the scanned barcode
       const processedBarcode = barcodeService.processScanResult({
@@ -73,21 +76,74 @@ export const ScanScreen: React.FC = () => {
 
       if (processedBarcode) {
         setLastScannedBarcode(processedBarcode);
+        setIsSearching(true);
 
-        // Show success message with scanned barcode
-        Alert.alert(
-          'Barcode Scanned Successfully!',
-          `UPC: ${processedBarcode}\n\nNext: Product lookup and dietary analysis will be implemented in the next phase.`,
-          [
-            { text: 'Scan Another', style: 'default' },
-            { text: 'OK', style: 'default' }
-          ]
-        );
+        // Perform product search and allergen analysis
+        const searchResult = await productSearchService.searchAndAnalyze(processedBarcode);
+
+        setIsSearching(false);
+
+        if (searchResult.success && searchResult.product && searchResult.analysisResult) {
+          // Navigate to appropriate result screen based on severity
+          const { product, analysisResult } = searchResult;
+          
+          switch (analysisResult.severity) {
+            case 'severe':
+              navigation.navigate('SevereAllergyResultScreen' as never, {
+                product: {
+                  upc: product.upc,
+                  name: product.name,
+                  brand: product.brand
+                },
+                violation: {
+                  allergen: analysisResult.violations[0]?.allergen || 'Unknown',
+                  riskLevel: analysisResult.riskLevel
+                }
+              });
+              break;
+              
+            case 'mild':
+              navigation.navigate('MildWarningResultScreen' as never, {
+                product: {
+                  upc: product.upc,
+                  name: product.name,
+                  brand: product.brand
+                },
+                violations: analysisResult.violations.map((v: any) => ({
+                  allergen: v.allergen,
+                  type: v.type
+                }))
+              });
+              break;
+              
+            case 'safe':
+            default:
+              navigation.navigate('AllClearResultScreen' as never, {
+                product: {
+                  upc: product.upc,
+                  name: product.name,
+                  brand: product.brand
+                }
+              });
+              break;
+          }
+        } else {
+          // Show error message
+          Alert.alert(
+            'Product Not Found',
+            searchResult.error || 'Unable to find product information for this barcode.',
+            [
+              { text: 'Try Again', style: 'default' },
+              { text: 'Manual Entry', style: 'default' }
+            ]
+          );
+        }
       } else {
         handleScanError('Invalid barcode format');
       }
     } catch (error) {
       console.error('Error processing scanned barcode:', error);
+      setIsSearching(false);
       handleScanError('Failed to process barcode');
     }
   };
@@ -102,25 +158,30 @@ export const ScanScreen: React.FC = () => {
 
   const handleCancelPress = () => {
     // Navigate back to home screen
-    navigation.navigate('Home' as never);
+    navigation.goBack();
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header with Logo */}
-      <View style={styles.header}>
-        <View style={styles.logoContainer}>
-          <Image
-            source={require('../../assets/smarties-logo.png')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
+      <ScrollView 
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Header with Logo */}
+        <View style={styles.header}>
+          <View style={styles.logoContainer}>
+            <Image
+              source={require('../../assets/smarties-logo.png')}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+          </View>
+          <Text style={styles.title}>SCAN BARCODE</Text>
         </View>
-        <Text style={styles.title}>SCAN BARCODE</Text>
-      </View>
 
-      {/* Camera Viewfinder Area */}
-      <View style={styles.cameraContainer}>
+        {/* Camera Viewfinder Area */}
+        <View style={styles.cameraContainer}>
         {hasPermission === null ? (
           <View style={styles.cameraView}>
             <Text style={styles.permissionText}>Requesting camera permission...</Text>
@@ -178,10 +239,17 @@ export const ScanScreen: React.FC = () => {
         <TouchableOpacity
           style={[styles.captureButton, scanned && styles.captureButtonScanned]}
           onPress={handleCapturePress}
+          disabled={isSearching}
         >
-          <Ionicons name={scanned ? "refresh" : "camera"} size={32} color="#1E88E5" />
+          {isSearching ? (
+            <ActivityIndicator size="large" color="#1E88E5" />
+          ) : (
+            <Ionicons name={scanned ? "refresh" : "camera"} size={32} color="#1E88E5" />
+          )}
           <Text style={styles.captureButtonText}>
-            {isNativeAvailable
+            {isSearching
+              ? 'Searching...'
+              : isNativeAvailable
               ? (scanned ? 'Scan Another' : 'Ready to Scan')
               : 'Simulate Scan'
             }
@@ -191,15 +259,39 @@ export const ScanScreen: React.FC = () => {
         <TouchableOpacity style={styles.cancelButton} onPress={handleCancelPress}>
           <Text style={styles.cancelButtonText}>Cancel</Text>
         </TouchableOpacity>
+
+        {/* Test UPC Buttons */}
+        <View style={styles.testUpcContainer}>
+          <Text style={styles.testUpcTitle}>Test Products</Text>
+          <View style={styles.testUpcGrid}>
+            <TouchableOpacity 
+              style={[styles.testUpcButton, isSearching && styles.testUpcButtonDisabled]} 
+              onPress={() => handleBarcodeScanned('123456789012')}
+              disabled={isSearching}
+            >
+              <Text style={[styles.testUpcButtonText, isSearching && styles.testUpcButtonTextDisabled]}>Organic Milk</Text>
+              <Text style={[styles.testUpcSubText, isSearching && styles.testUpcButtonTextDisabled]}>123456789012</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={[styles.testUpcButton, isSearching && styles.testUpcButtonDisabled]} 
+              onPress={() => handleBarcodeScanned('987654321098')}
+              disabled={isSearching}
+            >
+              <Text style={[styles.testUpcButtonText, isSearching && styles.testUpcButtonTextDisabled]}>Peanut Cookies</Text>
+              <Text style={[styles.testUpcSubText, isSearching && styles.testUpcButtonTextDisabled]}>987654321098</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
 
-      {/* Last scanned result */}
-      {lastScannedBarcode && (
-        <View style={styles.lastScanContainer}>
-          <Text style={styles.lastScanLabel}>Last scanned:</Text>
-          <Text style={styles.lastScanBarcode}>{lastScannedBarcode}</Text>
-        </View>
-      )}
+        {/* Last scanned result */}
+        {lastScannedBarcode && (
+          <View style={styles.lastScanContainer}>
+            <Text style={styles.lastScanLabel}>Last scanned:</Text>
+            <Text style={styles.lastScanBarcode}>{lastScannedBarcode}</Text>
+          </View>
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -208,6 +300,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#1E88E5', // Changed to match home screen blue
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    minHeight: '100%', // Ensure content takes at least full screen height
   },
   header: {
     paddingTop: 20,
@@ -228,10 +327,11 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
   },
   cameraContainer: {
-    flex: 1,
+    minHeight: 400, // Fixed height instead of flex to ensure proper scrolling
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 40,
+    marginBottom: 20,
   },
   cameraView: {
     width: '100%',
@@ -410,5 +510,55 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
     fontFamily: 'monospace',
+  },
+  testUpcContainer: {
+    marginTop: 20,
+    width: '100%',
+    paddingBottom: 40, // Extra padding at bottom for better scrolling experience
+  },
+  testUpcTitle: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 15,
+    opacity: 0.8,
+  },
+  testUpcGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: 10,
+  },
+  testUpcButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 15,
+    paddingVertical: 15,
+    paddingHorizontal: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+    width: '48%', // Two columns with gap
+    minHeight: 70,
+  },
+  testUpcButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginBottom: 4,
+  },
+  testUpcSubText: {
+    color: 'rgba(255, 255, 255, 0.7)',
+    fontSize: 10,
+    fontFamily: 'monospace',
+    textAlign: 'center',
+  },
+  testUpcButtonDisabled: {
+    opacity: 0.5,
+  },
+  testUpcButtonTextDisabled: {
+    color: 'rgba(255, 255, 255, 0.5)',
   },
 });

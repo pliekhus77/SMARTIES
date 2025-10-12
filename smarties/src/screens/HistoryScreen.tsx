@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDatabase } from '../hooks/useDatabase';
-import { ScanResult } from '../../../src/types/ScanResult';
+import { ScanHistory } from '../types';
 
 /**
  * Scan history and analytics screen

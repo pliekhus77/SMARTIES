@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StackScreenProps } from '@react-navigation/stack';
-import { ScanStackParamList } from '../types/navigation';
+import { ScanStackParamList } from '../types';
 import { colors, spacing, textStyles, buttonStyles, cardStyles } from '../styles/constants';
 
 type Props = StackScreenProps<ScanStackParamList, 'Result'>;

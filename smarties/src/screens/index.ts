@@ -7,3 +7,8 @@ export * from './ProfileScreen';
 export * from './HistoryScreen';
 export * from './SettingsScreen';
 export * from './ResultScreen';
+
+// Result screens for product scanning
+export * from './SevereAllergyResultScreen';
+export * from './MildWarningResultScreen';
+export * from './AllClearResultScreen';

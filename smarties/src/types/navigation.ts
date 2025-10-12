@@ -20,13 +20,33 @@ export type RootTabParamList = {
 // Stack navigation types for scan flow
 export type ScanStackParamList = {
   Scanner: undefined;
-  Result: {
-    scanResult: {
+  SevereAllergyResultScreen: {
+    product: {
       upc: string;
-      productName: string;
-      status: 'safe' | 'warning' | 'danger';
-      violations?: string[];
-      timestamp: string;
+      name: string;
+      brand?: string;
+    };
+    violation: {
+      allergen: string;
+      riskLevel: string;
+    };
+  };
+  MildWarningResultScreen: {
+    product: {
+      upc: string;
+      name: string;
+      brand?: string;
+    };
+    violations: {
+      allergen: string;
+      type: string;
+    }[];
+  };
+  AllClearResultScreen: {
+    product: {
+      upc: string;
+      name: string;
+      brand?: string;
     };
   };
 };

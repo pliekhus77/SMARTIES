@@ -19,8 +19,7 @@ export class DatabaseService {
   private isConnected = false;
 
   constructor() {
-    // Use the backend API URL - for now using localhost, but this should be your deployed backend
-    this.baseUrl = process.env.API_BASE_URL || 'http://localhost:3001/api';
+    this.baseUrl = 'http://localhost:3002/api';
   }
 
   async connect(): Promise<void> {

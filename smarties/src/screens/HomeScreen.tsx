@@ -1,15 +1,26 @@
 import React from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  TouchableOpacity, 
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
   ScrollView,
-  SafeAreaView,
   Image
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
+
+type RootStackParamList = {
+  Home: undefined;
+  ScanScreen: undefined;
+  History: undefined;
+  Profile: undefined;
+  Settings: undefined;
+};
+
+type NavigationProp = StackNavigationProp<RootStackParamList>;
 
 interface RecentScan {
   id: string;
@@ -20,7 +31,7 @@ interface RecentScan {
 }
 
 const HomeScreen: React.FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
 
   const recentScans: RecentScan[] = [
     {
@@ -31,7 +42,7 @@ const HomeScreen: React.FC = () => {
       allergenStatus: 'danger'
     },
     {
-      id: '2', 
+      id: '2',
       name: 'Pasta Sauce',
       icon: '🍝',
       status: 'warning',
@@ -39,7 +50,7 @@ const HomeScreen: React.FC = () => {
     },
     {
       id: '3',
-      name: 'Seltzer Water', 
+      name: 'Seltzer Water',
       icon: '🥤',
       status: 'safe',
       allergenStatus: 'safe'
@@ -69,12 +80,13 @@ const HomeScreen: React.FC = () => {
   };
 
   const handleScanPress = () => {
-    navigation.navigate('Scan' as never);
+    navigation.navigate('ScanScreen');
   };
 
-  const handleBottomNavPress = (screen: string) => {
-    if (screen === 'Home') return; // Already on home
-    navigation.navigate(screen as never);
+  const handleBottomNavPress = (screen: keyof RootStackParamList) => {
+    if (screen !== 'Home') {
+      navigation.navigate(screen);
+    }
   };
 
   return (
@@ -83,8 +95,8 @@ const HomeScreen: React.FC = () => {
         {/* Header with Logo */}
         <View style={styles.header}>
           <View style={styles.logoContainer}>
-            <Image 
-              source={require('../../assets/smarties-logo.png')} 
+            <Image
+              source={require('../../assets/smarties-logo.png')}
               style={styles.logo}
               resizeMode="contain"
             />
@@ -106,7 +118,7 @@ const HomeScreen: React.FC = () => {
             {recentScans.map((scan) => {
               const statusIcon = getStatusIcon(scan.status);
               const allergenIcon = getAllergenStatusIcon(scan.allergenStatus || 'safe');
-              
+
               return (
                 <View key={scan.id} style={styles.scanItem}>
                   <View style={styles.scanItemLeft}>
@@ -117,17 +129,17 @@ const HomeScreen: React.FC = () => {
                   </View>
                   <View style={styles.scanItemRight}>
                     <View style={[styles.statusIcon, { backgroundColor: statusIcon.color }]}>
-                      <Ionicons 
-                        name={statusIcon.icon as any} 
-                        size={32} 
-                        color="#fff" 
+                      <Ionicons
+                        name={statusIcon.icon as any}
+                        size={32}
+                        color="#fff"
                       />
                     </View>
                     <View style={[styles.allergenIcon, { backgroundColor: allergenIcon.color }]}>
-                      <Ionicons 
-                        name={allergenIcon.icon as any} 
-                        size={24} 
-                        color="#fff" 
+                      <Ionicons
+                        name={allergenIcon.icon as any}
+                        size={24}
+                        color="#fff"
                       />
                     </View>
                   </View>
@@ -149,32 +161,32 @@ const HomeScreen: React.FC = () => {
 
       {/* Bottom Navigation */}
       <View style={styles.bottomNav}>
-        <TouchableOpacity 
-          style={[styles.navItem, styles.activeNavItem]} 
+        <TouchableOpacity
+          style={[styles.navItem, styles.activeNavItem]}
           onPress={() => handleBottomNavPress('Home')}
         >
           <Ionicons name="home" size={24} color="#1168bd" />
           <Text style={[styles.navText, styles.activeNavText]}>Home</Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.navItem} 
+
+        <TouchableOpacity
+          style={styles.navItem}
           onPress={() => handleBottomNavPress('History')}
         >
           <Ionicons name="time-outline" size={24} color="#999" />
           <Text style={styles.navText}>History</Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.navItem} 
+
+        <TouchableOpacity
+          style={styles.navItem}
           onPress={() => handleBottomNavPress('Profile')}
         >
           <Ionicons name="person-outline" size={24} color="#999" />
           <Text style={styles.navText}>Profile</Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.navItem} 
+
+        <TouchableOpacity
+          style={styles.navItem}
           onPress={() => handleBottomNavPress('Settings')}
         >
           <Ionicons name="settings-outline" size={24} color="#999" />
@@ -200,11 +212,25 @@ const styles = StyleSheet.create({
     paddingBottom: 8, // Reduced from 15 to 8 (half of previous 25 total spacing)
   },
   logoContainer: {
-    marginBottom: 5, // Reduced from 10 to 5 (half of previous 25 total spacing)
+    marginBottom: 5,
+    alignItems: 'center',
   },
   logo: {
-    width: 211, // Increased from 176 to 211 (120% larger: 176 × 1.2 = 211)
-    height: 211, // Increased from 176 to 211 (120% larger: 176 × 1.2 = 211)
+    width: 312,
+    height: 156,
+    marginBottom: 8,
+  },
+  logoSubtext: {
+    color: 'rgba(255, 255, 255, 0.8)',
+    fontSize: 14,
+    textAlign: 'center',
+    marginTop: 4,
+  },
+  message: {
+    color: '#fff',
+    fontSize: 18,
+    textAlign: 'center',
+    marginTop: 20,
   },
 
   scanButton: {

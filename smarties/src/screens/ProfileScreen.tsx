@@ -6,10 +6,13 @@ import {
   ScrollView, 
   ActivityIndicator, 
   Alert,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-// import { useNavigation } from '@react-navigation/native'; // Available for future use
+import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
+import type { StackNavigationProp } from '@react-navigation/stack';
 
 // Import enhanced profile components
 import { 
@@ -35,6 +38,16 @@ import {
 // Import profile service
 import { ProfileService } from '../services/profile/ProfileService';
 
+type RootStackParamList = {
+  Home: undefined;
+  ScanScreen: undefined;
+  History: undefined;
+  Profile: undefined;
+  Settings: undefined;
+};
+
+type NavigationProp = StackNavigationProp<RootStackParamList>;
+
 /**
  * Enhanced User Dietary Profile Management Screen
  * 
@@ -44,7 +57,7 @@ import { ProfileService } from '../services/profile/ProfileService';
  * severity levels with accessibility support.
  */
 export const ProfileScreen: React.FC = () => {
-  // const navigation = useNavigation(); // Available for future use
+  const navigation = useNavigation<NavigationProp>();
   const [state, setState] = useState<ProfileScreenState>({
     restrictions: [],
     isLoading: true,
@@ -223,6 +236,12 @@ export const ProfileScreen: React.FC = () => {
     }
   };
 
+  const handleBottomNavPress = (screen: keyof RootStackParamList) => {
+    if (screen !== 'Profile') {
+      navigation.navigate(screen);
+    }
+  };
+
   if (state.isLoading) {
     return (
       <SafeAreaView style={styles.container}>
@@ -292,6 +311,41 @@ export const ProfileScreen: React.FC = () => {
         onSelectRestriction={handleRestrictionSelected}
         excludeTypes={state.restrictions.map(r => r.type)}
       />
+
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNav}>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => handleBottomNavPress('Home')}
+        >
+          <Ionicons name="home-outline" size={24} color="#999" />
+          <Text style={styles.navText}>Home</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => handleBottomNavPress('History')}
+        >
+          <Ionicons name="time-outline" size={24} color="#999" />
+          <Text style={styles.navText}>History</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.navItem, styles.activeNavItem]}
+          onPress={() => handleBottomNavPress('Profile')}
+        >
+          <Ionicons name="person" size={24} color="#1168bd" />
+          <Text style={[styles.navText, styles.activeNavText]}>Profile</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => handleBottomNavPress('Settings')}
+        >
+          <Ionicons name="settings-outline" size={24} color="#999" />
+          <Text style={styles.navText}>Settings</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -362,5 +416,38 @@ const styles = StyleSheet.create({
   },
   bottomSpacing: {
     height: 40,
+  },
+  bottomNav: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderRadius: 25,
+    marginHorizontal: 20,
+    marginBottom: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  navItem: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  activeNavItem: {
+    backgroundColor: 'rgba(17, 104, 189, 0.1)',
+    borderRadius: 20,
+  },
+  navText: {
+    fontSize: 12,
+    color: '#999',
+    marginTop: 4,
+    fontWeight: '500',
+  },
+  activeNavText: {
+    color: '#1168bd',
+    fontWeight: 'bold',
   },
 });
