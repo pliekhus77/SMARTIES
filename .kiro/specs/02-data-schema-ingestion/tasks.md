@@ -19,7 +19,7 @@
     - Test model loading and basic embedding generation
     - _Requirements: 2.1, 2.5_
 
-  - [ ] 2.2 Create embedding service interface and implementation
+  - [x] 2.2 Create embedding service interface and implementation
     - Build HuggingFaceEmbedder class with sentence-transformers integration
     - Implement batch processing for efficient local embedding generation
     - Add embedding caching layer to avoid recomputation
