@@ -44,10 +44,22 @@ export interface DatabaseInterface {
 export interface CollectionInterface {
   insertOne(doc: any): Promise<{ insertedId: any }>;
   findOne(filter: any): Promise<any>;
-  find(filter: any): { toArray(): Promise<any[]> };
+  find(filter: any): { 
+    toArray(): Promise<any[]>;
+    sort(sort: any): { 
+      toArray(): Promise<any[]>;
+      limit(limit: number): { toArray(): Promise<any[]> };
+    };
+    limit(limit: number): { 
+      toArray(): Promise<any[]>;
+      sort(sort: any): { toArray(): Promise<any[]> };
+    };
+  };
   updateOne(filter: any, update: any): Promise<{ modifiedCount: number }>;
   deleteOne(filter: any): Promise<{ deletedCount: number }>;
   createIndex(keys: any, options?: any): Promise<string>;
+  indexes(): Promise<any[]>;
+  dropIndex(indexName: string): Promise<any>;
 }
 
 /**
@@ -978,6 +990,105 @@ export class DatabaseService {
     return this.readOne<Product>('products', { upc });
   }
 
+  async getUserByProfileId(profileId: string): Promise<DatabaseResult<User | null>> {
+    return this.readOne<User>('users', { profileId });
+  }
+
+  async getUserScanHistory(userId: string, limit: number = 50): Promise<DatabaseResult<ScanResult[]>> {
+    try {
+      // Check if we're offline
+      if (this.offlineManager.isOffline() || this.connectionState !== ConnectionState.CONNECTED) {
+        return this.handleOfflineRead<ScanResult>('scan_results', { userId }, null);
+      }
+
+      const collection = this.getCollection('scan_results');
+      const query = { userId };
+      
+      // Use compound index (userId + scanTimestamp) for optimal performance
+      const documents = await collection.find(query)
+        .sort({ scanTimestamp: -1 }) // Most recent first
+        .limit(limit)
+        .toArray();
+
+      console.log(`Found ${documents.length} scan results for user ${userId}`);
+
+      return {
+        success: true,
+        data: documents as ScanResult[]
+      };
+    } catch (error) {
+      const errorMessage = `Get user scan history failed for user ${userId}`;
+      console.error(errorMessage, error);
+      
+      return {
+        success: false,
+        error: errorMessage
+      };
+    }
+  }
+
+  async getProductsByAllergen(allergen: string): Promise<DatabaseResult<Product[]>> {
+    try {
+      // Check if we're offline
+      if (this.offlineManager.isOffline() || this.connectionState !== ConnectionState.CONNECTED) {
+        return this.handleOfflineRead<Product>('products', { allergens: allergen }, null);
+      }
+
+      const collection = this.getCollection('products');
+      const query = { allergens: allergen };
+      
+      // Use allergen index for optimal performance
+      const documents = await collection.find(query).toArray();
+
+      console.log(`Found ${documents.length} products with allergen ${allergen}`);
+
+      return {
+        success: true,
+        data: documents as Product[]
+      };
+    } catch (error) {
+      const errorMessage = `Get products by allergen failed for allergen ${allergen}`;
+      console.error(errorMessage, error);
+      
+      return {
+        success: false,
+        error: errorMessage
+      };
+    }
+  }
+
+  async searchProducts(searchTerm: string): Promise<DatabaseResult<Product[]>> {
+    try {
+      // Check if we're offline
+      if (this.offlineManager.isOffline() || this.connectionState !== ConnectionState.CONNECTED) {
+        return this.handleOfflineRead<Product>('products', { $text: { $search: searchTerm } }, null);
+      }
+
+      const collection = this.getCollection('products');
+      const query = { $text: { $search: searchTerm } };
+      
+      // Use text index for optimal performance
+      const documents = await collection.find(query)
+        .sort({ score: { $meta: 'textScore' } }) // Sort by relevance
+        .toArray();
+
+      console.log(`Found ${documents.length} products matching search term "${searchTerm}"`);
+
+      return {
+        success: true,
+        data: documents as Product[]
+      };
+    } catch (error) {
+      const errorMessage = `Search products failed for term "${searchTerm}"`;
+      console.error(errorMessage, error);
+      
+      return {
+        success: false,
+        error: errorMessage
+      };
+    }
+  }
+
   async getProducts(query: Record<string, any> = {}): Promise<DatabaseResult<Product[]>> {
     return this.read<Product>('products', query);
   }
@@ -995,10 +1106,6 @@ export class DatabaseService {
    */
   async createUser(user: Omit<User, '_id'>): Promise<DatabaseResult<User>> {
     return this.create<User>('users', user as User);
-  }
-
-  async getUserByProfileId(profileId: string): Promise<DatabaseResult<User | null>> {
-    return this.readOne<User>('users', { profileId });
   }
 
   async getUsers(query: Record<string, any> = {}): Promise<DatabaseResult<User[]>> {
@@ -1148,6 +1255,434 @@ export class DatabaseService {
   clearOfflineCache(): void {
     this.cacheManager.clear();
     console.log('Offline cache cleared');
+  }
+
+  /**
+   * Creates performance-optimized indexes for all collections
+   * Implements Requirements 2.2, 2.3, 2.4, 2.5 from core architecture specification
+   */
+  async createPerformanceIndexes(): Promise<DatabaseResult<boolean>> {
+    try {
+      if (this.connectionState !== ConnectionState.CONNECTED) {
+        throw new DatabaseError('Database not connected', null, 'NOT_CONNECTED');
+      }
+
+      console.log('Creating performance-optimized indexes...');
+
+      // Create indexes for products collection
+      await this.createProductsIndexes();
+      
+      // Create indexes for users collection
+      await this.createUsersIndexes();
+      
+      // Create indexes for scan_results collection
+      await this.createScanResultsIndexes();
+
+      console.log('✅ All performance-optimized indexes created successfully');
+
+      return {
+        success: true,
+        data: true
+      };
+    } catch (error) {
+      const errorMessage = 'Failed to create performance indexes';
+      console.error(errorMessage, error);
+      return {
+        success: false,
+        error: errorMessage
+      };
+    }
+  }
+
+  /**
+   * Creates indexes for products collection
+   * Implements Requirements 2.2, 2.4 for fast product lookups and allergen filtering
+   */
+  private async createProductsIndexes(): Promise<void> {
+    const collection = this.getCollection('products');
+    
+    console.log('Creating products collection indexes...');
+
+    // Unique index on UPC for fast product lookups (Requirement 2.2)
+    await collection.createIndex(
+      { "upc": 1 }, 
+      { unique: true, name: "upc_unique_lookup" }
+    );
+    console.log('  ✅ Created unique index on products.upc');
+
+    // Index on allergens for fast allergen filtering (Requirement 2.4)
+    await collection.createIndex(
+      { "allergens": 1 }, 
+      { name: "allergens_filter" }
+    );
+    console.log('  ✅ Created index on products.allergens');
+
+    // Text index for product search functionality (Requirement 2.4)
+    await collection.createIndex(
+      { "name": "text", "brand": "text" }, 
+      { name: "product_text_search" }
+    );
+    console.log('  ✅ Created text index on products.name and products.brand');
+
+    // Index on dietary flags for filtering (Requirement 2.4)
+    await collection.createIndex(
+      { "dietaryFlags.halal": 1 }, 
+      { name: "dietary_halal_filter", sparse: true }
+    );
+    await collection.createIndex(
+      { "dietaryFlags.kosher": 1 }, 
+      { name: "dietary_kosher_filter", sparse: true }
+    );
+    await collection.createIndex(
+      { "dietaryFlags.vegan": 1 }, 
+      { name: "dietary_vegan_filter", sparse: true }
+    );
+    await collection.createIndex(
+      { "dietaryFlags.vegetarian": 1 }, 
+      { name: "dietary_vegetarian_filter", sparse: true }
+    );
+    await collection.createIndex(
+      { "dietaryFlags.glutenFree": 1 }, 
+      { name: "dietary_gluten_free_filter", sparse: true }
+    );
+    console.log('  ✅ Created indexes on products.dietaryFlags');
+
+    // Index on data freshness for cache management (Requirement 2.5)
+    await collection.createIndex(
+      { "lastUpdated": -1 }, 
+      { name: "last_updated_desc" }
+    );
+    console.log('  ✅ Created index on products.lastUpdated');
+
+    // Index on source for data quality queries
+    await collection.createIndex(
+      { "source": 1 }, 
+      { name: "data_source_filter" }
+    );
+    console.log('  ✅ Created index on products.source');
+  }
+
+  /**
+   * Creates indexes for users collection
+   * Implements Requirements 2.3 for efficient user profile queries
+   */
+  private async createUsersIndexes(): Promise<void> {
+    const collection = this.getCollection('users');
+    
+    console.log('Creating users collection indexes...');
+
+    // Unique index on profileId for primary user lookup (Requirement 2.3)
+    await collection.createIndex(
+      { "profileId": 1 }, 
+      { unique: true, name: "profile_id_unique" }
+    );
+    console.log('  ✅ Created unique index on users.profileId');
+
+    // Index on dietary restrictions for allergen-based queries (Requirement 2.3)
+    await collection.createIndex(
+      { "dietaryRestrictions.allergies": 1 }, 
+      { name: "user_allergies_filter" }
+    );
+    console.log('  ✅ Created index on users.dietaryRestrictions.allergies');
+
+    // Index on religious restrictions for filtering
+    await collection.createIndex(
+      { "dietaryRestrictions.religious": 1 }, 
+      { name: "user_religious_filter" }
+    );
+    console.log('  ✅ Created index on users.dietaryRestrictions.religious');
+
+    // Index on medical restrictions for filtering
+    await collection.createIndex(
+      { "dietaryRestrictions.medical": 1 }, 
+      { name: "user_medical_filter" }
+    );
+    console.log('  ✅ Created index on users.dietaryRestrictions.medical');
+
+    // Index on lifestyle restrictions for filtering
+    await collection.createIndex(
+      { "dietaryRestrictions.lifestyle": 1 }, 
+      { name: "user_lifestyle_filter" }
+    );
+    console.log('  ✅ Created index on users.dietaryRestrictions.lifestyle');
+
+    // Index on user activity tracking (Requirement 2.3)
+    await collection.createIndex(
+      { "lastActive": -1 }, 
+      { name: "last_active_desc" }
+    );
+    console.log('  ✅ Created index on users.lastActive');
+
+    // Index on alert level for notification queries
+    await collection.createIndex(
+      { "preferences.alertLevel": 1 }, 
+      { name: "alert_level_filter" }
+    );
+    console.log('  ✅ Created index on users.preferences.alertLevel');
+  }
+
+  /**
+   * Creates indexes for scan_results collection
+   * Implements Requirements 2.3, 2.5 for user scan history and analytics
+   */
+  private async createScanResultsIndexes(): Promise<void> {
+    const collection = this.getCollection('scan_results');
+    
+    console.log('Creating scan_results collection indexes...');
+
+    // Compound index on userId + scanTimestamp for user scan history (Requirement 2.3, 2.5)
+    await collection.createIndex(
+      { "userId": 1, "scanTimestamp": -1 }, 
+      { name: "user_scan_history" }
+    );
+    console.log('  ✅ Created compound index on scan_results.userId + scanTimestamp');
+
+    // Index on UPC for product-based analytics (Requirement 2.5)
+    await collection.createIndex(
+      { "upc": 1 }, 
+      { name: "scan_upc_analytics" }
+    );
+    console.log('  ✅ Created index on scan_results.upc');
+
+    // Index on compliance status for safety analytics (Requirement 2.5)
+    await collection.createIndex(
+      { "complianceStatus": 1 }, 
+      { name: "compliance_status_analytics" }
+    );
+    console.log('  ✅ Created index on scan_results.complianceStatus');
+
+    // Index on scan timestamp for recent scans across users (Requirement 2.5)
+    await collection.createIndex(
+      { "scanTimestamp": -1 }, 
+      { name: "recent_scans_global" }
+    );
+    console.log('  ✅ Created index on scan_results.scanTimestamp');
+
+    // Index on violations for violation analysis
+    await collection.createIndex(
+      { "violations": 1 }, 
+      { name: "violations_analysis" }
+    );
+    console.log('  ✅ Created index on scan_results.violations');
+
+    // Index on productId for product-scan relationship queries
+    await collection.createIndex(
+      { "productId": 1 }, 
+      { name: "product_scan_relationship" }
+    );
+    console.log('  ✅ Created index on scan_results.productId');
+
+    // Compound index for location-based queries (if location data is available)
+    await collection.createIndex(
+      { "location.latitude": 1, "location.longitude": 1 }, 
+      { name: "location_geo_queries", sparse: true }
+    );
+    console.log('  ✅ Created compound index on scan_results.location');
+  }
+
+  /**
+   * Validates index performance by running test queries
+   * Implements Requirement 2.5 for sub-100ms query response times
+   */
+  async validateIndexPerformance(): Promise<DatabaseResult<{
+    products: { avgResponseTime: number; passed: boolean };
+    users: { avgResponseTime: number; passed: boolean };
+    scanResults: { avgResponseTime: number; passed: boolean };
+  }>> {
+    try {
+      if (this.connectionState !== ConnectionState.CONNECTED) {
+        throw new DatabaseError('Database not connected', null, 'NOT_CONNECTED');
+      }
+
+      console.log('Validating index performance...');
+
+      const results = {
+        products: await this.testProductsIndexPerformance(),
+        users: await this.testUsersIndexPerformance(),
+        scanResults: await this.testScanResultsIndexPerformance()
+      };
+
+      const allPassed = results.products.passed && results.users.passed && results.scanResults.passed;
+
+      console.log('Index performance validation results:');
+      console.log(`  Products: ${results.products.avgResponseTime}ms (${results.products.passed ? 'PASS' : 'FAIL'})`);
+      console.log(`  Users: ${results.users.avgResponseTime}ms (${results.users.passed ? 'PASS' : 'FAIL'})`);
+      console.log(`  Scan Results: ${results.scanResults.avgResponseTime}ms (${results.scanResults.passed ? 'PASS' : 'FAIL'})`);
+      console.log(`  Overall: ${allPassed ? 'PASS' : 'FAIL'}`);
+
+      return {
+        success: true,
+        data: results
+      };
+    } catch (error) {
+      const errorMessage = 'Failed to validate index performance';
+      console.error(errorMessage, error);
+      return {
+        success: false,
+        error: errorMessage
+      };
+    }
+  }
+
+  /**
+   * Tests products collection index performance
+   */
+  private async testProductsIndexPerformance(): Promise<{ avgResponseTime: number; passed: boolean }> {
+    const collection = this.getCollection('products');
+    const testQueries = [
+      () => collection.findOne({ upc: "123456789012" }),
+      () => collection.find({ allergens: "milk" }).toArray(),
+      () => collection.find({ $text: { $search: "organic" } }).toArray(),
+      () => collection.find({ "dietaryFlags.vegan": true }).toArray()
+    ];
+
+    let totalTime = 0;
+    const iterations = testQueries.length;
+
+    for (const query of testQueries) {
+      const startTime = Date.now();
+      await query();
+      const endTime = Date.now();
+      totalTime += (endTime - startTime);
+    }
+
+    const avgResponseTime = totalTime / iterations;
+    const passed = avgResponseTime < 100; // Sub-100ms requirement
+
+    return { avgResponseTime, passed };
+  }
+
+  /**
+   * Tests users collection index performance
+   */
+  private async testUsersIndexPerformance(): Promise<{ avgResponseTime: number; passed: boolean }> {
+    const collection = this.getCollection('users');
+    const testQueries = [
+      () => collection.findOne({ profileId: "demo_user_001" }),
+      () => collection.find({ "dietaryRestrictions.allergies": "peanuts" }).toArray(),
+      () => collection.find({ "dietaryRestrictions.religious": "halal" }).toArray(),
+      () => collection.find({ "preferences.alertLevel": "strict" }).toArray()
+    ];
+
+    let totalTime = 0;
+    const iterations = testQueries.length;
+
+    for (const query of testQueries) {
+      const startTime = Date.now();
+      await query();
+      const endTime = Date.now();
+      totalTime += (endTime - startTime);
+    }
+
+    const avgResponseTime = totalTime / iterations;
+    const passed = avgResponseTime < 100; // Sub-100ms requirement
+
+    return { avgResponseTime, passed };
+  }
+
+  /**
+   * Tests scan_results collection index performance
+   */
+  private async testScanResultsIndexPerformance(): Promise<{ avgResponseTime: number; passed: boolean }> {
+    const collection = this.getCollection('scan_results');
+    const testQueries = [
+      () => collection.find({ userId: "demo_user_001" }).toArray(),
+      () => collection.find({ upc: "123456789012" }).toArray(),
+      () => collection.find({ complianceStatus: "safe" }).toArray(),
+      () => collection.find({ scanTimestamp: { $gte: new Date(Date.now() - 24 * 60 * 60 * 1000) } }).toArray()
+    ];
+
+    let totalTime = 0;
+    const iterations = testQueries.length;
+
+    for (const query of testQueries) {
+      const startTime = Date.now();
+      await query();
+      const endTime = Date.now();
+      totalTime += (endTime - startTime);
+    }
+
+    const avgResponseTime = totalTime / iterations;
+    const passed = avgResponseTime < 100; // Sub-100ms requirement
+
+    return { avgResponseTime, passed };
+  }
+
+  /**
+   * Lists all indexes for a collection
+   */
+  async listCollectionIndexes(collectionName: string): Promise<DatabaseResult<any[]>> {
+    try {
+      if (this.connectionState !== ConnectionState.CONNECTED) {
+        throw new DatabaseError('Database not connected', null, 'NOT_CONNECTED');
+      }
+
+      const collection = this.getCollection(collectionName);
+      const indexes = await collection.indexes();
+
+      console.log(`Indexes for ${collectionName}:`, indexes.map(i => i.name));
+
+      return {
+        success: true,
+        data: indexes
+      };
+    } catch (error) {
+      const errorMessage = `Failed to list indexes for ${collectionName}`;
+      console.error(errorMessage, error);
+      return {
+        success: false,
+        error: errorMessage
+      };
+    }
+  }
+
+  /**
+   * Drops and recreates all indexes (use with caution)
+   */
+  async recreateAllIndexes(): Promise<DatabaseResult<boolean>> {
+    try {
+      if (this.connectionState !== ConnectionState.CONNECTED) {
+        throw new DatabaseError('Database not connected', null, 'NOT_CONNECTED');
+      }
+
+      console.log('Recreating all indexes...');
+
+      // Drop existing indexes (except _id)
+      const collections = ['products', 'users', 'scan_results'];
+      
+      for (const collectionName of collections) {
+        const collection = this.getCollection(collectionName);
+        const indexes = await collection.indexes();
+        
+        for (const index of indexes) {
+          if (index.name !== '_id_') {
+            try {
+              await collection.dropIndex(index.name);
+              console.log(`  Dropped index ${index.name} from ${collectionName}`);
+            } catch (error) {
+              console.warn(`  Failed to drop index ${index.name} from ${collectionName}:`, error);
+            }
+          }
+        }
+      }
+
+      // Recreate all indexes
+      await this.createPerformanceIndexes();
+
+      console.log('✅ All indexes recreated successfully');
+
+      return {
+        success: true,
+        data: true
+      };
+    } catch (error) {
+      const errorMessage = 'Failed to recreate indexes';
+      console.error(errorMessage, error);
+      return {
+        success: false,
+        error: errorMessage
+      };
+    }
   }
 
   /**

@@ -5,3 +5,5 @@ export * from './atlas';
 export * from './ai';
 export * from './barcode';
 export * from './dietary';
+export * from './AppInitializationService';
+export * from './ConnectionStatusService';

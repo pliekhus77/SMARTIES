@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BarcodeScanner } from '../components/scanner';
 import { BarcodeScanner as BarcodeScannerService } from '../services/barcode';
+import { useDatabase } from '../hooks/useDatabase';
 
 /**
  * Primary barcode scanning interface
@@ -13,6 +14,7 @@ export const ScanScreen: React.FC = () => {
   const [lastScannedBarcode, setLastScannedBarcode] = useState<string | null>(null);
   
   const barcodeService = new BarcodeScannerService();
+  const { executeOperation } = useDatabase();
 
   const handleScanPress = () => {
     setIsScanning(true);

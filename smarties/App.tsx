@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -8,24 +8,83 @@ import { ProfileScreen, HistoryScreen, SettingsScreen } from './src/screens';
 import { ScanStack } from './src/navigation';
 import { RootTabParamList } from './src/types/navigation';
 import { colors, spacing } from './src/styles/constants';
+import { LoadingScreen, OfflineBanner, ErrorBoundary } from './src/components';
+import { AppInitializationService, InitializationResult } from './src/services/AppInitializationService';
+import { useConnectionStatus } from './src/hooks';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
 /**
  * Main SMARTIES Application Component
+ * Task 7.1 & 7.2: App initialization with database connection and error handling
  * 
- * This is the root component that includes:
+ * Features:
+ * - App startup sequence with configuration validation
+ * - Database connection initialization
+ * - Loading screen during initialization
+ * - App startup sequence with configuration validation
+ * - Database connection initialization
+ * - Loading screen during initialization
+ * - Offline mode detection and UI feedback
+ * - Error boundary for graceful error handling
  * - Navigation setup with bottom tabs and nested stack navigation
  * - Safe area handling
- * - Screen routing between Scanner Stack, Profile, History, and Settings
  * 
- * The app uses a tab-based navigation pattern with nested stack navigation
- * for the scanner flow (Scanner → Result).
+ * Requirements: 5.1, 5.3, 5.4, 5.5
  */
 export default function App() {
+  const [isInitializing, setIsInitializing] = useState(true);
+  const [initializationError, setInitializationError] = useState<string | null>(null);
+  const [loadingMessage, setLoadingMessage] = useState('Initializing SMARTIES...');
+  const { isOfflineMode } = useConnectionStatus();
+
+  useEffect(() => {
+    initializeApp();
+  }, []);
+
+  const initializeApp = async () => {
+    try {
+      setLoadingMessage('Validating configuration...');
+      
+      const appInitService = AppInitializationService.getInstance();
+      const result: InitializationResult = await appInitService.initialize();
+
+      if (!result.success) {
+        setInitializationError(result.error || 'Initialization failed');
+        setLoadingMessage('Initialization failed');
+        return;
+      }
+
+      setLoadingMessage('Ready!');
+      
+      // Small delay to show "Ready!" message
+      setTimeout(() => {
+        setIsInitializing(false);
+      }, 500);
+
+    } catch (error) {
+      console.error('App initialization error:', error);
+      setInitializationError(error instanceof Error ? error.message : 'Unknown error');
+      setLoadingMessage('Initialization failed');
+    }
+  };
+
+  // Show loading screen during initialization
+  if (isInitializing) {
+    return <LoadingScreen message={loadingMessage} />;
+  }
+
+  // Show error screen if initialization failed
+  if (initializationError) {
+    return <LoadingScreen message={`Error: ${initializationError}`} />;
+  }
+
+  // Main app navigation
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
+    <ErrorBoundary>
+      <SafeAreaProvider>
+        <OfflineBanner isVisible={isOfflineMode} />
+        <NavigationContainer>
         <Tab.Navigator
           initialRouteName="ScanStack"
           screenOptions={({ route }) => ({
@@ -123,5 +182,6 @@ export default function App() {
         <StatusBar style="light" />
       </NavigationContainer>
     </SafeAreaProvider>
+    </ErrorBoundary>
   );
 }
