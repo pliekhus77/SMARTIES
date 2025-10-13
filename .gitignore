@@ -48,4 +48,3 @@ build/
 # Testing
 coverage/
 .nyc_output/
-venv/Scripts/python.exe
