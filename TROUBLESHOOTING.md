@@ -345,7 +345,6 @@ expo start --localhost
 
 ## 🗄️ Database Issues
 
-### MongoDB Atlas Connection Issues
 
 #### "Connection String Invalid"
 
@@ -354,7 +353,6 @@ expo start --localhost
 **Solution**:
 1. Check connection string format:
    ```
-   mongodb+srv://username:password@cluster.xxxxx.mongodb.net/database
    ```
 2. Verify username and password are correct
 3. Ensure special characters in password are URL-encoded
@@ -365,7 +363,6 @@ expo start --localhost
 **Problem**: IP address not whitelisted
 
 **Solution**:
-1. Go to MongoDB Atlas dashboard
 2. Navigate to "Network Access"
 3. Add current IP address or use 0.0.0.0/0 for development
 4. Wait 2-3 minutes for changes to propagate
@@ -375,7 +372,6 @@ expo start --localhost
 **Problem**: Database user credentials incorrect
 
 **Solution**:
-1. Go to "Database Access" in MongoDB Atlas
 2. Verify username exists
 3. Reset password if needed
 4. Ensure user has read/write permissions
@@ -388,29 +384,23 @@ expo start --localhost
 **Solutions**:
 ```bash
 # Test basic connectivity
-ping cluster0.xxxxx.mongodb.net
 
 # Check firewall settings
 # Allow outbound connections on port 27017
 
 # Try different connection method
 # Use connection string with different options
-mongodb+srv://user:pass@cluster.net/db?retryWrites=true&w=majority&connectTimeoutMS=30000
 ```
 
 ### Local Database Issues
 
-#### MongoDB Not Starting
 
-**Problem**: Local MongoDB service not running
 
 **Solutions**:
 ```bash
 # Windows
-net start MongoDB
 
 # macOS
-brew services start mongodb-community
 
 # Linux
 sudo systemctl start mongod
@@ -622,7 +612,6 @@ jest.mock('react-native', () => ({
 **Solutions**:
 ```javascript
 // Use test database
-const TEST_DB_URI = process.env.TEST_MONGODB_URI || 'mongodb://localhost:27017/smarties_test';
 
 // Clean database before tests
 beforeEach(async () => {
@@ -682,7 +671,6 @@ react-devtools
 ### Documentation Resources
 - [React Native Troubleshooting](https://reactnative.dev/docs/troubleshooting)
 - [Expo Troubleshooting](https://docs.expo.dev/troubleshooting/overview/)
-- [MongoDB Atlas Troubleshooting](https://docs.atlas.mongodb.com/troubleshoot-connection/)
 
 ### Community Support
 - [React Native Community](https://github.com/react-native-community)
