@@ -1,165 +1,203 @@
-/**
- * Scan Screen with Product Search Integration
- * Implements Requirements 1.1, 1.3, 1.4, 2.5, 3.1, 4.1, 5.1 from SMARTIES API integration specification
- */
-
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Alert, ActivityIndicator } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { View, StyleSheet, Alert, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { ProductService } from '../services/api/ProductService';
-import { AllergenService } from '../services/AllergenService';
-import { HistoryService } from '../services/HistoryService';
-import { SmartiesAPIClient } from '../services/api/SmartiesAPIClient';
-import { UserProfile } from '../types/core';
+import { CameraView } from '../components/scanner/CameraView';
+import { ManualEntryModal } from '../components/scanner/ManualEntryModal';
+import { ProductNotFound } from '../components/product/ProductNotFound';
+import { ScanOrchestrationService } from '../services/scan/ScanOrchestrationService';
+import { NetworkService } from '../services/network/NetworkService';
+import { ErrorHandlingService, ErrorType } from '../services/error/ErrorHandlingService';
+import { BarcodeResult, DetectionError } from '../types/barcode';
 
-interface Props {
-  userProfile: UserProfile;
-}
-
-export const ScanScreen: React.FC<Props> = ({ userProfile }) => {
-  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [scanned, setScanned] = useState(false);
+export const ScanScreen: React.FC = () => {
+  const [showManualEntry, setShowManualEntry] = useState(false);
+  const [showProductNotFound, setShowProductNotFound] = useState(false);
+  const [currentBarcode, setCurrentBarcode] = useState<string>('');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isOnline, setIsOnline] = useState(true);
+  const [retryCount, setRetryCount] = useState(0);
+  
   const navigation = useNavigation();
-
-  // Initialize services
-  const apiClient = new SmartiesAPIClient();
-  const productService = new ProductService(apiClient);
-  const allergenService = new AllergenService();
-  const historyService = new HistoryService();
+  const scanService = new ScanOrchestrationService();
+  const networkService = new NetworkService();
+  const errorService = new ErrorHandlingService();
 
   useEffect(() => {
-    const getBarCodeScannerPermissions = async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    };
+    // Monitor network connectivity
+    const unsubscribe = networkService.addListener((state) => {
+      setIsOnline(state.isConnected && state.isInternetReachable);
+    });
 
-    getBarCodeScannerPermissions();
+    return unsubscribe;
   }, []);
 
-  const handleBarcodeScanned = async ({ type, data }: { type: string; data: string }) => {
-    if (scanned || isLoading) return;
-
-    setScanned(true);
-    setIsLoading(true);
+  const handleBarcodeDetected = async (result: BarcodeResult) => {
+    if (isProcessing) return;
+    
+    setIsProcessing(true);
+    setCurrentBarcode(result.normalized);
 
     try {
-      // Search for product
-      const product = await productService.searchByUPC(data);
+      // Process the scan with retry logic
+      const scanResult = await errorService.retryWithExponentialBackoff(
+        () => scanService.processScan(result),
+        3,
+        1000
+      );
       
-      if (!product) {
-        Alert.alert(
-          'Product Not Found',
-          'This product is not in our database. Would you like to try again?',
-          [
-            { text: 'Try Again', onPress: () => setScanned(false) },
-            { text: 'Cancel', style: 'cancel' }
-          ]
-        );
-        setIsLoading(false);
+      if (!scanResult.success) {
+        if (scanResult.error?.includes('not found')) {
+          setShowProductNotFound(true);
+        } else {
+          const errorInfo = errorService.handleError(
+            ErrorType.API_ERROR,
+            scanResult.error || 'Failed to process barcode',
+            undefined,
+            { barcode: result.normalized }
+          );
+
+          const recoveryActions = errorService.getRecoveryActions(errorInfo);
+          recoveryActions[0].action = () => handleRetryBarcode(result); // Set retry action
+
+          errorService.showErrorDialog(errorInfo, recoveryActions);
+        }
         return;
       }
 
-      // Analyze for allergens
-      const analysis = allergenService.analyzeProduct(product, userProfile);
+      if (!scanResult.product) {
+        const errorInfo = errorService.handleError(
+          ErrorType.API_ERROR,
+          'No product data received',
+          undefined,
+          { barcode: result.normalized }
+        );
+        errorService.showErrorDialog(errorInfo);
+        return;
+      }
 
-      // Save to history
-      await historyService.saveScanResult(product, analysis, userProfile.id);
+      // Reset retry count on success
+      setRetryCount(0);
+
+      // Analyze dietary compliance (mock user restrictions for now)
+      const userRestrictions = ['milk', 'gluten', 'vegan']; // This would come from user profile
+      const analysisResult = await scanService.analyzeDietaryCompliance(
+        scanResult.product,
+        userRestrictions
+      );
+
+      // Add to scan history
+      await scanService.addToScanHistory(scanResult.product, analysisResult);
 
       // Navigate to appropriate result screen
-      navigateToResultScreen(product, analysis);
+      const targetScreen = scanService.getNavigationTarget(analysisResult.severity);
+      
+      navigation.navigate(targetScreen as never, {
+        product: scanResult.product,
+        analysis: analysisResult,
+        fromCache: scanResult.fromCache,
+      } as never);
 
     } catch (error) {
-      console.error('Scan processing failed:', error);
-      Alert.alert(
-        'Error',
-        'Failed to process the scanned product. Please try again.',
-        [
-          { text: 'Retry', onPress: () => setScanned(false) },
-          { text: 'Cancel', style: 'cancel' }
-        ]
+      const errorInfo = errorService.handleError(
+        ErrorType.UNKNOWN_ERROR,
+        'Failed to process scan',
+        error as Error,
+        { barcode: result.normalized, retryCount }
       );
+
+      const recoveryActions = errorService.getRecoveryActions(errorInfo);
+      recoveryActions[0].action = () => handleRetryBarcode(result);
+
+      errorService.showErrorDialog(errorInfo, recoveryActions);
     } finally {
-      setIsLoading(false);
+      setIsProcessing(false);
     }
   };
 
-  const navigateToResultScreen = (product: any, analysis: any) => {
-    const screenParams = { product, analysis };
-
-    switch (analysis.severity) {
-      case 'severe':
-        navigation.navigate('SevereAllergy', {
-          ...screenParams,
-          onSaveToHistory: () => console.log('Already saved'),
-          onReportIssue: () => navigation.navigate('ReportIssue', screenParams),
-          onGoBack: () => {
-            setScanned(false);
-            navigation.goBack();
-          }
-        });
-        break;
-      case 'mild':
-        navigation.navigate('MildWarning', {
-          ...screenParams,
-          onSaveToHistory: () => console.log('Already saved'),
-          onReportIssue: () => navigation.navigate('ReportIssue', screenParams),
-          onGoBack: () => {
-            setScanned(false);
-            navigation.goBack();
-          }
-        });
-        break;
-      case 'safe':
-      default:
-        navigation.navigate('AllClear', {
-          ...screenParams,
-          onDone: () => {
-            setScanned(false);
-            navigation.goBack();
-          },
-          onSaveToHistory: () => console.log('Already saved')
-        });
-        break;
-    }
+  const handleRetryBarcode = async (result: BarcodeResult) => {
+    setRetryCount(prev => prev + 1);
+    await handleBarcodeDetected(result);
   };
 
-  if (hasPermission === null) {
-    return (
-      <View style={styles.container}>
-        <Text>Requesting camera permission...</Text>
-      </View>
-    );
-  }
+  const handleScanError = (error: DetectionError) => {
+    const errorType = error.type === 'CAMERA_ERROR' 
+      ? ErrorType.CAMERA_INITIALIZATION_FAILED
+      : error.type === 'DETECTION_ERROR'
+      ? ErrorType.BARCODE_DETECTION_FAILED
+      : ErrorType.VALIDATION_ERROR;
 
-  if (hasPermission === false) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.errorText}>No access to camera</Text>
-        <Text style={styles.helpText}>Please enable camera permissions in settings</Text>
-      </View>
+    const errorInfo = errorService.handleError(
+      errorType,
+      error.message,
+      undefined,
+      { errorType: error.type }
     );
-  }
+
+    const recoveryActions = errorService.getRecoveryActions(errorInfo);
+    
+    // Set up recovery actions
+    recoveryActions.forEach(action => {
+      if (action.label === 'Manual Entry') {
+        action.action = () => setShowManualEntry(true);
+      } else if (action.label === 'Turn on Flash') {
+        action.action = () => {
+          // This would trigger torch toggle in camera component
+        };
+      }
+    });
+
+    errorService.showErrorDialog(errorInfo, recoveryActions);
+  };
+
+  const handleManualBarcodeEntry = async (barcode: string) => {
+    setShowManualEntry(false);
+    
+    // Create a mock barcode result for manual entry
+    const mockResult: BarcodeResult = {
+      value: barcode,
+      format: barcode.length === 13 ? 'EAN_13' as any : 'UPC_A' as any,
+      normalized: barcode,
+      isValid: true,
+    };
+
+    await handleBarcodeDetected(mockResult);
+  };
+
+  const handleRetryNotFound = () => {
+    setShowProductNotFound(false);
+    // Camera will automatically resume scanning
+  };
+
+  const handleManualEntryFromNotFound = () => {
+    setShowProductNotFound(false);
+    setShowManualEntry(true);
+  };
 
   return (
     <View style={styles.container}>
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarcodeScanned}
-        style={StyleSheet.absoluteFillObject}
+      <CameraView
+        onBarcodeDetected={handleBarcodeDetected}
+        onError={handleScanError}
+        onManualEntry={() => setShowManualEntry(true)}
       />
-      
-      <View style={styles.overlay}>
-        <View style={styles.scanArea} />
-        <Text style={styles.instructionText}>
-          Point camera at barcode to scan
-        </Text>
-      </View>
 
-      {isLoading && (
-        <View style={styles.loadingOverlay}>
-          <ActivityIndicator size="large" color="#4CAF50" />
-          <Text style={styles.loadingText}>Analyzing product...</Text>
+      <ManualEntryModal
+        visible={showManualEntry}
+        onClose={() => setShowManualEntry(false)}
+        onBarcodeEntered={handleManualBarcodeEntry}
+      />
+
+      {showProductNotFound && (
+        <ProductNotFound
+          barcode={currentBarcode}
+          onRetry={handleRetryNotFound}
+          onManualEntry={handleManualEntryFromNotFound}
+        />
+      )}
+
+      {!isOnline && (
+        <View style={styles.offlineIndicator}>
+          <Text style={styles.offlineText}>Offline - Using cached data only</Text>
         </View>
       )}
     </View>
@@ -171,49 +209,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'black',
   },
-  overlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  scanArea: {
-    width: 250,
-    height: 250,
-    borderWidth: 2,
-    borderColor: '#4CAF50',
-    borderRadius: 10,
-    backgroundColor: 'transparent',
-  },
-  instructionText: {
-    color: 'white',
-    fontSize: 16,
-    marginTop: 20,
-    textAlign: 'center',
-  },
-  loadingOverlay: {
+  offlineIndicator: {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    top: 50,
+    left: 20,
+    right: 20,
+    backgroundColor: 'rgba(255, 165, 0, 0.9)',
+    padding: 8,
+    borderRadius: 4,
   },
-  loadingText: {
+  offlineText: {
     color: 'white',
-    fontSize: 16,
-    marginTop: 10,
-  },
-  errorText: {
-    color: 'red',
-    fontSize: 18,
     textAlign: 'center',
-    marginBottom: 10,
-  },
-  helpText: {
-    color: 'gray',
     fontSize: 14,
-    textAlign: 'center',
+    fontWeight: '600',
   },
 });

@@ -43,6 +43,10 @@ export class ConnectionStatusService {
   }
 
   private startPeriodicCheck() {
+    // DISABLED: Network checks causing app crash
+    console.log('Connection status checks disabled');
+    
+    /*
     // Check connection status every 30 seconds
     this.checkInterval = setInterval(() => {
       this.checkDatabaseConnection();
@@ -50,6 +54,7 @@ export class ConnectionStatusService {
 
     // Initial check
     this.checkDatabaseConnection();
+    */
   }
 
   private async checkDatabaseConnection() {

@@ -84,6 +84,10 @@ export class IssueReportingService {
    * Send report to server
    */
   private async sendReportToServer(report: IssueReport): Promise<void> {
+    // DISABLED: Network call causing app crash
+    throw new Error('Network reporting disabled');
+    
+    /*
     const response = await fetch(this.API_ENDPOINT, {
       method: 'POST',
       headers: {
@@ -105,6 +109,7 @@ export class IssueReportingService {
     if (!response.ok) {
       throw new Error(`Report submission failed: ${response.status}`);
     }
+    */
   }
 
   /**

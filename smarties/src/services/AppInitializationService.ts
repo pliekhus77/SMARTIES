@@ -88,6 +88,10 @@ export class AppInitializationService {
    * Initialize database connection
    */
   private async initializeDatabase(): Promise<void> {
+    // DISABLED: Database connection causing app crash
+    console.log('Database initialization disabled');
+    
+    /*
     try {
       console.log('Initializing MongoDB Atlas connection...');
       await this.databaseService.connect();
@@ -103,6 +107,7 @@ export class AppInitializationService {
       console.error('❌ Database initialization failed:', error);
       throw new Error(`Database connection failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
+    */
   }
 
   /**
