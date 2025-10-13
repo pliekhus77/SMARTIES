@@ -4,7 +4,7 @@ inclusion: always
 
 # SMARTIES Product Guide
 
-**SMARTIES** (Scan‑based Mobile Allergen Risk Tracking & IntelligencE Suite) is a React Native mobile application that provides instant dietary compliance checking through UPC barcode scanning, powered by MongoDB Atlas and AI.
+**SMARTIES** (Scan‑based Mobile Allergen Risk Tracking & IntelligencE Suite) is a React Native mobile application that provides instant dietary compliance checking through UPC barcode scanning, powered by Open Food Facts API and AI.
 
 ## Core Product Principles
 
@@ -35,31 +35,31 @@ inclusion: always
 - **Certification Priority**: Trust certified labels (Halal/Kosher symbols) over ingredient analysis
 
 ### Product Data Sources
-- **Primary**: Open Food Facts API (2M+ products)
-- **Secondary**: USDA Food Data Central (nutritional data)
-- **Tertiary**: Manual user submissions with verification
-- **Real-time**: Barcode scanning with image OCR fallback
+- **Primary**: Open Food Facts API (2M+ products) - Direct API access
+- **Secondary**: Open Beauty Facts, Open Pet Food Facts (via same API structure)
+- **Fallback**: Manual barcode entry when scanning fails
+- **Real-time**: Barcode scanning with immediate API lookup
 
 ## Technical Architecture Guidelines
 
 ### Data Flow Patterns
-1. **Scan → Lookup → Analyze → Alert → Store**
-2. **Offline-First**: Cache user profile + recent scans locally
-3. **Sync Strategy**: Upload scan history when online, download product updates
-4. **AI Pipeline**: Vector similarity search → RAG context → LLM analysis → Structured response
+1. **Scan → API Lookup → Analyze → Alert → Cache**
+2. **API-First**: Direct calls to Open Food Facts API for product data
+3. **Local Caching**: Cache user profile + recent products for offline access
+4. **AI Pipeline**: Product data → LLM analysis → Dietary compliance check
 
 ### Performance Requirements
 - **Barcode Recognition**: <1 second
-- **Product Lookup**: <2 seconds (cached), <5 seconds (API)
-- **AI Analysis**: <3 seconds for complex products
+- **API Lookup**: <2 seconds for Open Food Facts API call
+- **AI Analysis**: <3 seconds for dietary compliance check
 - **App Launch**: <2 seconds to scanner ready
 - **Battery Impact**: <5% drain per hour of active scanning
 
 ### Security & Privacy
-- **Local Storage**: User profiles encrypted with device keychain
-- **Data Minimization**: Only store necessary dietary restrictions, not full health records
-- **Anonymized Analytics**: Track usage patterns without PII
-- **GDPR Compliance**: Right to deletion, data portability
+- **Local Storage**: User profiles and cached products encrypted with device keychain
+- **Data Minimization**: Only store necessary dietary restrictions and recent scans
+- **No Backend**: No user data stored on our servers - privacy by design
+- **GDPR Compliance**: Local data only, easy deletion and export
 
 ## Feature Prioritization Framework
 
@@ -109,10 +109,10 @@ inclusion: always
 - **Temporary Restrictions**: Time-limited dietary needs (pregnancy, medication)
 
 ### Product Database Management
-- **Confidence Scoring**: Rate product data quality (verified, crowdsourced, AI-generated)
-- **Update Frequency**: Daily sync for popular products, weekly for long-tail
-- **User Contributions**: Allow ingredient corrections with moderation
-- **Duplicate Handling**: Merge products with same UPC from different sources
+- **Open Food Facts Integration**: Leverage community-maintained database
+- **Local Caching**: Cache recently scanned products for offline access
+- **User Contributions**: Direct users to Open Food Facts for product additions
+- **Data Quality**: Trust Open Food Facts community verification process
 
 ## Success Metrics
 
@@ -134,10 +134,10 @@ inclusion: always
 ## Integration Points
 
 ### External APIs
-- **Open Food Facts**: Primary product database
-- **MongoDB Atlas**: User profiles, scan history, product cache
+- **Open Food Facts**: Primary product database (world.openfoodfacts.org)
+- **Open Beauty Facts**: Beauty products (world.openbeautyfacts.org)
+- **Open Pet Food Facts**: Pet food products (world.openpetfoodfacts.org)
 - **OpenAI/Anthropic**: Dietary analysis and recommendations
-- **Barcode Lookup Services**: Fallback for unknown UPCs
 
 ### Platform Features
 - **Camera API**: Barcode scanning and image capture

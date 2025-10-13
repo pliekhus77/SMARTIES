@@ -8,15 +8,15 @@ inclusion: always
 
 ### Core Technologies (Non-Negotiable)
 - **Mobile Framework**: React Native with TypeScript
-- **Database**: MongoDB Atlas with Realm SDK for offline sync
+- **Local Storage**: AsyncStorage with encryption for user profiles and cache
 - **AI/ML**: OpenAI/Anthropic APIs for dietary analysis
-- **Barcode Scanning**: expo-barcode-scanner
-- **Vector Search**: MongoDB Atlas Vector Search
+- **Barcode Scanning**: Google ML Kit (Android) / Apple Vision (iOS) via react-native wrapper
+- **Product Data**: Open Food Facts API (direct HTTP calls)
 
 ### Data Sources Integration
-- **Primary**: Open Food Facts API for product data
-- **Secondary**: USDA Food Data Central for nutritional info
-- **Fallback**: Manual user submissions with moderation
+- **Primary**: Open Food Facts API (world.openfoodfacts.org/api/v2/product/{barcode}.json)
+- **Secondary**: Open Beauty Facts, Open Pet Food Facts (same API structure)
+- **Fallback**: Manual barcode entry and "Add Product" redirect to Open Food Facts
 
 ## Development Patterns & Conventions
 
@@ -59,43 +59,62 @@ const ScannerScreen: React.FC = () => {
 };
 ```
 
-### MongoDB Integration Patterns
+### Open Food Facts API Integration Patterns
 ```typescript
-// Use aggregation pipelines for complex queries
-const dietaryAnalysis = await db.collection('products').aggregate([
-  { $match: { upc: barcode } },
-  { $lookup: { from: 'allergens', localField: 'ingredients', foreignField: 'name' } },
-  { $addFields: { riskScore: { $sum: '$allergens.severity' } } }
-]);
+// Direct API calls to Open Food Facts
+const fetchProduct = async (barcode: string): Promise<Product | null> => {
+  const normalizedBarcode = barcode.padStart(13, '0'); // Normalize barcode
+  const response = await fetch(
+    `https://world.openfoodfacts.org/api/v2/product/${normalizedBarcode}.json`,
+    {
+      headers: {
+        'User-Agent': 'SMARTIES - React Native - Version 1.0 - https://smarties.app - scan'
+      }
+    }
+  );
+  
+  const data = await response.json();
+  return data.status === 1 ? data.product : null;
+};
 
-// Always use proper error handling
-try {
-  const result = await realm.write(() => {
-    return realm.create('Product', productData);
-  });
-} catch (error) {
-  console.error('Database write failed:', error);
-  throw new DatabaseError('Failed to save product');
-}
+// Local caching with AsyncStorage
+const cacheProduct = async (barcode: string, product: Product) => {
+  try {
+    await AsyncStorage.setItem(`product_${barcode}`, JSON.stringify(product));
+  } catch (error) {
+    console.error('Cache write failed:', error);
+  }
+};
 ```
 
-### AI/RAG Implementation Guidelines
+### AI Dietary Analysis Implementation
 ```typescript
-// Structure AI requests with proper context
-const dietaryAdvice = await openai.chat.completions.create({
-  model: "gpt-4",
-  messages: [
-    { role: "system", content: "You are a dietary safety assistant..." },
-    { role: "user", content: `Analyze product: ${productData}` }
-  ],
-  temperature: 0.1 // Low temperature for safety-critical responses
-});
+// Analyze product against user dietary restrictions
+const analyzeDietaryCompliance = async (
+  product: OpenFoodFactsProduct, 
+  userProfile: UserProfile
+): Promise<DietaryAnalysis> => {
+  const prompt = `
+    Analyze this product for dietary compliance:
+    Product: ${product.product_name}
+    Ingredients: ${product.ingredients_text}
+    Allergens: ${product.allergens}
+    User restrictions: ${userProfile.restrictions.join(', ')}
+    
+    Return JSON with: { safe: boolean, violations: string[], warnings: string[] }
+  `;
 
-// Always validate AI responses
-const validatedResponse = validateDietaryAdvice(dietaryAdvice);
-if (!validatedResponse.isValid) {
-  throw new AIValidationError('Invalid dietary advice generated');
-}
+  const response = await openai.chat.completions.create({
+    model: "gpt-4",
+    messages: [
+      { role: "system", content: "You are a dietary safety assistant. Always err on the side of caution." },
+      { role: "user", content: prompt }
+    ],
+    temperature: 0.1
+  });
+
+  return JSON.parse(response.choices[0].message.content);
+};
 ```
 
 ### Error Handling Standards
