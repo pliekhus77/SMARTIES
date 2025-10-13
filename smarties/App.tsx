@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -70,7 +70,7 @@ export default function App() {
             component={SevereAllergyResultScreen}
           />
         </Stack.Navigator>
-        <StatusBar style="light" />
+        <StatusBar barStyle="light-content" backgroundColor="#000000" />
       </NavigationContainer>
     </SafeAreaProvider>
   );
