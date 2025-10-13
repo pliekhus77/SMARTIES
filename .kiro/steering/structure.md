@@ -20,26 +20,24 @@ smarties/
 │   │   ├── HistoryScreen.tsx    # Scan history and analytics
 │   │   └── SettingsScreen.tsx   # App configuration
 │   ├── services/                # Business logic and API integrations
-│   │   ├── atlas/               # MongoDB Atlas integration
-│   │   ├── ai/                  # GenAI and RAG pipeline
+│   │   ├── api/                 # Open Food Facts API integration
+│   │   ├── ai/                  # AI dietary analysis
 │   │   ├── barcode/             # Barcode scanning logic
+│   │   ├── storage/             # Local storage and caching
 │   │   └── dietary/             # Dietary compliance checking
 │   ├── models/                  # Data models and schemas
-│   │   ├── Product.ts           # Product data structure
+│   │   ├── OpenFoodFactsProduct.ts # Open Food Facts API response types
 │   │   ├── UserProfile.ts       # User dietary profile
 │   │   └── ScanHistory.ts       # Scan result tracking
 │   ├── utils/                   # Utility functions and helpers
 │   │   ├── allergenDetection.ts # Allergen identification logic
 │   │   ├── religiousCompliance.ts # Religious dietary rules
+│   │   ├── barcodeNormalization.ts # Barcode formatting utilities
 │   │   └── medicalChecks.ts     # Medical condition compliance
 │   └── config/                  # Configuration files
-│       ├── atlas.ts             # MongoDB Atlas connection
+│       ├── api.ts               # API endpoints and configuration
 │       ├── ai.ts                # AI service configuration
 │       └── constants.ts         # App-wide constants
-├── data/                        # Data processing and imports
-│   ├── processors/              # Data transformation scripts
-│   ├── imports/                 # Raw data import utilities
-│   └── seeds/                   # Database seeding scripts
 ├── tests/                       # Test files
 │   ├── components/              # Component tests
 │   ├── services/                # Service layer tests
@@ -55,9 +53,10 @@ smarties/
 
 This structure follows the required technology stack defined in the project guidelines:
 - **React Native with TypeScript**: All source files use .ts/.tsx extensions
-- **MongoDB Atlas with Realm SDK**: Database integration in services/atlas/
+- **Open Food Facts API**: Direct API integration in services/api/
 - **OpenAI/Anthropic APIs**: AI services in services/ai/
-- **expo-barcode-scanner**: Barcode functionality in services/barcode/
+- **Google ML Kit / Apple Vision**: Barcode functionality in services/barcode/
+- **AsyncStorage**: Local storage and caching in services/storage/
 
 ## Key Architectural Principles
 
@@ -68,24 +67,25 @@ This structure follows the required technology stack defined in the project guid
 - **Platform-Specific**: Separate iOS/Android implementations when needed
 
 ### Service Layer Structure
-- **Atlas Service**: All MongoDB operations centralized
-- **AI Service**: RAG pipeline and GenAI integrations
+- **API Service**: Open Food Facts API calls and response handling
+- **AI Service**: Dietary analysis using LLM APIs
+- **Storage Service**: Local caching and user profile management
+- **Barcode Service**: Scanning and barcode normalization
 - **Dietary Service**: Core business logic for compliance checking
-- **Barcode Service**: Scanning and product lookup functionality
 
 ### Data Flow Patterns
 - **Unidirectional**: Data flows down, events flow up
-- **Offline-First**: Local storage with Atlas sync
-- **Event-Driven**: User actions trigger service calls
-- **Caching Strategy**: Intelligent caching for offline functionality
+- **API-First**: Direct calls to Open Food Facts API
+- **Local Caching**: Cache products and user data locally
+- **Event-Driven**: User actions trigger API calls and analysis
 
 ### File Naming Conventions
 - **Components**: PascalCase (e.g., `ScannerComponent.tsx`)
-- **Services**: camelCase (e.g., `atlasService.ts`)
-- **Utilities**: camelCase (e.g., `allergenDetection.ts`)
-- **Constants**: UPPER_SNAKE_CASE (e.g., `DIETARY_RESTRICTIONS`)
+- **Services**: camelCase (e.g., `apiService.ts`, `storageService.ts`)
+- **Utilities**: camelCase (e.g., `allergenDetection.ts`, `barcodeNormalization.ts`)
+- **Constants**: UPPER_SNAKE_CASE (e.g., `DIETARY_RESTRICTIONS`, `API_ENDPOINTS`)
 - **Tests**: Match source file with `.test.ts` or `.test.tsx` suffix
-- **Types**: PascalCase with `.types.ts` suffix (e.g., `Product.types.ts`)
+- **Types**: PascalCase with `.types.ts` suffix (e.g., `OpenFoodFactsProduct.types.ts`)
 
 ### Import/Export Patterns
 - **Barrel Exports**: Use index.ts files for clean imports
@@ -94,32 +94,33 @@ This structure follows the required technology stack defined in the project guid
 - **Component Imports**: Group by source (external → internal → relative)
 - **Type Imports**: Use `import type` for TypeScript types
 
-### MongoDB Collection Structure
+### Local Storage Structure
 ```
-smarties_db/
-├── products                     # Food product database
-├── users                       # User profiles and preferences  
-├── scan_history                # Individual scan results
-├── dietary_rules               # Compliance rules and patterns
-└── embeddings                  # Vector embeddings for AI
+AsyncStorage Keys:
+├── user_profile                 # User dietary restrictions and preferences
+├── scan_history                 # Recent scan results and analysis
+├── product_cache_${barcode}     # Cached Open Food Facts product data
+├── app_settings                 # App configuration and preferences
+└── dietary_rules                # Custom dietary compliance rules
 ```
 
 ### Configuration Management
-- **Environment Variables**: Use .env files for sensitive data
+- **Environment Variables**: Use .env files for API keys and sensitive data
 - **Config Objects**: Centralized configuration in config/ directory with TypeScript interfaces
 - **Feature Flags**: Toggle features for different environments
-- **Atlas Connection**: Secure connection string management via Realm SDK
+- **API Configuration**: Open Food Facts endpoints and user agent strings
 - **Type Safety**: All configuration objects must have TypeScript interfaces
 
 ### Error Handling Structure
+- **API Level**: Handle Open Food Facts API errors and network failures
 - **Service Level**: Catch and transform errors at service boundaries
 - **Component Level**: Display user-friendly error messages
 - **Global Handler**: Catch unhandled errors and log appropriately
-- **Offline Handling**: Graceful degradation when offline
+- **Offline Handling**: Use cached data when API unavailable
 
 ### Testing Organization
 - **Unit Tests**: Test individual functions and components using Jest
-- **Integration Tests**: Test service interactions with MongoDB and APIs
+- **Integration Tests**: Test service interactions with Open Food Facts API
 - **E2E Tests**: Test complete user workflows using Detox
-- **Mock Data**: Consistent test data across all test types with TypeScript interfaces
-- **Type Testing**: Validate TypeScript interfaces and type safety
+- **Mock Data**: Mock Open Food Facts API responses for consistent testing
+- **Type Testing**: Validate TypeScript interfaces and API response types

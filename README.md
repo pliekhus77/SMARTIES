@@ -2,7 +2,7 @@
 
 **S**can‑based **M**obile **A**llergen **R**isk **T**racking & **I**ntelligenc**E** **S**uite
 
-A React Native mobile application that provides instant dietary compliance checking through UPC barcode scanning, powered by MongoDB Atlas and AI.
+A React Native mobile application that provides instant dietary compliance checking through UPC barcode scanning, powered by AI services.
 
 ![SMARTIES Logo](design/SMARTIES.png)
 
@@ -55,7 +55,7 @@ Empower users to make safe dietary choices instantly by scanning product barcode
 | Component | Technology | Purpose |
 |-----------|------------|---------|
 | **Mobile Framework** | React Native + TypeScript | Cross-platform native performance |
-| **Database** | MongoDB Atlas + Realm SDK | Offline sync and vector search |
+| **Local Storage** | AsyncStorage | Offline data persistence |
 | **AI/ML** | OpenAI/Anthropic APIs | Dietary analysis and recommendations |
 | **Barcode Scanning** | expo-barcode-scanner | UPC recognition |
 | **Data Sources** | Open Food Facts API, USDA Food Data Central | Product and nutritional data |
