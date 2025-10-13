@@ -9,9 +9,8 @@
     "newArchEnabled": true,
     "updates": {
       "enabled": false,
-      "checkAutomatically": "OFF",
-      "fallbackToCacheTimeout": 0,
-      "url": null
+      "checkAutomatically": "ON_ERROR_RECOVERY",
+      "fallbackToCacheTimeout": 0
     },
     "splash": {
       "image": "./assets/splash-icon.png",
