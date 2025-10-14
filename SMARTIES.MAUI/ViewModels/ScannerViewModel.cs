@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
 using SMARTIES.MAUI.Models;
 using SMARTIES.MAUI.Services;
+using SMARTIES.MAUI.Services.Performance;
 
 namespace SMARTIES.MAUI.ViewModels;
 
@@ -16,6 +17,11 @@ public partial class ScannerViewModel : ObservableObject
     private readonly IProductCacheService _productCacheService;
     private readonly IScannerErrorHandler _errorHandler;
     private readonly ILogger<ScannerViewModel> _logger;
+    
+    // Performance monitoring services
+    private readonly IScanPerformanceService _scanPerformanceService;
+    private readonly IPerformanceAlertingService _performanceAlertingService;
+    private readonly IScanResultTrackingService _scanResultTrackingService;
 
     [ObservableProperty]
     private bool isScanning;
@@ -50,7 +56,10 @@ public partial class ScannerViewModel : ObservableObject
         IUserProfileService userProfileService,
         IProductCacheService productCacheService,
         IScannerErrorHandler errorHandler,
-        ILogger<ScannerViewModel> logger)
+        ILogger<ScannerViewModel> logger,
+        IScanPerformanceService scanPerformanceService,
+        IPerformanceAlertingService performanceAlertingService,
+        IScanResultTrackingService scanResultTrackingService)
     {
         _barcodeService = barcodeService;
         _openFoodFactsService = openFoodFactsService;
@@ -59,8 +68,13 @@ public partial class ScannerViewModel : ObservableObject
         _productCacheService = productCacheService;
         _errorHandler = errorHandler;
         _logger = logger;
+        _scanPerformanceService = scanPerformanceService;
+        _performanceAlertingService = performanceAlertingService;
+        _scanResultTrackingService = scanResultTrackingService;
 
         _barcodeService.BarcodeDetected += OnBarcodeDetected;
+        _performanceAlertingService.AlertGenerated += OnPerformanceAlertGenerated;
+        
         _ = Task.Run(InitializeAsync);
     }
 
@@ -68,6 +82,12 @@ public partial class ScannerViewModel : ObservableObject
     {
         try
         {
+            // Optimize camera settings based on device capabilities
+            await _scanPerformanceService.OptimizeCameraSettingsAsync();
+            
+            // Preload critical resources
+            await _scanPerformanceService.PreloadCriticalResourcesAsync();
+            
             ActiveProfile = await _userProfileService.GetActiveProfileAsync();
             await LoadRecentProductsAsync();
         }
@@ -80,6 +100,14 @@ public partial class ScannerViewModel : ObservableObject
     private async void OnBarcodeDetected(object? sender, BarcodeDetectedEventArgs e)
     {
         await ProcessBarcodeAsync(e.Barcode);
+    }
+
+    private async void OnPerformanceAlertGenerated(object? sender, PerformanceAlert alert)
+    {
+        if (alert.Severity == AlertSeverity.Critical)
+        {
+            StatusMessage = $"Performance Alert: {alert.Message}";
+        }
     }
 
     [RelayCommand]
@@ -168,41 +196,56 @@ public partial class ScannerViewModel : ObservableObject
             IsProcessing = true;
             StatusMessage = "Looking up product...";
 
-            var product = await _productCacheService.GetCachedProductAsync(barcode);
-            
-            if (product == null)
+            // Measure complete scan-to-result workflow
+            var scanTime = await _scanPerformanceService.MeasureScanWorkflowAsync(async () =>
             {
-                product = await _openFoodFactsService.GetProductAsync(barcode);
+                var product = await _productCacheService.GetCachedProductAsync(barcode);
                 
                 if (product == null)
                 {
-                    StatusMessage = "Product not found. Try manual entry.";
-                    return;
+                    // Track API response time
+                    await _scanResultTrackingService.TrackApiResponseAsync(async () =>
+                    {
+                        product = await _openFoodFactsService.GetProductAsync(barcode);
+                    });
+                    
+                    if (product == null)
+                    {
+                        StatusMessage = "Product not found. Try manual entry.";
+                        return;
+                    }
+
+                    await _productCacheService.CacheProductAsync(product);
                 }
 
-                await _productCacheService.CacheProductAsync(product);
-            }
+                CurrentProduct = product;
+                StatusMessage = "Analyzing dietary compliance...";
 
-            CurrentProduct = product;
-            StatusMessage = "Analyzing dietary compliance...";
-
-            if (ActiveProfile != null)
-            {
-                CurrentAnalysis = await _dietaryAnalysisService.AnalyzeProductAsync(product, ActiveProfile);
-                
-                StatusMessage = CurrentAnalysis.OverallCompliance switch
+                if (ActiveProfile != null)
                 {
-                    ComplianceLevel.Safe => "✅ Safe to consume",
-                    ComplianceLevel.Caution => "⚠️ Minor concerns",
-                    ComplianceLevel.Warning => "⚠️ Significant warnings",
-                    ComplianceLevel.Violation => "🚫 Dietary violations found",
-                    ComplianceLevel.Critical => "🚫 CRITICAL: Do not consume",
-                    _ => "Analysis complete"
-                };
-            }
-            else
+                    CurrentAnalysis = await _dietaryAnalysisService.AnalyzeProductAsync(product, ActiveProfile);
+                    
+                    StatusMessage = CurrentAnalysis.OverallCompliance switch
+                    {
+                        ComplianceLevel.Safe => "✅ Safe to consume",
+                        ComplianceLevel.Caution => "⚠️ Minor concerns",
+                        ComplianceLevel.Warning => "⚠️ Significant warnings",
+                        ComplianceLevel.Violation => "🚫 Dietary violations found",
+                        ComplianceLevel.Critical => "🚫 CRITICAL: Do not consume",
+                        _ => "Analysis complete"
+                    };
+                }
+                else
+                {
+                    StatusMessage = "No active profile for analysis";
+                }
+            });
+
+            // Validate performance threshold
+            var isWithinThreshold = await _scanPerformanceService.ValidatePerformanceThresholdAsync(scanTime);
+            if (!isWithinThreshold)
             {
-                StatusMessage = "No active profile for analysis";
+                _logger.LogWarning("Scan performance exceeded threshold: {ScanTime}ms", scanTime.TotalMilliseconds);
             }
 
             await LoadRecentProductsAsync();
