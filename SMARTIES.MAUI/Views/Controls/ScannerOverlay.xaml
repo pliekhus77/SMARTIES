@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SMARTIES.MAUI.Views.Controls.ScannerOverlay">
+    
+    <Grid>
+        <!-- Semi-transparent overlay -->
+        <BoxView BackgroundColor="#80000000" />
+        
+        <!-- Scanning area -->
+        <Frame x:Name="ScanningFrame"
+               BackgroundColor="Transparent"
+               BorderColor="{StaticResource Primary}"
+               BorderWidth="2"
+               CornerRadius="{StaticResource RadiusMedium}"
+               WidthRequest="280"
+               HeightRequest="200"
+               HorizontalOptions="Center"
+               VerticalOptions="Center">
+            
+            <!-- Corner guides -->
+            <Grid>
+                <!-- Top-left corner -->
+                <Frame BackgroundColor="{StaticResource Primary}"
+                       WidthRequest="20"
+                       HeightRequest="3"
+                       CornerRadius="2"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Start"
+                       Margin="5" />
+                <Frame BackgroundColor="{StaticResource Primary}"
+                       WidthRequest="3"
+                       HeightRequest="20"
+                       CornerRadius="2"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Start"
+                       Margin="5" />
+                
+                <!-- Top-right corner -->
+                <Frame BackgroundColor="{StaticResource Primary}"
+                       WidthRequest="20"
+                       HeightRequest="3"
+                       CornerRadius="2"
+                       HorizontalOptions="End"
+                       VerticalOptions="Start"
+                       Margin="5" />
+                <Frame BackgroundColor="{StaticResource Primary}"
+                       WidthRequest="3"
+                       HeightRequest="20"
+                       CornerRadius="2"
+                       HorizontalOptions="End"
+                       VerticalOptions="Start"
+                       Margin="5" />
+                
+                <!-- Bottom-left corner -->
+                <Frame BackgroundColor="{StaticResource Primary}"
+                       WidthRequest="20"
+                       HeightRequest="3"
+                       CornerRadius="2"
+                       HorizontalOptions="Start"
+                       VerticalOptions="End"
+                       Margin="5" />
+                <Frame BackgroundColor="{StaticResource Primary}"
+                       WidthRequest="3"
+                       HeightRequest="20"
+                       CornerRadius="2"
+                       HorizontalOptions="Start"
+                       VerticalOptions="End"
+                       Margin="5" />
+                
+                <!-- Bottom-right corner -->
+                <Frame BackgroundColor="{StaticResource Primary}"
+                       WidthRequest="20"
+                       HeightRequest="3"
+                       CornerRadius="2"
+                       HorizontalOptions="End"
+                       VerticalOptions="End"
+                       Margin="5" />
+                <Frame BackgroundColor="{StaticResource Primary}"
+                       WidthRequest="3"
+                       HeightRequest="20"
+                       CornerRadius="2"
+                       HorizontalOptions="End"
+                       VerticalOptions="End"
+                       Margin="5" />
+                
+                <!-- Scanning line -->
+                <Frame x:Name="ScanLine"
+                       BackgroundColor="{StaticResource Primary}"
+                       HeightRequest="2"
+                       CornerRadius="1"
+                       HorizontalOptions="Fill"
+                       VerticalOptions="Start"
+                       Opacity="0.8" />
+            </Grid>
+        </Frame>
+        
+        <!-- Instructions -->
+        <StackLayout VerticalOptions="End"
+                     HorizontalOptions="Center"
+                     Margin="{StaticResource Spacing6}">
+            
+            <Label x:Name="InstructionLabel"
+                   Text="Position barcode within the frame"
+                   Style="{StaticResource BodyLarge}"
+                   TextColor="{StaticResource White}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center" />
+            
+            <Label x:Name="StatusLabel"
+                   Text="Scanning..."
+                   Style="{StaticResource LabelMedium}"
+                   TextColor="{StaticResource Gray200}"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   Margin="0,{StaticResource Spacing2},0,0" />
+        </StackLayout>
+        
+        <!-- Controls -->
+        <StackLayout Orientation="Horizontal"
+                     HorizontalOptions="Center"
+                     VerticalOptions="End"
+                     Margin="{StaticResource Spacing8}">
+            
+            <Button x:Name="FlashlightButton"
+                    Text="💡"
+                    Style="{StaticResource IconButton}"
+                    BackgroundColor="{StaticResource Gray800}"
+                    TextColor="{StaticResource White}"
+                    Margin="{StaticResource Spacing3}" />
+            
+            <Button x:Name="ManualEntryButton"
+                    Text="Manual Entry"
+                    Style="{StaticResource SecondaryButton}"
+                    BackgroundColor="{StaticResource Gray800}"
+                    TextColor="{StaticResource White}"
+                    BorderColor="{StaticResource White}"
+                    Margin="{StaticResource Spacing3}" />
+            
+            <Button x:Name="SettingsButton"
+                    Text="⚙️"
+                    Style="{StaticResource IconButton}"
+                    BackgroundColor="{StaticResource Gray800}"
+                    TextColor="{StaticResource White}"
+                    Margin="{StaticResource Spacing3}" />
+        </StackLayout>
+    </Grid>
+</ContentView>

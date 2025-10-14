@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Base Card Style -->
+    <Style x:Key="BaseCard" TargetType="Frame">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource DarkSurface}}" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusMedium}" />
+        <Setter Property="HasShadow" Value="True" />
+        <Setter Property="Shadow" Value="{StaticResource ShadowMedium}" />
+        <Setter Property="Padding" Value="{StaticResource Spacing4}" />
+        <Setter Property="Margin" Value="{StaticResource Spacing2}" />
+        <Setter Property="BorderColor" Value="Transparent" />
+    </Style>
+
+    <!-- Elevated Card -->
+    <Style x:Key="ElevatedCard" TargetType="Frame" BasedOn="{StaticResource BaseCard}">
+        <Setter Property="Shadow" Value="{StaticResource ShadowLarge}" />
+    </Style>
+
+    <!-- Outlined Card -->
+    <Style x:Key="OutlinedCard" TargetType="Frame" BasedOn="{StaticResource BaseCard}">
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="BorderColor" Value="{StaticResource Gray300}" />
+        <Setter Property="BorderWidth" Value="1" />
+    </Style>
+
+    <!-- Safety Status Cards -->
+    <Style x:Key="SafeCard" TargetType="Frame" BasedOn="{StaticResource BaseCard}">
+        <Setter Property="BackgroundColor" Value="{StaticResource SafeBackground}" />
+        <Setter Property="BorderColor" Value="{StaticResource Success}" />
+        <Setter Property="BorderWidth" Value="1" />
+    </Style>
+
+    <Style x:Key="CautionCard" TargetType="Frame" BasedOn="{StaticResource BaseCard}">
+        <Setter Property="BackgroundColor" Value="{StaticResource CautionBackground}" />
+        <Setter Property="BorderColor" Value="{StaticResource Warning}" />
+        <Setter Property="BorderWidth" Value="1" />
+    </Style>
+
+    <Style x:Key="ViolationCard" TargetType="Frame" BasedOn="{StaticResource BaseCard}">
+        <Setter Property="BackgroundColor" Value="{StaticResource ViolationBackground}" />
+        <Setter Property="BorderColor" Value="{StaticResource Danger}" />
+        <Setter Property="BorderWidth" Value="2" />
+    </Style>
+
+    <!-- Product Card -->
+    <Style x:Key="ProductCard" TargetType="Frame" BasedOn="{StaticResource BaseCard}">
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusLarge}" />
+    </Style>
+
+    <!-- Compact Card -->
+    <Style x:Key="CompactCard" TargetType="Frame" BasedOn="{StaticResource BaseCard}">
+        <Setter Property="Padding" Value="{StaticResource Spacing3}" />
+        <Setter Property="Margin" Value="{StaticResource Spacing1}" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusSmall}" />
+        <Setter Property="Shadow" Value="{StaticResource ShadowSmall}" />
+    </Style>
+
+    <!-- Section Container -->
+    <Style x:Key="SectionCard" TargetType="Frame" BasedOn="{StaticResource BaseCard}">
+        <Setter Property="Margin" Value="0,{StaticResource Spacing4},0,0" />
+        <Setter Property="Padding" Value="{StaticResource Spacing4},{StaticResource Spacing5}" />
+    </Style>
+
+    <!-- List Item Container -->
+    <Style x:Key="ListItemContainer" TargetType="Grid">
+        <Setter Property="Padding" Value="{StaticResource Spacing4}" />
+        <Setter Property="RowSpacing" Value="{StaticResource Spacing2}" />
+        <Setter Property="ColumnSpacing" Value="{StaticResource Spacing3}" />
+    </Style>
+
+    <!-- Expandable Card Template -->
+    <ControlTemplate x:Key="ExpandableCardTemplate">
+        <Frame Style="{StaticResource BaseCard}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+                <!-- Header -->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    
+                    <ContentPresenter x:Name="HeaderContent" Grid.Column="0" />
+                    <Label Grid.Column="1" Text="▼" FontSize="12" VerticalOptions="Center" />
+                </Grid>
+                
+                <!-- Expandable Content -->
+                <ContentPresenter x:Name="ExpandableContent" Grid.Row="1" IsVisible="False" />
+            </Grid>
+        </Frame>
+    </ControlTemplate>
+
+</ResourceDictionary>

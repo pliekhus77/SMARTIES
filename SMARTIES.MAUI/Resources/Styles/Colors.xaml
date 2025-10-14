@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Primary Brand Colors -->
+    <Color x:Key="SafetyGreen">#28a745</Color>
+    <Color x:Key="WarningYellow">#ffc107</Color>
+    <Color x:Key="DangerRed">#dc3545</Color>
+    
+    <!-- Light Theme Colors -->
+    <Color x:Key="Primary">#28a745</Color>
+    <Color x:Key="PrimaryDark">#1e7e34</Color>
+    <Color x:Key="PrimaryLight">#5cb85c</Color>
+    
+    <Color x:Key="Secondary">#6c757d</Color>
+    <Color x:Key="SecondaryDark">#495057</Color>
+    <Color x:Key="SecondaryLight">#adb5bd</Color>
+    
+    <Color x:Key="Success">#28a745</Color>
+    <Color x:Key="Warning">#ffc107</Color>
+    <Color x:Key="Danger">#dc3545</Color>
+    <Color x:Key="Info">#17a2b8</Color>
+    
+    <!-- Neutral Colors -->
+    <Color x:Key="White">#ffffff</Color>
+    <Color x:Key="Gray100">#f8f9fa</Color>
+    <Color x:Key="Gray200">#e9ecef</Color>
+    <Color x:Key="Gray300">#dee2e6</Color>
+    <Color x:Key="Gray400">#ced4da</Color>
+    <Color x:Key="Gray500">#adb5bd</Color>
+    <Color x:Key="Gray600">#6c757d</Color>
+    <Color x:Key="Gray700">#495057</Color>
+    <Color x:Key="Gray800">#343a40</Color>
+    <Color x:Key="Gray900">#212529</Color>
+    <Color x:Key="Black">#000000</Color>
+    
+    <!-- Surface Colors -->
+    <Color x:Key="Surface">#ffffff</Color>
+    <Color x:Key="SurfaceVariant">#f8f9fa</Color>
+    <Color x:Key="Background">#ffffff</Color>
+    <Color x:Key="OnSurface">#212529</Color>
+    <Color x:Key="OnBackground">#212529</Color>
+    
+    <!-- Dark Theme Colors -->
+    <Color x:Key="DarkPrimary">#5cb85c</Color>
+    <Color x:Key="DarkSurface">#1e1e1e</Color>
+    <Color x:Key="DarkSurfaceVariant">#2d2d30</Color>
+    <Color x:Key="DarkBackground">#121212</Color>
+    <Color x:Key="DarkOnSurface">#ffffff</Color>
+    <Color x:Key="DarkOnBackground">#ffffff</Color>
+    
+    <!-- Semantic Colors -->
+    <Color x:Key="SafeBackground">#d4edda</Color>
+    <Color x:Key="SafeText">#155724</Color>
+    <Color x:Key="CautionBackground">#fff3cd</Color>
+    <Color x:Key="CautionText">#856404</Color>
+    <Color x:Key="ViolationBackground">#f8d7da</Color>
+    <Color x:Key="ViolationText">#721c24</Color>
+    
+    <!-- Interactive States -->
+    <Color x:Key="Pressed">#00000020</Color>
+    <Color x:Key="Hover">#00000010</Color>
+    <Color x:Key="Focused">#28a74540</Color>
+    <Color x:Key="Disabled">#00000040</Color>
+    
+</ResourceDictionary>

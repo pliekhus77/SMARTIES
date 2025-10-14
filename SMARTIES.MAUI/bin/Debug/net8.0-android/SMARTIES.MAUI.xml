@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SMARTIES.MAUI</name>
+    </assembly>
+    <members>
+        <member name="T:SMARTIES.MAUI.ViewModels.ScannerViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.IsScanning">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.isScanning"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.IsAnalyzing">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.isAnalyzing"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.StatusMessage">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.statusMessage"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.CurrentProduct">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.currentProduct"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.CurrentAnalysis">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.currentAnalysis"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.ActiveProfile">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.activeProfile"/>
+        </member>
+        <member name="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.scanBarcodeCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.ScanBarcodeCommand"/>.</summary>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.ScanBarcodeCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.ScannerViewModel.ScanBarcodeAsync"/>.</summary>
+        </member>
+        <member name="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.processBarcodeCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.ProcessBarcodeCommand"/>.</summary>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.ProcessBarcodeCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.ScannerViewModel.ProcessBarcodeAsync(System.String)"/>.</summary>
+        </member>
+        <member name="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.loadRecentProductsCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.LoadRecentProductsCommand"/>.</summary>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.LoadRecentProductsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.ScannerViewModel.LoadRecentProductsAsync"/>.</summary>
+        </member>
+        <member name="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.selectRecentProductCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.SelectRecentProductCommand"/>.</summary>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.SelectRecentProductCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.ScannerViewModel.SelectRecentProductAsync(SMARTIES.MAUI.Models.Product)"/>.</summary>
+        </member>
+        <member name="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.refreshActiveProfileCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.RefreshActiveProfileCommand"/>.</summary>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.RefreshActiveProfileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.ScannerViewModel.RefreshActiveProfileAsync"/>.</summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsScanning">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsScanning" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsAnalyzing">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsAnalyzing" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.StatusMessage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "StatusMessage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CurrentProduct">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CurrentProduct" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CurrentAnalysis">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CurrentAnalysis" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ActiveProfile">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ActiveProfile" generated properties.</summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs">
+            <summary>
+            A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instances
+            for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsScanning">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsScanning" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsAnalyzing">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsAnalyzing" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.StatusMessage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "StatusMessage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CurrentProduct">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CurrentProduct" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CurrentAnalysis">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CurrentAnalysis" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ActiveProfile">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ActiveProfile" generated properties.</summary>
+        </member>
+    </members>
+</doc>

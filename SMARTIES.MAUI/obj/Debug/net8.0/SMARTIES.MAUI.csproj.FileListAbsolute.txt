@@ -1,0 +1,13 @@
+C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0\SMARTIES.MAUI.csproj.AssemblyReference.cache
+C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0\SMARTIES.MAUI.GeneratedMSBuildEditorConfig.editorconfig
+C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0\SMARTIES.MAUI.AssemblyInfoInputs.cache
+C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0\SMARTIES.MAUI.AssemblyInfo.cs
+C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0\SMARTIES.MAUI.csproj.CoreCompileInputs.cache
+C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0\SMARTIES.MAUI.sourcelink.json
+C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0\SMARTIES.MAUI.deps.json
+C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0\SMARTIES.MAUI.dll
+C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0\SMARTIES.MAUI.pdb
+C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0\SMARTIES.MAUI.dll
+C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0\refint\SMARTIES.MAUI.dll
+C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0\SMARTIES.MAUI.pdb
+C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0\ref\SMARTIES.MAUI.dll

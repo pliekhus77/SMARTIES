@@ -7,10 +7,10 @@ inclusion: always
 ## Required Technology Stack
 
 ### Core Technologies (Non-Negotiable)
-- **Mobile Framework**: React Native with TypeScript
-- **Local Storage**: AsyncStorage with encryption for user profiles and cache
+- **Mobile Framework**: .NET MAUI with C#
+- **Local Storage**: SQLite with encryption for user profiles and cache
 - **AI/ML**: OpenAI/Anthropic APIs for dietary analysis
-- **Barcode Scanning**: Google ML Kit (Android) / Apple Vision (iOS) via react-native wrapper
+- **Barcode Scanning**: ZXing.Net.Maui for cross-platform barcode scanning
 - **Product Data**: Open Food Facts API (direct HTTP calls)
 
 ### Data Sources Integration
@@ -22,120 +22,146 @@ inclusion: always
 
 ### Code Organization Rules
 ```
-src/
-├── components/          # Reusable UI components
-├── screens/            # Screen-level components
-├── services/           # Business logic and API calls
-├── models/             # Data models and types
-├── utils/              # Helper functions
-└── config/             # Configuration files
+SMARTIES.MAUI/
+├── Models/              # Data models and entities
+├── Services/            # Business logic and API calls
+├── ViewModels/          # MVVM view models
+├── Views/               # XAML pages and UI components
+├── Platforms/           # Platform-specific implementations
+└── Resources/           # Images, fonts, styles
 ```
 
 ### Naming Conventions
-- **Files**: PascalCase for components (`ScannerScreen.tsx`), camelCase for utilities (`allergenDetection.ts`)
-- **Components**: PascalCase (`ProductCard`, `DietaryAlert`)
-- **Functions**: camelCase (`checkAllergens`, `processBarcode`)
-- **Constants**: UPPER_SNAKE_CASE (`DIETARY_RESTRICTIONS`, `API_ENDPOINTS`)
+- **Files**: PascalCase for all C# files (`ScannerPage.xaml`, `ProductService.cs`)
+- **Classes**: PascalCase (`ProductCard`, `DietaryAlert`)
+- **Methods**: PascalCase (`CheckAllergens`, `ProcessBarcode`)
+- **Constants**: PascalCase (`DietaryRestrictions`, `ApiEndpoints`)
 
-### TypeScript Requirements
-- Always use TypeScript, never plain JavaScript
-- Define interfaces for all data models
-- Use strict null checks and proper error handling
-- Export types alongside implementations
+### C# Requirements
+- Always use nullable reference types enabled
+- Define proper interfaces for all services
+- Use async/await patterns consistently
+- Implement proper error handling with try-catch
 
-### React Native Patterns
-```typescript
-// Use functional components with hooks
-const ScannerScreen: React.FC = () => {
-  const [scanning, setScanning] = useState(false);
-  
-  // Always handle loading and error states
-  const { data, loading, error } = useProductLookup(barcode);
-  
-  if (loading) return <LoadingSpinner />;
-  if (error) return <ErrorMessage error={error} />;
-  
-  return <ProductDisplay product={data} />;
-};
+### MAUI MVVM Patterns
+```csharp
+// Use MVVM pattern with CommunityToolkit.Mvvm
+public partial class ScannerViewModel : ObservableObject
+{
+    [ObservableProperty]
+    private bool isScanning;
+    
+    [ObservableProperty]
+    private Product? currentProduct;
+    
+    [RelayCommand]
+    private async Task ScanBarcodeAsync()
+    {
+        IsScanning = true;
+        try
+        {
+            var barcode = await _barcodeService.ScanAsync();
+            CurrentProduct = await _productService.GetProductAsync(barcode);
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+        }
+        finally
+        {
+            IsScanning = false;
+        }
+    }
+}
 ```
 
 ### Open Food Facts API Integration Patterns
-```typescript
+```csharp
 // Direct API calls to Open Food Facts
-const fetchProduct = async (barcode: string): Promise<Product | null> => {
-  const normalizedBarcode = barcode.padStart(13, '0'); // Normalize barcode
-  const response = await fetch(
-    `https://world.openfoodfacts.org/api/v2/product/${normalizedBarcode}.json`,
-    {
-      headers: {
-        'User-Agent': 'SMARTIES - React Native - Version 1.0 - https://smarties.app - scan'
-      }
-    }
-  );
-  
-  const data = await response.json();
-  return data.status === 1 ? data.product : null;
-};
+public async Task<Product?> GetProductAsync(string barcode, CancellationToken cancellationToken = default)
+{
+    var normalizedBarcode = NormalizeBarcode(barcode);
+    var url = $"{BaseUrl}/{normalizedBarcode}.json";
+    
+    var response = await _httpClient.GetAsync(url, cancellationToken);
+    if (!response.IsSuccessStatusCode) return null;
+    
+    var jsonContent = await response.Content.ReadAsStringAsync(cancellationToken);
+    var apiResponse = JsonSerializer.Deserialize<OpenFoodFactsResponse>(jsonContent);
+    
+    return apiResponse?.Status == 1 ? MapToProduct(normalizedBarcode, apiResponse.Product) : null;
+}
 
-// Local caching with AsyncStorage
-const cacheProduct = async (barcode: string, product: Product) => {
-  try {
-    await AsyncStorage.setItem(`product_${barcode}`, JSON.stringify(product));
-  } catch (error) {
-    console.error('Cache write failed:', error);
-  }
-};
+// Local caching with SQLite
+public async Task CacheProductAsync(Product product)
+{
+    try
+    {
+        await _database.InsertOrReplaceAsync(product);
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Cache write failed for product {Barcode}", product.Barcode);
+    }
+}
 ```
 
 ### AI Dietary Analysis Implementation
-```typescript
+```csharp
 // Analyze product against user dietary restrictions
-const analyzeDietaryCompliance = async (
-  product: OpenFoodFactsProduct, 
-  userProfile: UserProfile
-): Promise<DietaryAnalysis> => {
-  const prompt = `
-    Analyze this product for dietary compliance:
-    Product: ${product.product_name}
-    Ingredients: ${product.ingredients_text}
-    Allergens: ${product.allergens}
-    User restrictions: ${userProfile.restrictions.join(', ')}
-    
-    Return JSON with: { safe: boolean, violations: string[], warnings: string[] }
-  `;
+public async Task<DietaryAnalysis> AnalyzeProductAsync(Product product, UserProfile userProfile)
+{
+    var restrictions = GetUserRestrictions(userProfile);
+    var prompt = $@"
+        Analyze this product for dietary compliance:
+        Product: {product.ProductName}
+        Ingredients: {product.IngredientsText}
+        Allergens: {product.Allergens}
+        User restrictions: {string.Join(", ", restrictions)}
+        
+        Return JSON with: {{ ""safe"": boolean, ""violations"": string[], ""warnings"": string[] }}
+    ";
 
-  const response = await openai.chat.completions.create({
-    model: "gpt-4",
-    messages: [
-      { role: "system", content: "You are a dietary safety assistant. Always err on the side of caution." },
-      { role: "user", content: prompt }
-    ],
-    temperature: 0.1
-  });
-
-  return JSON.parse(response.choices[0].message.content);
-};
+    // TODO: Implement actual AI API call
+    // For now, return mock analysis
+    return new DietaryAnalysis
+    {
+        ProductBarcode = product.Barcode,
+        ProductName = product.ProductName,
+        IsSafe = true,
+        OverallCompliance = ComplianceLevel.Safe,
+        Summary = "Product appears safe for your dietary restrictions."
+    };
+}
 ```
 
 ### Error Handling Standards
-```typescript
-// Use custom error classes
-export class ProductNotFoundError extends Error {
-  constructor(barcode: string) {
-    super(`Product not found: ${barcode}`);
-    this.name = 'ProductNotFoundError';
-  }
+```csharp
+// Use custom exception classes
+public class ProductNotFoundException : Exception
+{
+    public ProductNotFoundException(string barcode) 
+        : base($"Product not found: {barcode}")
+    {
+        Barcode = barcode;
+    }
+    
+    public string Barcode { get; }
 }
 
 // Always provide user-friendly error messages
-const handleScanError = (error: Error) => {
-  if (error instanceof ProductNotFoundError) {
-    showUserMessage('Product not found. Try manual entry.');
-  } else {
-    showUserMessage('Scanning failed. Please try again.');
-    logError(error); // Log technical details separately
-  }
-};
+private async Task HandleScanErrorAsync(Exception error)
+{
+    var message = error switch
+    {
+        ProductNotFoundException => "Product not found. Try manual entry.",
+        HttpRequestException => "Network error. Check your connection.",
+        _ => "Scanning failed. Please try again."
+    };
+    
+    await Shell.Current.DisplayAlert("Error", message, "OK");
+    _logger.LogError(error, "Scan error occurred");
+}
 ```
 
 ### Performance Requirements
@@ -152,44 +178,59 @@ const handleScanError = (error: Error) => {
 - Implement proper authentication for user data sync
 
 ### Testing Requirements
-```typescript
-// Test critical paths thoroughly
-describe('Dietary Analysis', () => {
-  it('should detect allergens correctly', async () => {
-    const product = mockProductWithAllergens(['milk', 'eggs']);
-    const userProfile = mockUserProfile(['dairy allergy']);
+```csharp
+// Test critical paths thoroughly using xUnit
+[Fact]
+public async Task AnalyzeProductAsync_ShouldDetectAllergens_WhenProductContainsAllergens()
+{
+    // Arrange
+    var product = CreateMockProductWithAllergens(["milk", "eggs"]);
+    var userProfile = CreateMockUserProfile(["dairy allergy"]);
     
-    const result = await analyzeDietaryCompliance(product, userProfile);
+    // Act
+    var result = await _dietaryAnalysisService.AnalyzeProductAsync(product, userProfile);
     
-    expect(result.hasViolations).toBe(true);
-    expect(result.violations).toContain('dairy');
-  });
-});
+    // Assert
+    Assert.False(result.IsSafe);
+    Assert.Contains(result.Violations, v => v.RestrictionName.Contains("dairy"));
+}
 ```
 
 ### Development Commands
 ```bash
 # Setup
-npm install
-npx react-native start
+dotnet workload install maui
+dotnet restore
 
 # Testing
-npm test                    # Unit tests
-npm run test:integration   # Integration tests
-npm run test:e2e          # End-to-end tests
+dotnet test                 # Unit tests
+dotnet test --filter Category=Integration  # Integration tests
 
-# Platform-specific
-npx react-native run-ios     # iOS development
-npx react-native run-android # Android development
+# Platform-specific development
+dotnet run --project SMARTIES.MAUI -f net8.0-windows10.0.19041.0  # Windows
+dotnet run --project SMARTIES.MAUI -f net8.0-android              # Android
 
 # Production builds
-npm run build:ios
-npm run build:android
+dotnet publish -f net8.0-android -c Release
+dotnet publish -f net8.0-windows10.0.19041.0 -c Release
 ```
 
 ### Code Quality Standards
-- Use ESLint and Prettier for consistent formatting
+- Use EditorConfig and .NET analyzers for consistent formatting
 - Maintain >80% test coverage for critical paths
 - Use meaningful commit messages following conventional commits
-- All components must be accessible (screen reader compatible)
-- Handle all async operations with proper loading states
+- All UI must be accessible (screen reader compatible)
+- Handle all async operations with proper loading states and cancellation tokens
+
+### MAUI-Specific Guidelines
+- **Dependency Injection**: Register all services in MauiProgram.cs
+- **MVVM Pattern**: Use CommunityToolkit.Mvvm for ViewModels
+- **Platform APIs**: Use MAUI Essentials for cross-platform functionality
+- **Local Database**: Use SQLite-net-pcl for local data storage (not Entity Framework Core)
+- **HTTP Clients**: Register HttpClient in DI container with proper configuration
+
+### Database Strategy
+- **SQLite-net-pcl**: Lightweight ORM for mobile applications
+- **Attributes**: Use SQLite attributes for table and column configuration
+- **Async Operations**: All database operations should be async
+- **Connection Management**: Single connection per service, properly disposed

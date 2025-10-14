@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Base Entry Style -->
+    <Style x:Key="BaseEntry" TargetType="Entry">
+        <Setter Property="FontFamily" Value="{StaticResource RegularFont}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="MinimumHeightRequest" Value="{StaticResource TouchTargetMinimum}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource DarkSurface}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnSurface}, Dark={StaticResource DarkOnSurface}}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource Gray500}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Focused">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="{StaticResource Focused}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="0.5" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Outlined Entry -->
+    <Style x:Key="OutlinedEntry" TargetType="Entry" BasedOn="{StaticResource BaseEntry}">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
+
+    <!-- Search Entry -->
+    <Style x:Key="SearchEntry" TargetType="SearchBar">
+        <Setter Property="FontFamily" Value="{StaticResource RegularFont}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource DarkSurfaceVariant}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnSurface}, Dark={StaticResource DarkOnSurface}}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource Gray500}" />
+        <Setter Property="CancelButtonColor" Value="{StaticResource Primary}" />
+    </Style>
+
+    <!-- Switch Style -->
+    <Style x:Key="BaseSwitch" TargetType="Switch">
+        <Setter Property="OnColor" Value="{StaticResource Primary}" />
+        <Setter Property="ThumbColor" Value="{StaticResource White}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="0.5" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Checkbox Style -->
+    <Style x:Key="BaseCheckBox" TargetType="CheckBox">
+        <Setter Property="Color" Value="{StaticResource Primary}" />
+        <Setter Property="MinimumHeightRequest" Value="{StaticResource TouchTargetMinimum}" />
+        <Setter Property="MinimumWidthRequest" Value="{StaticResource TouchTargetMinimum}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="0.5" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <!-- Slider Style -->
+    <Style x:Key="BaseSlider" TargetType="Slider">
+        <Setter Property="MinimumTrackColor" Value="{StaticResource Primary}" />
+        <Setter Property="MaximumTrackColor" Value="{StaticResource Gray300}" />
+        <Setter Property="ThumbColor" Value="{StaticResource Primary}" />
+        <Setter Property="MinimumHeightRequest" Value="{StaticResource TouchTargetMinimum}" />
+    </Style>
+
+    <!-- Picker Style -->
+    <Style x:Key="BasePicker" TargetType="Picker">
+        <Setter Property="FontFamily" Value="{StaticResource RegularFont}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark={StaticResource DarkSurface}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnSurface}, Dark={StaticResource DarkOnSurface}}" />
+        <Setter Property="TitleColor" Value="{StaticResource Gray500}" />
+    </Style>
+
+    <!-- Form Field Container -->
+    <Style x:Key="FormField" TargetType="StackLayout">
+        <Setter Property="Spacing" Value="{StaticResource Spacing2}" />
+        <Setter Property="Margin" Value="0,{StaticResource Spacing3},0,0" />
+    </Style>
+
+    <!-- Field Label -->
+    <Style x:Key="FieldLabel" TargetType="Label" BasedOn="{StaticResource LabelMedium}">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray700}, Dark={StaticResource Gray300}}" />
+    </Style>
+
+    <!-- Error Label -->
+    <Style x:Key="ErrorLabel" TargetType="Label" BasedOn="{StaticResource BodySmall}">
+        <Setter Property="TextColor" Value="{StaticResource Danger}" />
+        <Setter Property="IsVisible" Value="False" />
+    </Style>
+
+    <!-- Helper Text -->
+    <Style x:Key="HelperText" TargetType="Label" BasedOn="{StaticResource BodySmall}">
+        <Setter Property="TextColor" Value="{StaticResource Gray500}" />
+    </Style>
+
+    <!-- Validation States -->
+    <Style x:Key="ValidEntry" TargetType="Entry" BasedOn="{StaticResource BaseEntry}">
+        <Setter Property="BackgroundColor" Value="{StaticResource SafeBackground}" />
+    </Style>
+
+    <Style x:Key="InvalidEntry" TargetType="Entry" BasedOn="{StaticResource BaseEntry}">
+        <Setter Property="BackgroundColor" Value="{StaticResource ViolationBackground}" />
+    </Style>
+
+</ResourceDictionary>

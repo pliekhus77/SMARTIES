@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
+             xmlns:converters="clr-namespace:SMARTIES.MAUI.Converters"
+             x:Class="SMARTIES.MAUI.Views.Controls.SmartiesCameraView">
+    
+    <ContentView.Resources>
+        <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+    </ContentView.Resources>
+    
+    <Grid>
+        <!-- Camera View -->
+        <zxing:CameraBarcodeReaderView x:Name="CameraView"
+                                       IsDetecting="{Binding IsScanning}"
+                                       IsTorchOn="{Binding IsFlashlightOn}"
+                                       BarcodeDetected="OnBarcodeDetected"
+                                       AutomationProperties.IsInAccessibleTree="True"
+                                       AutomationProperties.Name="Barcode scanner camera view"
+                                       AutomationProperties.HelpText="Point camera at barcode to scan" />
+        
+        <!-- Overlay -->
+        <Grid BackgroundColor="Black" Opacity="0.5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="200" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <!-- Scanning Area -->
+            <Border Grid.Row="1" Grid.Column="1"
+                    BackgroundColor="Transparent"
+                    Stroke="White"
+                    StrokeThickness="2"
+                    StrokeDashArray="5,5"
+                    AutomationProperties.IsInAccessibleTree="True"
+                    AutomationProperties.Name="Scanning area"
+                    AutomationProperties.HelpText="Center barcode within this frame">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+            </Border>
+        </Grid>
+        
+        <!-- Instructions -->
+        <Label Grid.Row="0" 
+               Text="{Binding ScanningInstructions}"
+               TextColor="White"
+               FontSize="16"
+               HorizontalOptions="Center"
+               VerticalOptions="End"
+               Margin="20,0,20,20"
+               AutomationProperties.IsInAccessibleTree="True"
+               AutomationProperties.Name="Scanning instructions" />
+        
+        <!-- Controls -->
+        <StackLayout Grid.Row="2" 
+                     Orientation="Horizontal"
+                     HorizontalOptions="Center"
+                     VerticalOptions="Start"
+                     Margin="20">
+            
+            <Button Text="Manual Entry"
+                    Command="{Binding ManualEntryCommand}"
+                    BackgroundColor="DarkBlue"
+                    TextColor="White"
+                    Margin="10,0"
+                    AutomationProperties.IsInAccessibleTree="True"
+                    AutomationProperties.Name="Manual barcode entry"
+                    AutomationProperties.HelpText="Enter barcode numbers manually" />
+            
+            <Button Text="💡"
+                    Command="{Binding ToggleFlashlightCommand}"
+                    BackgroundColor="{Binding IsFlashlightOn, Converter={StaticResource BoolToColorConverter}}"
+                    TextColor="White"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    Margin="10,0"
+                    AutomationProperties.IsInAccessibleTree="True"
+                    AutomationProperties.Name="Toggle flashlight"
+                    AutomationProperties.HelpText="Turn flashlight on or off" />
+        </StackLayout>
+        
+        <!-- Stop Scanning Button -->
+        <Button Grid.Row="2"
+                Text="Stop Scanning"
+                Command="{Binding StopScanningCommand}"
+                BackgroundColor="Red"
+                TextColor="White"
+                CornerRadius="25"
+                HeightRequest="50"
+                Margin="20"
+                VerticalOptions="End"
+                AutomationProperties.IsInAccessibleTree="True"
+                AutomationProperties.Name="Stop scanning"
+                AutomationProperties.HelpText="Stop camera scanning and return to main screen" />
+    </Grid>
+</ContentView>

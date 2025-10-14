@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Font Families -->
+    <OnPlatform x:Key="RegularFont" x:TypeArguments="x:String">
+        <On Platform="Android" Value="sans-serif" />
+        <On Platform="WinUI" Value="Segoe UI" />
+    </OnPlatform>
+    
+    <OnPlatform x:Key="MediumFont" x:TypeArguments="x:String">
+        <On Platform="Android" Value="sans-serif-medium" />
+        <On Platform="WinUI" Value="Segoe UI Semibold" />
+    </OnPlatform>
+    
+    <OnPlatform x:Key="BoldFont" x:TypeArguments="x:String">
+        <On Platform="Android" Value="sans-serif-black" />
+        <On Platform="WinUI" Value="Segoe UI Bold" />
+    </OnPlatform>
+
+    <!-- Display Styles -->
+    <Style x:Key="DisplayLarge" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource BoldFont}" />
+        <Setter Property="FontSize" Value="57" />
+        <Setter Property="LineHeight" Value="1.12" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource DarkOnBackground}}" />
+    </Style>
+    
+    <Style x:Key="DisplayMedium" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource BoldFont}" />
+        <Setter Property="FontSize" Value="45" />
+        <Setter Property="LineHeight" Value="1.16" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource DarkOnBackground}}" />
+    </Style>
+    
+    <Style x:Key="DisplaySmall" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource BoldFont}" />
+        <Setter Property="FontSize" Value="36" />
+        <Setter Property="LineHeight" Value="1.22" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource DarkOnBackground}}" />
+    </Style>
+
+    <!-- Headline Styles -->
+    <Style x:Key="HeadlineLarge" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource MediumFont}" />
+        <Setter Property="FontSize" Value="32" />
+        <Setter Property="LineHeight" Value="1.25" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource DarkOnBackground}}" />
+    </Style>
+    
+    <Style x:Key="HeadlineMedium" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource MediumFont}" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="LineHeight" Value="1.29" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource DarkOnBackground}}" />
+    </Style>
+    
+    <Style x:Key="HeadlineSmall" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource MediumFont}" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="LineHeight" Value="1.33" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource DarkOnBackground}}" />
+    </Style>
+
+    <!-- Title Styles -->
+    <Style x:Key="TitleLarge" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource MediumFont}" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="LineHeight" Value="1.27" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource DarkOnBackground}}" />
+    </Style>
+    
+    <Style x:Key="TitleMedium" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource MediumFont}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="LineHeight" Value="1.5" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource DarkOnBackground}}" />
+    </Style>
+    
+    <Style x:Key="TitleSmall" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource MediumFont}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="1.43" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource DarkOnBackground}}" />
+    </Style>
+
+    <!-- Body Styles -->
+    <Style x:Key="BodyLarge" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource RegularFont}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="LineHeight" Value="1.5" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource DarkOnBackground}}" />
+    </Style>
+    
+    <Style x:Key="BodyMedium" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource RegularFont}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="1.43" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource DarkOnBackground}}" />
+    </Style>
+    
+    <Style x:Key="BodySmall" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource RegularFont}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="LineHeight" Value="1.33" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource DarkOnBackground}}" />
+    </Style>
+
+    <!-- Label Styles -->
+    <Style x:Key="LabelLarge" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource MediumFont}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="1.43" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource DarkOnBackground}}" />
+    </Style>
+    
+    <Style x:Key="LabelMedium" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource MediumFont}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="LineHeight" Value="1.33" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource DarkOnBackground}}" />
+    </Style>
+    
+    <Style x:Key="LabelSmall" TargetType="Label">
+        <Setter Property="FontFamily" Value="{StaticResource MediumFont}" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="LineHeight" Value="1.45" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource OnBackground}, Dark={StaticResource DarkOnBackground}}" />
+    </Style>
+
+</ResourceDictionary>

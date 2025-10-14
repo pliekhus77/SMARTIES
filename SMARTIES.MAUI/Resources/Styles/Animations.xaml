@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Animation Durations -->
+    <x:Int32 x:Key="AnimationFast">150</x:Int32>
+    <x:Int32 x:Key="AnimationNormal">300</x:Int32>
+    <x:Int32 x:Key="AnimationSlow">500</x:Int32>
+
+    <!-- Easing Functions -->
+    <Easing x:Key="EaseInOut">CubicInOut</Easing>
+    <Easing x:Key="EaseOut">CubicOut</Easing>
+    <Easing x:Key="EaseIn">CubicIn</Easing>
+    <Easing x:Key="Bounce">BounceOut</Easing>
+
+    <!-- Page Transition Styles -->
+    <Style x:Key="FadeInPage" TargetType="ContentPage">
+        <Setter Property="Opacity" Value="0" />
+        <Style.Triggers>
+            <EventTrigger Event="Appearing">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                       To="1"
+                                       Duration="0:0:0.3" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="SlideInPage" TargetType="ContentPage">
+        <Setter Property="TranslationX" Value="100" />
+        <Setter Property="Opacity" Value="0" />
+        <Style.Triggers>
+            <EventTrigger Event="Appearing">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="TranslationX"
+                                       To="0"
+                                       Duration="0:0:0.3" />
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                       To="1"
+                                       Duration="0:0:0.3" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Loading Animation Style -->
+    <Style x:Key="PulseAnimation" TargetType="Frame">
+        <Style.Triggers>
+            <DataTrigger TargetType="Frame" Binding="{Binding IsLoading}" Value="True">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard RepeatBehavior="Forever">
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                           From="1" To="0.5" Duration="0:0:1"
+                                           AutoReverse="True" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Success Animation -->
+    <Style x:Key="SuccessAnimation" TargetType="Frame">
+        <Style.Triggers>
+            <DataTrigger TargetType="Frame" Binding="{Binding ShowSuccess}" Value="True">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Scale"
+                                           From="1" To="1.1" Duration="0:0:0.15"
+                                           AutoReverse="True" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Reveal Animation for Lists -->
+    <Style x:Key="RevealAnimation" TargetType="Frame">
+        <Setter Property="Opacity" Value="0" />
+        <Setter Property="TranslationY" Value="20" />
+        <Style.Triggers>
+            <EventTrigger Event="Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                       To="1" Duration="0:0:0.4" />
+                        <DoubleAnimation Storyboard.TargetProperty="TranslationY"
+                                       To="0" Duration="0:0:0.4" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

@@ -4,7 +4,7 @@ inclusion: always
 
 # SMARTIES Product Guide
 
-**SMARTIES** (Scan‑based Mobile Allergen Risk Tracking & IntelligencE Suite) is a React Native mobile application that provides instant dietary compliance checking through UPC barcode scanning, powered by Open Food Facts API and AI.
+**SMARTIES** (Scan‑based Mobile Allergen Risk Tracking & IntelligencE Suite) is a .NET MAUI cross-platform mobile application that provides instant dietary compliance checking through UPC barcode scanning, powered by Open Food Facts API and AI.
 
 ## Core Product Principles
 
@@ -23,10 +23,10 @@ inclusion: always
 ## Domain Model & Business Rules
 
 ### Dietary Restrictions (Core Entities)
-- **Allergies**: FDA Top 9 + additional (tree nuts, shellfish, dairy, eggs, soy, wheat, fish, peanuts, sesame)
+- **Allergies**: FDA Top 14 allergens (Milk, Eggs, Fish, Shellfish, TreeNuts, Peanuts, Wheat, Soybeans, Sesame, Sulfites, Mustard, Celery, Lupin, Molluscs)
 - **Religious**: Halal, Kosher, Hindu vegetarian, Jain, Buddhist
-- **Medical**: Diabetes (sugar/carb limits), hypertension (sodium limits), celiac (gluten-free), kidney disease (potassium/phosphorus)
-- **Lifestyle**: Vegan, vegetarian, keto, paleo, organic-only, non-GMO
+- **Medical**: Diabetes, Hypertension, Celiac, Kidney Disease, Heart Disease, Low Sodium, Low Sugar, Gluten Free
+- **Lifestyle**: Vegan, Vegetarian, Keto, Paleo, Organic Only, Non-GMO, Low Carb, High Protein, Dairy Free, Sugar Free
 
 ### Compliance Logic
 - **Strict Mode**: Any violation = red warning (default for allergies/medical)
@@ -78,9 +78,10 @@ inclusion: always
 ## Development Guidelines
 
 ### Code Organization
-- **Feature-Based Structure**: Group by user journey (scanning, profile, history, settings)
-- **Shared Components**: Reusable UI components for dietary warnings, product cards, scan results
-- **Service Layer**: Separate business logic from UI (dietary analysis, product lookup, user management)
+- **MVVM Architecture**: Models, ViewModels, Views with proper separation of concerns
+- **Service Layer**: Business logic separated from UI (OpenFoodFactsService, DietaryAnalysisService, UserProfileService, ProductCacheService, BarcodeService)
+- **Dependency Injection**: All services registered and injected through MAUI DI container
+- **Cross-Platform**: Platform-specific implementations in Platforms folder
 
 ### Testing Strategy
 - **Critical Path Testing**: Barcode scanning → product lookup → dietary analysis → warning display
@@ -140,9 +141,10 @@ inclusion: always
 - **OpenAI/Anthropic**: Dietary analysis and recommendations
 
 ### Platform Features
-- **Camera API**: Barcode scanning and image capture
-- **Local Storage**: Offline product cache and user data
-- **Push Notifications**: Product recalls, dietary alerts
-- **Accessibility Services**: VoiceOver, TalkBack integration
+- **Camera API**: ZXing.Net.Maui for barcode scanning and image capture
+- **Local Storage**: SQLite database for offline product cache and user data
+- **Push Notifications**: Product recalls, dietary alerts (via MAUI Essentials)
+- **Accessibility Services**: Built-in MAUI accessibility support for screen readers
+- **Cross-Platform**: Windows, Android support (iOS available with macOS development environment)
 
 This guide should inform all development decisions, feature specifications, and architectural choices for the SMARTIES application.

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- High Contrast Colors -->
+    <Color x:Key="HighContrastBackground">#000000</Color>
+    <Color x:Key="HighContrastForeground">#ffffff</Color>
+    <Color x:Key="HighContrastAccent">#ffff00</Color>
+    <Color x:Key="HighContrastBorder">#ffffff</Color>
+
+    <!-- Accessible Button Style -->
+    <Style x:Key="AccessibleButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
+        <Setter Property="AutomationProperties.IsInAccessibleTree" Value="True" />
+        <Setter Property="MinimumHeightRequest" Value="{StaticResource TouchTargetComfortable}" />
+        <Setter Property="MinimumWidthRequest" Value="{StaticResource TouchTargetComfortable}" />
+        <Style.Triggers>
+            <DataTrigger TargetType="Button" Binding="{x:Static Application.RequestedTheme}" Value="HighContrast">
+                <Setter Property="BackgroundColor" Value="{StaticResource HighContrastBackground}" />
+                <Setter Property="TextColor" Value="{StaticResource HighContrastForeground}" />
+                <Setter Property="BorderColor" Value="{StaticResource HighContrastBorder}" />
+                <Setter Property="BorderWidth" Value="2" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Accessible Label Style -->
+    <Style x:Key="AccessibleLabel" TargetType="Label">
+        <Setter Property="AutomationProperties.IsInAccessibleTree" Value="True" />
+        <Setter Property="LineBreakMode" Value="WordWrap" />
+        <Style.Triggers>
+            <DataTrigger TargetType="Label" Binding="{x:Static Application.RequestedTheme}" Value="HighContrast">
+                <Setter Property="TextColor" Value="{StaticResource HighContrastForeground}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource HighContrastBackground}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Focus Indicator Style -->
+    <Style x:Key="FocusIndicator" TargetType="Frame">
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="BorderWidth" Value="2" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusSmall}" />
+        <Style.Triggers>
+            <Trigger TargetType="Frame" Property="IsFocused" Value="True">
+                <Setter Property="BorderColor" Value="{StaticResource Primary}" />
+            </Trigger>
+            <DataTrigger TargetType="Frame" Binding="{x:Static Application.RequestedTheme}" Value="HighContrast">
+                <Setter Property="BorderColor" Value="{StaticResource HighContrastAccent}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Screen Reader Optimized Styles -->
+    <Style x:Key="ScreenReaderHeading" TargetType="Label" BasedOn="{StaticResource HeadlineMedium}">
+        <Setter Property="AutomationProperties.IsInAccessibleTree" Value="True" />
+        <Setter Property="AutomationProperties.HeadingLevel" Value="Level1" />
+    </Style>
+
+    <Style x:Key="ScreenReaderSubheading" TargetType="Label" BasedOn="{StaticResource TitleLarge}">
+        <Setter Property="AutomationProperties.IsInAccessibleTree" Value="True" />
+        <Setter Property="AutomationProperties.HeadingLevel" Value="Level2" />
+    </Style>
+
+    <!-- Accessible Input Styles -->
+    <Style x:Key="AccessibleEntry" TargetType="Entry" BasedOn="{StaticResource BaseEntry}">
+        <Setter Property="AutomationProperties.IsInAccessibleTree" Value="True" />
+        <Setter Property="MinimumHeightRequest" Value="{StaticResource TouchTargetComfortable}" />
+        <Style.Triggers>
+            <DataTrigger TargetType="Entry" Binding="{x:Static Application.RequestedTheme}" Value="HighContrast">
+                <Setter Property="BackgroundColor" Value="{StaticResource HighContrastBackground}" />
+                <Setter Property="TextColor" Value="{StaticResource HighContrastForeground}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Accessible Card Style -->
+    <Style x:Key="AccessibleCard" TargetType="Frame" BasedOn="{StaticResource BaseCard}">
+        <Setter Property="AutomationProperties.IsInAccessibleTree" Value="True" />
+        <Style.Triggers>
+            <DataTrigger TargetType="Frame" Binding="{x:Static Application.RequestedTheme}" Value="HighContrast">
+                <Setter Property="BackgroundColor" Value="{StaticResource HighContrastBackground}" />
+                <Setter Property="BorderColor" Value="{StaticResource HighContrastBorder}" />
+                <Setter Property="BorderWidth" Value="2" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

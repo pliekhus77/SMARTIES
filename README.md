@@ -2,7 +2,7 @@
 
 **S**can‑based **M**obile **A**llergen **R**isk **T**racking & **I**ntelligenc**E** **S**uite
 
-A React Native mobile application that provides instant dietary compliance checking through UPC barcode scanning, powered by AI services.
+A .NET MAUI cross-platform mobile application that provides instant dietary compliance checking through UPC barcode scanning, powered by AI services.
 
 ![SMARTIES Logo](design/SMARTIES.png)
 
@@ -14,7 +14,7 @@ Empower users to make safe dietary choices instantly by scanning product barcode
 
 ### 🔍 **Instant Barcode Scanning**
 - Sub-3-second scan-to-result response time
-- UPC barcode recognition with image OCR fallback
+- UPC barcode recognition with ZXing.Net.Maui
 - Offline-first architecture for core safety features
 
 ### 🛡️ **Comprehensive Dietary Analysis**
@@ -29,9 +29,8 @@ Empower users to make safe dietary choices instantly by scanning product barcode
 - 🟢 **Green**: Safe - Compliant with all restrictions
 
 ### 🤖 **AI-Powered Intelligence**
-- Vector similarity search with MongoDB Atlas
-- RAG (Retrieval-Augmented Generation) pipeline
 - OpenAI/Anthropic integration for complex analysis
+- Offline rule-based analysis for core functionality
 - Confidence scoring for product data quality
 
 ## 📱 User Interface
@@ -54,37 +53,38 @@ Empower users to make safe dietary choices instantly by scanning product barcode
 
 | Component | Technology | Purpose |
 |-----------|------------|---------|
-| **Mobile Framework** | React Native + TypeScript | Cross-platform native performance |
-| **Local Storage** | AsyncStorage | Offline data persistence |
+| **Mobile Framework** | .NET MAUI 8.0 + C# 12 | Cross-platform native performance |
+| **Local Storage** | SQLite with encryption | Offline data persistence |
 | **AI/ML** | OpenAI/Anthropic APIs | Dietary analysis and recommendations |
-| **Barcode Scanning** | expo-barcode-scanner | UPC recognition |
-| **Data Sources** | Open Food Facts API, USDA Food Data Central | Product and nutritional data |
+| **Barcode Scanning** | ZXing.Net.Maui | UPC recognition |
+| **Data Sources** | Open Food Facts API | Product and nutritional data |
+| **MVVM Framework** | CommunityToolkit.Mvvm | Clean architecture patterns |
 
 ### Project Structure
 
 ```
-smarties/
-├── src/
-│   ├── components/          # Reusable UI components
-│   │   ├── scanner/         # Barcode scanning components
-│   │   ├── profile/         # User profile management
-│   │   ├── alerts/          # Alert and warning components
-│   │   └── common/          # Shared UI components
-│   ├── screens/             # Main application screens
-│   │   ├── ScanScreen.tsx   # Primary scanning interface
-│   │   ├── ProfileScreen.tsx # Dietary profile management
-│   │   ├── HistoryScreen.tsx # Scan history and analytics
-│   │   └── SettingsScreen.tsx # App configuration
-│   ├── services/            # Business logic and API integrations
-│   │   ├── atlas/           # MongoDB Atlas integration
-│   │   ├── ai/              # GenAI and RAG pipeline
-│   │   ├── barcode/         # Barcode scanning logic
-│   │   └── dietary/         # Dietary compliance checking
-│   ├── models/              # Data models and schemas
-│   └── utils/               # Helper functions
-├── tests/                   # Comprehensive test suite
-├── docs/                    # Documentation
-└── design/                  # UI/UX assets and mockups
+SMARTIES.MAUI/
+├── Models/                    # Data models and entities
+│   ├── Product.cs            # Product and Open Food Facts API models
+│   ├── UserProfile.cs        # User profile and dietary restrictions
+│   └── DietaryAnalysis.cs    # Analysis results and compliance levels
+├── Services/                  # Business logic and external integrations
+│   ├── OpenFoodFactsService.cs    # Open Food Facts API integration
+│   ├── DietaryAnalysisService.cs  # AI-powered dietary analysis
+│   ├── UserProfileService.cs     # User profile management
+│   ├── ProductCacheService.cs    # Local product caching
+│   └── BarcodeService.cs         # Barcode scanning functionality
+├── ViewModels/               # MVVM view models
+│   ├── ScannerViewModel.cs   # Main scanner functionality
+│   ├── ProfileViewModel.cs   # Profile management
+│   └── HistoryViewModel.cs   # Scan history
+├── Views/                    # XAML pages and UI
+│   ├── ScannerPage.xaml     # Main scanning interface
+│   ├── ProfilePage.xaml     # Profile management
+│   └── HistoryPage.xaml     # Scan history
+└── Platforms/               # Platform-specific implementations
+    ├── Android/             # Android-specific code
+    └── iOS/                 # iOS-specific code (future)
 ```
 
 ### Data Flow Architecture
@@ -92,7 +92,7 @@ smarties/
 ```
 Scan → Lookup → Analyze → Alert → Store
   ↓       ↓        ↓       ↓      ↓
-Camera → API → AI/RAG → UI → Cache
+Camera → API → AI/Rules → UI → SQLite
 ```
 
 ## 🚀 Performance Requirements
@@ -117,22 +117,22 @@ Camera → API → AI/RAG → UI → Cache
 
 ### Setup Commands
 ```bash
-# Install dependencies
-npm install
+# Install MAUI workload (if not already installed)
+dotnet workload install maui
 
-# Start development server
-npx react-native start
+# Restore dependencies
+dotnet restore
 
-# Run on iOS
-npx react-native run-ios
+# Build the project
+dotnet build
 
 # Run on Android
-npx react-native run-android
+dotnet build -t:Run -f net8.0-android
 
 # Run tests
-npm test                    # Unit tests
-npm run test:integration   # Integration tests
-npm run test:e2e          # End-to-end tests
+dotnet test                    # All tests
+dotnet test --filter Category=Unit   # Unit tests only
+dotnet test --filter Category=Integration   # Integration tests only
 ```
 
 ### CI/CD Pipeline
@@ -141,14 +141,14 @@ Our automated build system ensures code quality and deployment readiness:
 
 #### 🔄 Continuous Integration
 - **Automated Testing**: Unit, integration, and platform-specific tests
-- **Code Quality**: ESLint, TypeScript checking, and Prettier formatting
-- **Multi-Platform Builds**: Automated iOS and Android build validation
-- **Coverage Reports**: Automated test coverage tracking with Codecov
+- **Code Quality**: Static analysis, nullable reference type checking
+- **Multi-Platform Builds**: Automated Android and iOS build validation
+- **Coverage Reports**: Automated test coverage tracking
 
 #### 🚀 Build Automation
 - **GitHub Actions**: Fully automated CI/CD pipeline
 - **Build Artifacts**: Automated build artifact generation and storage
-- **Manual Deployment**: On-demand deployment to hackathon/demo environments
+- **Manual Deployment**: On-demand deployment to demo environments
 - **Build Status**: Real-time build status notifications
 
 #### 📋 Quality Gates
@@ -156,18 +156,8 @@ Our automated build system ensures code quality and deployment readiness:
 |-------|--------|-------------------|
 | **Build** | Compilation, dependencies | ✅ Yes |
 | **Test** | Unit tests, integration tests, 80%+ coverage | ✅ Yes |
-| **Quality** | Linting, TypeScript, formatting | ✅ Yes |
-| **Platform** | iOS and Android build validation | ✅ Yes |
-
-#### 🔧 Available Workflows
-- **CI Pipeline**: Runs on every push and PR
-- **Manual Deployment**: Deploy to hackathon/demo environments
-- **Build Status**: Real-time build notifications
-
-```bash
-# Trigger manual deployment
-# Go to GitHub Actions → Deploy to Hackathon Environment → Run workflow
-```
+| **Quality** | Static analysis, nullable checks | ✅ Yes |
+| **Platform** | Android build validation | ✅ Yes |
 
 ### Testing Strategy
 - **Critical Path Testing**: Barcode scanning → product lookup → dietary analysis → warning display
@@ -176,8 +166,8 @@ Our automated build system ensures code quality and deployment readiness:
 - **Accessibility Testing**: Screen reader compatibility, high contrast mode
 
 ### Code Quality Standards
-- TypeScript strict mode with null checks
-- ESLint and Prettier for consistent formatting
+- C# 12 with nullable reference types enabled
+- Static analysis with built-in analyzers
 - >80% test coverage for critical paths
 - Conventional commit messages
 - Accessibility compliance (WCAG 2.1 AA)
@@ -220,8 +210,8 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 - Issue reporting
 
 ### Development Guidelines
-- Follow TypeScript strict mode
-- Use functional components with hooks
+- Follow C# coding standards and conventions
+- Use MVVM pattern for UI logic separation
 - Implement proper error handling
 - Write comprehensive tests
 - Ensure accessibility compliance
@@ -233,41 +223,41 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🆘 Support & Documentation
 
 ### 📚 Complete Documentation Suite
-- **[Development Setup Guide](DEVELOPMENT_SETUP.md)** - Complete environment setup instructions
-- **[Troubleshooting Guide](TROUBLESHOOTING.md)** - Common issues and solutions
-- **[Team Onboarding Guide](TEAM_ONBOARDING.md)** - New team member guide
+- **[MAUI Setup Guide](SMARTIES.MAUI/README.md)** - Complete MAUI development setup
+- **[Architecture Guide](.kiro/steering/)** - Technical architecture and patterns
 - **[Project Documentation](/docs)** - Additional technical documentation
 
 ### 🔧 Quick Setup
 ```bash
-# 1. Install dependencies
-npm install && cd smarties && npm install
+# 1. Install MAUI workload
+dotnet workload install maui
 
-# 2. Configure environment
-cp .env.example .env
-# Edit .env with your credentials
+# 2. Clone and restore
+git clone <repository-url>
+cd SMARTIES
+dotnet restore
 
-# 3. Start development
-npm start
+# 3. Build and run
+dotnet build
+dotnet build -t:Run -f net8.0-android
 ```
 
 ### 🆘 Getting Help
-- **Setup Issues**: Check [DEVELOPMENT_SETUP.md](DEVELOPMENT_SETUP.md)
-- **Runtime Problems**: Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
-- **New Team Members**: Start with [TEAM_ONBOARDING.md](TEAM_ONBOARDING.md)
+- **Setup Issues**: Check [SMARTIES.MAUI/README.md](SMARTIES.MAUI/README.md)
+- **Architecture Questions**: Check [.kiro/steering/](.kiro/steering/) files
 - **Bug Reports**: Create GitHub Issues
 - **Questions**: Use GitHub Discussions
 
 ## 🙏 Acknowledgments
 
 - **Open Food Facts**: Primary product database (2M+ products)
-- **USDA Food Data Central**: Nutritional information
-- **MongoDB Atlas**: Database and vector search capabilities
+- **Microsoft**: .NET MAUI framework and development tools
+- **ZXing.Net**: Barcode scanning capabilities
 - **OpenAI/Anthropic**: AI-powered dietary analysis
-- **React Native Community**: Cross-platform mobile framework
+- **Community Toolkit**: MVVM and UI components
 
 ---
 
 **Built with ❤️ for dietary safety and accessibility**
 
-*SMARTIES - Making food choices safer, one scan at a time.*
+*SMARTIES MAUI - Making food choices safer, one scan at a time.*

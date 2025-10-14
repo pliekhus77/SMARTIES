@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="456" height="456" viewBox="0 0 456 456" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="456" height="456" rx="72" fill="#2E7D32"/>
+    <path d="M228 100C280.467 100 322 141.533 322 194C322 246.467 280.467 288 228 288C175.533 288 134 246.467 134 194C134 141.533 175.533 100 228 100Z" fill="white"/>
+    <path d="M228 130C263.346 130 292 158.654 292 194C292 229.346 263.346 258 228 258C192.654 258 164 229.346 164 194C164 158.654 192.654 130 228 130Z" fill="#2E7D32"/>
+    <rect x="200" y="320" width="56" height="36" rx="18" fill="white"/>
+    <text x="228" y="380" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="24" font-weight="bold">SMARTIES</text>
+</svg>

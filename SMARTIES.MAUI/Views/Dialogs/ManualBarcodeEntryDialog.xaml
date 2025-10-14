@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="SMARTIES.MAUI.Views.Dialogs.ManualBarcodeEntryDialog"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Manual Barcode Entry"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+        
+        <!-- Header -->
+        <StackLayout Grid.Row="0" Spacing="10" Margin="0,0,0,20">
+            <Label Text="Enter Barcode Manually" 
+                   FontSize="20" 
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{DynamicResource Primary}" />
+            
+            <Label Text="Enter the barcode numbers found on the product package"
+                   FontSize="14"
+                   HorizontalOptions="Center"
+                   TextColor="{DynamicResource Gray600}" />
+        </StackLayout>
+
+        <!-- Input Section -->
+        <StackLayout Grid.Row="1" Spacing="15">
+            
+            <Entry x:Name="BarcodeEntry"
+                   Placeholder="Enter barcode (8, 12, or 13 digits)"
+                   Keyboard="Numeric"
+                   MaxLength="13"
+                   FontSize="18"
+                   HorizontalTextAlignment="Center"
+                   TextChanged="OnBarcodeTextChanged" />
+            
+            <Label x:Name="ValidationLabel"
+                   Text="Please enter a valid barcode"
+                   FontSize="12"
+                   TextColor="Red"
+                   HorizontalOptions="Center"
+                   IsVisible="False" />
+            
+            <!-- Tips -->
+            <Frame BackgroundColor="{DynamicResource Gray100}" 
+                   Padding="15" 
+                   CornerRadius="8">
+                <StackLayout Spacing="8">
+                    <Label Text="💡 Tips for finding barcodes:" 
+                           FontSize="14" 
+                           FontAttributes="Bold"
+                           TextColor="{DynamicResource Gray900}" />
+                    
+                    <Label Text="• Look for black and white vertical lines"
+                           FontSize="12"
+                           TextColor="{DynamicResource Gray700}" />
+                    
+                    <Label Text="• Usually found on the back or bottom of packages"
+                           FontSize="12"
+                           TextColor="{DynamicResource Gray700}" />
+                    
+                    <Label Text="• Numbers are printed below the lines"
+                           FontSize="12"
+                           TextColor="{DynamicResource Gray700}" />
+                    
+                    <Label Text="• Common formats: 8, 12, or 13 digits"
+                           FontSize="12"
+                           TextColor="{DynamicResource Gray700}" />
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+
+        <!-- Buttons -->
+        <StackLayout Grid.Row="2" 
+                     Orientation="Horizontal" 
+                     Spacing="10" 
+                     Margin="0,20,0,0">
+            
+            <Button Text="Cancel"
+                    FontSize="16"
+                    BackgroundColor="{DynamicResource Gray300}"
+                    TextColor="{DynamicResource Gray900}"
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    HorizontalOptions="FillAndExpand"
+                    Clicked="OnCancelClicked" />
+            
+            <Button x:Name="SubmitButton"
+                    Text="Lookup Product"
+                    FontSize="16"
+                    BackgroundColor="{DynamicResource Primary}"
+                    TextColor="White"
+                    CornerRadius="25"
+                    HeightRequest="50"
+                    HorizontalOptions="FillAndExpand"
+                    IsEnabled="False"
+                    Clicked="OnSubmitClicked" />
+        </StackLayout>
+    </Grid>
+</ContentPage>
