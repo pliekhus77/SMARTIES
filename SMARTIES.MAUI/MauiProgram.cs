@@ -46,11 +46,17 @@ public static class MauiProgram
         builder.Services.AddTransient<ProfileViewModel>();
         builder.Services.AddTransient<HistoryViewModel>();
 
+        // Register App
+        builder.Services.AddSingleton<App>();
+
         // Register Performance Services
         RegisterPerformanceServices(builder.Services);
 
         // Register Advanced Features Services
         RegisterAdvancedFeaturesServices(builder.Services);
+
+        // Register Splash Screen Services
+        RegisterSplashScreenServices(builder.Services);
 
         return builder.Build();
     }
@@ -123,5 +129,10 @@ public static class MauiProgram
 
         // ViewModels for advanced features
         services.AddTransient<FamilyProfilesViewModel>();
+    private static void RegisterSplashScreenServices(IServiceCollection services)
+    {
+        // Splash screen services
+        services.AddSingleton<ISplashScreenService, SplashScreenService>();
+        services.AddSingleton<ISplashScreenAccessibilityService, SplashScreenAccessibilityService>();
     }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Shield background -->
+    <path d="M100 20L160 40V100C160 140 130 170 100 180C70 170 40 140 40 100V40L100 20Z" fill="#2E7D32"/>
+    
+    <!-- Inner shield -->
+    <path d="M100 35L140 50V95C140 125 120 145 100 155C80 145 60 125 60 95V50L100 35Z" fill="white"/>
+    
+    <!-- Scanner symbol -->
+    <rect x="80" y="80" width="40" height="4" fill="#2E7D32"/>
+    <rect x="80" y="90" width="40" height="4" fill="#2E7D32"/>
+    <rect x="80" y="100" width="40" height="4" fill="#2E7D32"/>
+    
+    <!-- Checkmark -->
+    <path d="M85 110L95 120L115 100" stroke="#2E7D32" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
