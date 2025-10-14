@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="SMARTIES.MAUI.Views.FamilyProfilesPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:SMARTIES.MAUI.ViewModels"
+             x:DataType="viewmodels:FamilyProfilesViewModel"
+             Title="Family Profiles">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackLayout Grid.Row="0" Padding="20,10">
+            <Label Text="Manage Family Profiles" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" />
+            <Label Text="Create and switch between different dietary profiles" 
+                   FontSize="14" 
+                   TextColor="Gray" 
+                   HorizontalOptions="Center" />
+        </StackLayout>
+
+        <!-- Profiles List -->
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding Profiles}"
+                        Margin="20,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="15" Margin="0,5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Profile Photo -->
+                        <Ellipse Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+                                 WidthRequest="50" HeightRequest="50"
+                                 Fill="LightBlue" />
+                        
+                        <Label Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+                               Text="{Binding Name, Converter={StaticResource FirstLetterConverter}}"
+                               FontSize="20" FontAttributes="Bold"
+                               HorizontalOptions="Center" VerticalOptions="Center"
+                               TextColor="White" />
+
+                        <!-- Profile Info -->
+                        <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                            <Label Text="{Binding Name}" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" />
+                            <Label Text="(Active)" 
+                                   FontSize="14" 
+                                   TextColor="Green"
+                                   IsVisible="{Binding IsActive}" />
+                        </StackLayout>
+
+                        <Label Grid.Row="1" Grid.Column="1"
+                               Text="{Binding Description}" 
+                               FontSize="14" 
+                               TextColor="Gray" />
+
+                        <!-- Actions -->
+                        <StackLayout Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" 
+                                     Orientation="Horizontal" VerticalOptions="Center">
+                            <Button Text="Switch" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:FamilyProfilesViewModel}}, Path=SwitchProfileCommand}"
+                                    CommandParameter="{Binding Id}"
+                                    IsVisible="{Binding IsActive, Converter={StaticResource InvertedBoolConverter}}"
+                                    BackgroundColor="Green" TextColor="White" />
+                            <Button Text="Edit" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:FamilyProfilesViewModel}}, Path=EditProfileCommand}"
+                                    CommandParameter="{Binding .}"
+                                    BackgroundColor="Blue" TextColor="White" />
+                        </StackLayout>
+
+                        <!-- Background -->
+                        <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3"
+                                   Fill="White" Stroke="LightGray" StrokeThickness="1"
+                                   RadiusX="10" RadiusY="10" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Add Profile Button -->
+        <Button Grid.Row="2" 
+                Text="Add New Profile" 
+                Command="{Binding AddProfileCommand}"
+                Margin="20"
+                BackgroundColor="Blue" 
+                TextColor="White" />
+    </Grid>
+
+</ContentPage>

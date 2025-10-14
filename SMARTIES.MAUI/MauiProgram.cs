@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using SMARTIES.MAUI.Services;
 using SMARTIES.MAUI.Services.Performance;
 using SMARTIES.MAUI.ViewModels;
+using SMARTIES.MAUI.Data;
 
 namespace SMARTIES.MAUI;
 
@@ -48,6 +49,9 @@ public static class MauiProgram
         // Register Performance Services
         RegisterPerformanceServices(builder.Services);
 
+        // Register Advanced Features Services
+        RegisterAdvancedFeaturesServices(builder.Services);
+
         return builder.Build();
     }
 
@@ -88,5 +92,36 @@ public static class MauiProgram
         // Baseline and testing services
         services.AddSingleton<IPerformanceBaselineService, PerformanceBaselineService>();
         services.AddSingleton<IAutomatedPerformanceTestingService, AutomatedPerformanceTestingService>();
+    }
+
+    private static void RegisterAdvancedFeaturesServices(IServiceCollection services)
+    {
+        // Database service
+        services.AddSingleton<AdvancedFeaturesDbService>();
+
+        // Family profile services
+        services.AddSingleton<IFamilyProfileRepository, FamilyProfileRepository>();
+        services.AddSingleton<IFamilyProfileService, FamilyProfileService>();
+
+        // Recommendation services
+        services.AddSingleton<IRecommendationService, RecommendationService>();
+
+        // Analytics services
+        services.AddSingleton<IAnalyticsService, AnalyticsService>();
+
+        // Advanced search services
+        services.AddSingleton<IAdvancedSearchService, AdvancedSearchService>();
+
+        // Custom restriction services
+        services.AddSingleton<ICustomRestrictionService, CustomRestrictionService>();
+
+        // Social and community services
+        services.AddSingleton<ISocialSharingService, SocialSharingService>();
+
+        // Notification services
+        services.AddSingleton<INotificationService, NotificationService>();
+
+        // ViewModels for advanced features
+        services.AddTransient<FamilyProfilesViewModel>();
     }
 }
