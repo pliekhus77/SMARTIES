@@ -1,80 +1,48 @@
-name: CI
+name: SMARTIES CI/CD
 
 on:
   push:
     branches: [ main, develop ]
   pull_request:
     branches: [ main, develop ]
-  workflow_dispatch: # Allow manual triggering for hackathon testing
+  workflow_dispatch: # Allow manual triggering
 
 jobs:
   test:
     runs-on: ubuntu-latest
     
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-    
     steps:
     - uses: actions/checkout@v4
     
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        dotnet-version: 8.0.x
     
-    - name: Install root dependencies
-      run: npm ci
+    - name: Restore dependencies
+      run: dotnet restore SMARTIES.sln
     
-    - name: Install React Native dependencies
-      run: |
-        cd smarties
-        npm ci
-    
-    - name: Run linting
-      run: |
-        cd smarties
-        npm run lint
+    - name: Build solution
+      run: dotnet build SMARTIES.sln --no-restore --configuration Release
     
     - name: Run unit tests
-      run: |
-        cd smarties
-        npm run test:ci
-      env:
-        CI: true
-    
-    - name: Run integration tests
-      run: |
-        cd smarties
-        npm run test:integration
-      env:
-        CI: true
-        # Integration test environment variables
-        MONGODB_CONNECTION_STRING: ${{ secrets.MONGODB_CONNECTION_STRING_TEST }}
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY_TEST }}
-        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY_TEST }}
-    
-    - name: Upload coverage reports
-      uses: codecov/codecov-action@v3
-      with:
-        directory: ./smarties/coverage
-        fail_ci_if_error: false # Don't fail CI for coverage upload issues during hackathon
+      run: dotnet test SMARTIES.MAUI.Tests/SMARTIES.MAUI.Tests.csproj --no-build --configuration Release --logger trx --collect:"XPlat Code Coverage"
     
     - name: Upload test results
       uses: actions/upload-artifact@v4
-      if: always() # Upload even if tests fail
+      if: always()
       with:
-        name: test-results-${{ matrix.node-version }}
+        name: test-results
         path: |
-          smarties/coverage/
-          smarties/test-results.xml
+          **/*.trx
+          **/coverage.cobertura.xml
         retention-days: 7
     
-    - name: Check TypeScript
-      run: |
-        cd smarties
-        npx tsc --noEmit
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        files: '**/coverage.cobertura.xml'
+        fail_ci_if_error: false
 
   build-android:
     runs-on: ubuntu-latest
@@ -83,36 +51,27 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Use Node.js 18.x
-      uses: actions/setup-node@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
       with:
-        node-version: 18.x
-        cache: 'npm'
+        dotnet-version: 8.0.x
     
-    - name: Setup Java
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '17'
+    - name: Install MAUI workload
+      run: dotnet workload install maui
     
-    - name: Install dependencies
-      run: |
-        cd smarties
-        npm ci
+    - name: Restore dependencies
+      run: dotnet restore SMARTIES.MAUI/SMARTIES.MAUI.csproj
     
     - name: Build Android
-      run: |
-        cd smarties
-        npx expo export --platform android
-        # Alternative: npx expo build:android for full APK build
+      run: dotnet build SMARTIES.MAUI/SMARTIES.MAUI.csproj -f net8.0-android --configuration Release --no-restore
     
     - name: Upload Android build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: android-build
-        path: smarties/dist/
-        retention-days: 7 # Keep artifacts for a week during hackathon
-    
+        path: SMARTIES.MAUI/bin/Release/net8.0-android/
+        retention-days: 7
+
   build-ios:
     runs-on: macos-latest
     needs: test
@@ -120,79 +79,65 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Use Node.js 18.x
-      uses: actions/setup-node@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
       with:
-        node-version: 18.x
-        cache: 'npm'
+        dotnet-version: 8.0.x
     
-    - name: Install dependencies
-      run: |
-        cd smarties
-        npm ci
+    - name: Install MAUI workload
+      run: dotnet workload install maui
     
-    - name: Build iOS
-      run: |
-        cd smarties
-        npx expo export --platform ios
-        # Alternative: npx expo build:ios for full IPA build
+    - name: Restore dependencies
+      run: dotnet restore SMARTIES.MAUI/SMARTIES.MAUI.csproj
+    
+    - name: Build iOS (unsigned)
+      run: dotnet build SMARTIES.MAUI/SMARTIES.MAUI.csproj -f net8.0-ios --configuration Release --no-restore
     
     - name: Upload iOS build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: ios-build
-        path: smarties/dist/
-        retention-days: 7 # Keep artifacts for a week during hackathon
+        path: SMARTIES.MAUI/bin/Release/net8.0-ios/
+        retention-days: 7
 
-  integration-tests:
-    runs-on: ubuntu-latest
+  build-windows:
+    runs-on: windows-latest
     needs: test
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     
     steps:
     - uses: actions/checkout@v4
     
-    - name: Use Node.js 18.x
-      uses: actions/setup-node@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
       with:
-        node-version: 18.x
-        cache: 'npm'
+        dotnet-version: 8.0.x
     
-    - name: Install dependencies
-      run: |
-        cd smarties
-        npm ci
+    - name: Install MAUI workload
+      run: dotnet workload install maui
     
-    - name: Run cloud service integration tests
-      run: |
-        cd smarties
-        npm run test:integration:cloud
-      env:
-        CI: true
-        MONGODB_CONNECTION_STRING: ${{ secrets.MONGODB_CONNECTION_STRING_TEST }}
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY_TEST }}
-        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY_TEST }}
+    - name: Restore dependencies
+      run: dotnet restore SMARTIES.MAUI/SMARTIES.MAUI.csproj
     
-    - name: Upload integration test results
+    - name: Build Windows
+      run: dotnet build SMARTIES.MAUI/SMARTIES.MAUI.csproj -f net8.0-windows10.0.19041.0 --configuration Release --no-restore
+    
+    - name: Upload Windows build artifacts
       uses: actions/upload-artifact@v4
-      if: always()
       with:
-        name: integration-test-results
-        path: |
-          smarties/integration-test-results.xml
-          smarties/integration-coverage/
+        name: windows-build
+        path: SMARTIES.MAUI/bin/Release/net8.0-windows10.0.19041.0/
         retention-days: 7
 
   notify:
     runs-on: ubuntu-latest
-    needs: [test, build-android, build-ios, integration-tests]
-    if: always() # Run even if previous jobs fail
+    needs: [test, build-android, build-ios, build-windows]
+    if: always()
     
     steps:
     - name: Determine overall status
       id: status
       run: |
-        if [[ "${{ needs.test.result }}" == "success" && "${{ needs.build-android.result }}" == "success" && "${{ needs.build-ios.result }}" == "success" && "${{ needs.integration-tests.result }}" == "success" ]]; then
+        if [[ "${{ needs.test.result }}" == "success" && "${{ needs.build-android.result }}" == "success" && "${{ needs.build-ios.result }}" == "success" && "${{ needs.build-windows.result }}" == "success" ]]; then
           echo "status=success" >> $GITHUB_OUTPUT
           echo "message=✅ All tests and builds completed successfully!" >> $GITHUB_OUTPUT
         else
@@ -200,83 +145,53 @@ jobs:
           echo "message=❌ Some tests or builds failed. Check the logs above." >> $GITHUB_OUTPUT
         fi
     
-    - name: Create test summary
+    - name: Create build summary
       run: |
-        echo "## Test Results Summary" >> $GITHUB_STEP_SUMMARY
-        echo "| Job | Status |" >> $GITHUB_STEP_SUMMARY
-        echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
+        echo "## SMARTIES Build Results" >> $GITHUB_STEP_SUMMARY
+        echo "| Platform | Status |" >> $GITHUB_STEP_SUMMARY
+        echo "|----------|--------|" >> $GITHUB_STEP_SUMMARY
         echo "| Unit Tests | ${{ needs.test.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
-        echo "| Android Build | ${{ needs.build-android.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
-        echo "| iOS Build | ${{ needs.build-ios.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
-        echo "| Integration Tests | ${{ needs.integration-tests.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| Android | ${{ needs.build-android.result == 'success' && '✅ Built' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| iOS | ${{ needs.build-ios.result == 'success' && '✅ Built' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| Windows | ${{ needs.build-windows.result == 'success' && '✅ Built' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "**Overall Status:** ${{ steps.status.outputs.message }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📱 Platform Support" >> $GITHUB_STEP_SUMMARY
+        echo "- **Android**: Cross-platform barcode scanning and dietary analysis" >> $GITHUB_STEP_SUMMARY
+        echo "- **iOS**: Build validation (requires Apple Developer account for device testing)" >> $GITHUB_STEP_SUMMARY
+        echo "- **Windows**: Desktop version for development and testing" >> $GITHUB_STEP_SUMMARY
     
-    - name: Generate detailed test summary
-      if: always()
-      run: |
-        echo "## Detailed Test Results" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        
-        if [[ "${{ needs.test.result }}" == "success" ]]; then
-          echo "### ✅ Unit Tests - PASSED" >> $GITHUB_STEP_SUMMARY
-          echo "- All unit tests executed successfully" >> $GITHUB_STEP_SUMMARY
-          echo "- Code coverage reports generated" >> $GITHUB_STEP_SUMMARY
-        else
-          echo "### ❌ Unit Tests - FAILED" >> $GITHUB_STEP_SUMMARY
-          echo "- Some unit tests failed" >> $GITHUB_STEP_SUMMARY
-          echo "- Check the test logs for details" >> $GITHUB_STEP_SUMMARY
-        fi
-        
-        echo "" >> $GITHUB_STEP_SUMMARY
-        
-        if [[ "${{ needs.integration-tests.result }}" == "success" ]]; then
-          echo "### ✅ Integration Tests - PASSED" >> $GITHUB_STEP_SUMMARY
-          echo "- Cloud service integrations working" >> $GITHUB_STEP_SUMMARY
-          echo "- MongoDB Atlas connectivity verified" >> $GITHUB_STEP_SUMMARY
-          echo "- AI services responding correctly" >> $GITHUB_STEP_SUMMARY
-        else
-          echo "### ❌ Integration Tests - FAILED" >> $GITHUB_STEP_SUMMARY
-          echo "- Cloud service integration issues detected" >> $GITHUB_STEP_SUMMARY
-          echo "- Check service configurations and API keys" >> $GITHUB_STEP_SUMMARY
-        fi
-        
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 📊 Build Status" >> $GITHUB_STEP_SUMMARY
-        echo "- Android Build: ${{ needs.build-android.result == 'success' && '✅ Success' || '❌ Failed' }}" >> $GITHUB_STEP_SUMMARY
-        echo "- iOS Build: ${{ needs.build-ios.result == 'success' && '✅ Success' || '❌ Failed' }}" >> $GITHUB_STEP_SUMMARY
-        
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 🔗 Artifacts" >> $GITHUB_STEP_SUMMARY
-        echo "- Test results and coverage reports are available in the Actions artifacts" >> $GITHUB_STEP_SUMMARY
-        echo "- Build artifacts are retained for 7 days" >> $GITHUB_STEP_SUMMARY
-    
-    - name: Comment on PR with test results
+    - name: Comment on PR with build results
       if: github.event_name == 'pull_request' && always()
       uses: actions/github-script@v7
       with:
         script: |
           const testStatus = '${{ needs.test.result }}';
-          const integrationStatus = '${{ needs.integration-tests.result }}';
           const androidStatus = '${{ needs.build-android.result }}';
           const iosStatus = '${{ needs.build-ios.result }}';
+          const windowsStatus = '${{ needs.build-windows.result }}';
           
           const getStatusEmoji = (status) => status === 'success' ? '✅' : '❌';
           
-          const comment = `## 🧪 Test Results Summary
+          const comment = `## 📱 SMARTIES Build Results
           
-          | Test Type | Status | Result |
-          |-----------|--------|--------|
+          | Platform | Status | Result |
+          |----------|--------|--------|
           | Unit Tests | ${getStatusEmoji(testStatus)} | ${testStatus.toUpperCase()} |
-          | Integration Tests | ${getStatusEmoji(integrationStatus)} | ${integrationStatus.toUpperCase()} |
-          | Android Build | ${getStatusEmoji(androidStatus)} | ${androidStatus.toUpperCase()} |
-          | iOS Build | ${getStatusEmoji(iosStatus)} | ${iosStatus.toUpperCase()} |
+          | Android | ${getStatusEmoji(androidStatus)} | ${androidStatus.toUpperCase()} |
+          | iOS | ${getStatusEmoji(iosStatus)} | ${iosStatus.toUpperCase()} |
+          | Windows | ${getStatusEmoji(windowsStatus)} | ${windowsStatus.toUpperCase()} |
           
-          ${testStatus === 'success' && integrationStatus === 'success' && androidStatus === 'success' && iosStatus === 'success' 
-            ? '🎉 All tests and builds passed! Ready for review.' 
-            : '⚠️ Some tests or builds failed. Please check the details above.'}
+          ${testStatus === 'success' && androidStatus === 'success' && iosStatus === 'success' && windowsStatus === 'success'
+            ? '🎉 All platforms built successfully! SMARTIES is ready for cross-platform deployment.' 
+            : '⚠️ Some builds failed. Please check the platform-specific logs above.'}
           
-          📊 **Coverage reports** and **test artifacts** are available in the Actions tab.
+          ### 📋 Next Steps
+          ${iosStatus === 'success' 
+            ? '- ✅ iOS build validated - ready for Apple Developer account setup'
+            : '- ❌ iOS build needs attention before device testing'}
+          - 📦 Build artifacts are available for download in the Actions tab
           `;
           
           github.rest.issues.createComment({
