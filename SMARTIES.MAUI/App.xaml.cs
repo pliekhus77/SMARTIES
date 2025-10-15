@@ -1,34 +1,57 @@
-using SMARTIES.MAUI.Views;
-using SMARTIES.MAUI.Services;
-
 namespace SMARTIES.MAUI;
 
 public partial class App : Application
 {
-    private readonly ISplashScreenService _splashScreenService;
-
-    public App(ISplashScreenService splashScreenService)
+    public App()
     {
         InitializeComponent();
-        _splashScreenService = splashScreenService;
-
-        MainPage = new AppShell();
     }
 
-    protected override async void OnStart()
+    protected override Window CreateWindow(IActivationState? activationState)
     {
-        base.OnStart();
-        
-        try
+        var window = new Window(new ContentPage
         {
-            // Initialize and show splash screen
-            await _splashScreenService.InitializeAsync();
-            await _splashScreenService.ShowSplashScreenAsync();
-        }
-        catch (Exception ex)
+            Title = "SMARTIES",
+            BackgroundColor = Colors.LightBlue,
+            Content = new StackLayout
+            {
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center,
+                Children = {
+                    new Label 
+                    { 
+                        Text = "🎉 SMARTIES IS RUNNING! 🎉", 
+                        FontSize = 32, 
+                        FontAttributes = FontAttributes.Bold,
+                        TextColor = Colors.DarkBlue,
+                        HorizontalOptions = LayoutOptions.Center 
+                    },
+                    new Label 
+                    { 
+                        Text = "The MAUI app is working correctly!", 
+                        FontSize = 18, 
+                        TextColor = Colors.DarkGreen,
+                        HorizontalOptions = LayoutOptions.Center,
+                        Margin = new Thickness(0, 20, 0, 0)
+                    },
+                    new Button
+                    {
+                        Text = "Click Me!",
+                        BackgroundColor = Colors.Orange,
+                        TextColor = Colors.White,
+                        Margin = new Thickness(0, 30, 0, 0),
+                        Command = new Command(async () => 
+                        {
+                            await Application.Current.MainPage.DisplayAlert("Success!", "Button clicked! SMARTIES app is fully functional.", "OK");
+                        })
+                    }
+                }
+            }
+        })
         {
-            // Log error but don't crash the app
-            System.Diagnostics.Debug.WriteLine($"Splash screen error: {ex.Message}");
-        }
+            Title = "SMARTIES - Dietary Scanner"
+        };
+
+        return window;
     }
 }

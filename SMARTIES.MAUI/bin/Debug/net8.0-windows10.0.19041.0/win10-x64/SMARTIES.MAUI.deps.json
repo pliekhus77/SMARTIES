@@ -12,10 +12,13 @@
           "CommunityToolkit.Mvvm": "8.2.2",
           "Microsoft.Extensions.Http": "8.0.0",
           "Microsoft.Extensions.Logging.Debug": "8.0.0",
-          "Microsoft.Maui.Controls": "8.0.91",
+          "Microsoft.Maui.Controls": "8.0.100",
           "Microsoft.Maui.Controls.Compatibility": "8.0.100",
+          "Microsoft.Maui.Essentials": "8.0.100",
           "sqlite-net-pcl": "1.9.172",
           "System.Text.Json": "8.0.5",
+          "ZXing.Net.Maui": "0.4.0",
+          "ZXing.Net.Maui.Controls": "0.4.0",
           "runtimepack.Microsoft.Windows.SDK.NET.Ref": "10.0.19041.57"
         },
         "runtime": {
@@ -233,15 +236,15 @@
           }
         }
       },
-      "Microsoft.Maui.Controls/8.0.91": {
+      "Microsoft.Maui.Controls/8.0.100": {
         "dependencies": {
-          "Microsoft.Maui.Controls.Build.Tasks": "8.0.91",
+          "Microsoft.Maui.Controls.Build.Tasks": "8.0.100",
           "Microsoft.Maui.Controls.Core": "8.0.100",
           "Microsoft.Maui.Controls.Xaml": "8.0.100",
-          "Microsoft.Maui.Resizetizer": "8.0.91"
+          "Microsoft.Maui.Resizetizer": "8.0.100"
         }
       },
-      "Microsoft.Maui.Controls.Build.Tasks/8.0.91": {
+      "Microsoft.Maui.Controls.Build.Tasks/8.0.100": {
         "dependencies": {
           "Microsoft.Maui.Controls.Core": "8.0.100",
           "Microsoft.Maui.Controls.Xaml": "8.0.100"
@@ -451,7 +454,7 @@
           }
         }
       },
-      "Microsoft.Maui.Resizetizer/8.0.91": {},
+      "Microsoft.Maui.Resizetizer/8.0.100": {},
       "Microsoft.Windows.SDK.BuildTools/10.0.22621.756": {},
       "Microsoft.WindowsAppSDK/1.5.240802000": {
         "dependencies": {
@@ -579,7 +582,38 @@
       },
       "System.Diagnostics.DiagnosticSource/8.0.0": {},
       "System.Memory/4.5.3": {},
-      "System.Text.Json/8.0.5": {}
+      "System.Text.Json/8.0.5": {},
+      "ZXing.Net/0.16.9": {
+        "runtime": {
+          "lib/net7.0/zxing.dll": {
+            "assemblyVersion": "0.16.9.0",
+            "fileVersion": "0.16.9.0"
+          }
+        }
+      },
+      "ZXing.Net.Maui/0.4.0": {
+        "dependencies": {
+          "ZXing.Net": "0.16.9"
+        },
+        "runtime": {
+          "lib/net7.0-windows10.0.19041/ZXing.Net.MAUI.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ZXing.Net.Maui.Controls/0.4.0": {
+        "dependencies": {
+          "ZXing.Net": "0.16.9",
+          "ZXing.Net.Maui": "0.4.0"
+        },
+        "runtime": {
+          "lib/net7.0-windows10.0.19041/ZXing.Net.MAUI.Controls.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
     }
   },
   "libraries": {
@@ -712,19 +746,19 @@
       "path": "microsoft.io.recyclablememorystream/3.0.1",
       "hashPath": "microsoft.io.recyclablememorystream.3.0.1.nupkg.sha512"
     },
-    "Microsoft.Maui.Controls/8.0.91": {
+    "Microsoft.Maui.Controls/8.0.100": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-gqyrGqSQfYF2SMOS/jpWTBK7KVNsm8p4LvREATKXgEYuLN6ivrOXC+E4TrZaILEiVXB4pQr+kbb7ewzAVjSbeg==",
-      "path": "microsoft.maui.controls/8.0.91",
-      "hashPath": "microsoft.maui.controls.8.0.91.nupkg.sha512"
+      "sha512": "sha512-5t51qYH1m1bZX1+VLKcTqEuUBWY0NiVM6eYhQa7B0wNNzgP07Mo1ZKikdFprUm4oGgJL5lbOe2OeH+2D0afQfA==",
+      "path": "microsoft.maui.controls/8.0.100",
+      "hashPath": "microsoft.maui.controls.8.0.100.nupkg.sha512"
     },
-    "Microsoft.Maui.Controls.Build.Tasks/8.0.91": {
+    "Microsoft.Maui.Controls.Build.Tasks/8.0.100": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-is+MHVT02RSJxhBSAx1Z7xTXnalADGpsS2TDUCsgOEjsWrpzDoYwvqk9Yh/eHnvmDHzenMeWAvK7CLmAlaIlIQ==",
-      "path": "microsoft.maui.controls.build.tasks/8.0.91",
-      "hashPath": "microsoft.maui.controls.build.tasks.8.0.91.nupkg.sha512"
+      "sha512": "sha512-fxN4/f6teRh+4j1WE8kqvt8O4B88z2637179dT4aZGFkDiMWBsfxOn+jjrDgwMIVyjFdCrGgtBUfrV9M7+AfnA==",
+      "path": "microsoft.maui.controls.build.tasks/8.0.100",
+      "hashPath": "microsoft.maui.controls.build.tasks.8.0.100.nupkg.sha512"
     },
     "Microsoft.Maui.Controls.Compatibility/8.0.100": {
       "type": "package",
@@ -775,12 +809,12 @@
       "path": "microsoft.maui.graphics.win2d.winui.desktop/8.0.100",
       "hashPath": "microsoft.maui.graphics.win2d.winui.desktop.8.0.100.nupkg.sha512"
     },
-    "Microsoft.Maui.Resizetizer/8.0.91": {
+    "Microsoft.Maui.Resizetizer/8.0.100": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-LJF4SsXD4CYk5/W+LxqSHy9CnteHAHuINTKdo2P0xdceZP2J4UZax5ZVPg9KVWBMlL1Gmfqq/sdrkbckgufkmA==",
-      "path": "microsoft.maui.resizetizer/8.0.91",
-      "hashPath": "microsoft.maui.resizetizer.8.0.91.nupkg.sha512"
+      "sha512": "sha512-wEVBLYTe/tu30z9yR+tFupXiixqMaxkSp/xqC7FGlV6g9MvYo/wAcwTO+XWay2k/ug5qlxz6MXt5mEac7FMLmA==",
+      "path": "microsoft.maui.resizetizer/8.0.100",
+      "hashPath": "microsoft.maui.resizetizer.8.0.100.nupkg.sha512"
     },
     "Microsoft.Windows.SDK.BuildTools/10.0.22621.756": {
       "type": "package",
@@ -851,6 +885,27 @@
       "sha512": "sha512-0f1B50Ss7rqxXiaBJyzUu9bWFOO2/zSlifZ/UNMdiIpDYe4cY4LQQicP4nirK1OS31I43rn062UIJ1Q9bpmHpg==",
       "path": "system.text.json/8.0.5",
       "hashPath": "system.text.json.8.0.5.nupkg.sha512"
+    },
+    "ZXing.Net/0.16.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7WaVMHklpT3Ye2ragqRIwlFRsb6kOk63BOGADV0fan3ulVfGLUYkDi5yNUsZS/7FVNkWbtHAlDLmu4WnHGfqvQ==",
+      "path": "zxing.net/0.16.9",
+      "hashPath": "zxing.net.0.16.9.nupkg.sha512"
+    },
+    "ZXing.Net.Maui/0.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1VfHUKYLFZhvOD3We35aSaz6g32ccjKR4DtwJmq8n0eDLpTSEkASG3PcjE8rw7A5tIOs+Wpgbv75Y0hMsF8clQ==",
+      "path": "zxing.net.maui/0.4.0",
+      "hashPath": "zxing.net.maui.0.4.0.nupkg.sha512"
+    },
+    "ZXing.Net.Maui.Controls/0.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FwCgnoUT76cId+Z7LJrmAGxH8x/7UhVMP0lPKatyBMS622fu5ukuKGFXUJ5yhQElwNlr0YwwqLe8YPRE17Nl6Q==",
+      "path": "zxing.net.maui.controls/0.4.0",
+      "hashPath": "zxing.net.maui.controls.0.4.0.nupkg.sha512"
     }
   }
 }

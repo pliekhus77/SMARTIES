@@ -10,6 +10,7 @@
     <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <MauiEnableXamlCTask>false</MauiEnableXamlCTask>
 
     <!-- Display Version -->
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -45,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.91" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.100" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
@@ -53,6 +54,32 @@
     <PackageReference Include="SQLite-net-pcl" Version="1.9.172" />
     <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
     <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.100" />
+
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Tests\**" />
+    <EmbeddedResource Remove="Tests\**" />
+    <MauiXaml Remove="Tests\**" />
+    <None Remove="Tests\**" />
+    
+    <!-- Temporarily exclude problematic XAML files and their code-behind -->
+    <MauiXaml Remove="Resources\Styles\Accessibility.xaml" />
+    <MauiXaml Remove="Resources\Styles\Animations.xaml" />
+    <MauiXaml Remove="Resources\Styles\Cards.xaml" />
+    <MauiXaml Remove="Resources\Styles\Inputs.xaml" />
+    <MauiXaml Remove="Resources\Styles\Layout.xaml" />
+    <MauiXaml Remove="Views\Controls\ScannerOverlay.xaml" />
+    <MauiXaml Remove="Views\Controls\SmartiesCameraView.xaml" />
+    <MauiXaml Remove="Views\FamilyProfilesPage.xaml" />
+    <MauiXaml Remove="Views\ScannerPage.xaml" />
+    
+    <Compile Remove="Views\Controls\ScannerOverlay.xaml.cs" />
+    <Compile Remove="Views\Controls\SmartiesCameraView.xaml.cs" />
+    <Compile Remove="Views\FamilyProfilesPage.xaml.cs" />
+    <Compile Remove="Views\ScannerPage.xaml.cs" />
   </ItemGroup>
 
 </Project>

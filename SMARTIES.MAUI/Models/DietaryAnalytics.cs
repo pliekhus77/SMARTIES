@@ -34,9 +34,4 @@ public class DietaryAnalytics
     public Dictionary<string, double> NutritionalTrends { get; set; } = new();
 }
 
-public enum ComplianceLevel
-{
-    Compliant,
-    Warning,
-    Violation
-}
+

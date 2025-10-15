@@ -1,4 +1,5 @@
-using Microsoft.Maui.Essentials;
+
+
 using ZXing.Net.Maui;
 
 namespace SMARTIES.MAUI.Services;

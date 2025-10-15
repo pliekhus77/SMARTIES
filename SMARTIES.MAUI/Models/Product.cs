@@ -23,6 +23,12 @@ public class Product
 
     public string Categories { get; set; } = string.Empty;
 
+    // JSON serialized properties for compatibility
+    public string CategoriesJson => Categories;
+    public string NutritionFactsJson => System.Text.Json.JsonSerializer.Serialize(new { 
+        EnergyKcal, Fat, SaturatedFat, Carbohydrates, Sugars, Fiber, Proteins, Salt, Sodium 
+    });
+
     public DateTime CachedAt { get; set; } = DateTime.UtcNow;
 
     public bool IsFromCache { get; set; }

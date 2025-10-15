@@ -83,9 +83,13 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[8.0.91, )"
+              "version": "[8.0.100, )"
             },
             "Microsoft.Maui.Controls.Compatibility": {
+              "target": "Package",
+              "version": "[8.0.100, )"
+            },
+            "Microsoft.Maui.Essentials": {
               "target": "Package",
               "version": "[8.0.100, )"
             },
@@ -102,6 +106,14 @@
             "System.Text.Json": {
               "target": "Package",
               "version": "[8.0.5, )"
+            },
+            "ZXing.Net.Maui": {
+              "target": "Package",
+              "version": "[0.4.0, )"
+            },
+            "ZXing.Net.Maui.Controls": {
+              "target": "Package",
+              "version": "[0.4.0, )"
             }
           },
           "imports": [
@@ -164,9 +176,13 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[8.0.91, )"
+              "version": "[8.0.100, )"
             },
             "Microsoft.Maui.Controls.Compatibility": {
+              "target": "Package",
+              "version": "[8.0.100, )"
+            },
+            "Microsoft.Maui.Essentials": {
               "target": "Package",
               "version": "[8.0.100, )"
             },
@@ -177,6 +193,14 @@
             "System.Text.Json": {
               "target": "Package",
               "version": "[8.0.5, )"
+            },
+            "ZXing.Net.Maui": {
+              "target": "Package",
+              "version": "[0.4.0, )"
+            },
+            "ZXing.Net.Maui.Controls": {
+              "target": "Package",
+              "version": "[0.4.0, )"
             }
           },
           "imports": [

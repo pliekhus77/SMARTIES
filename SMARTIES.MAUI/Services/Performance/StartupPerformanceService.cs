@@ -8,6 +8,7 @@ public interface IStartupPerformanceService
     Task LazyLoadNonEssentialComponentsAsync();
     Task<TimeSpan> MeasureStartupTimeAsync();
     Task PreloadFrequentlyUsedDataAsync();
+    Task TrackStartupPhaseAsync(string phaseName);
 }
 
 public class StartupPerformanceService : IStartupPerformanceService
@@ -69,5 +70,17 @@ public class StartupPerformanceService : IStartupPerformanceService
         
         // Preload user preferences (simulated)
         await Task.Delay(50);
+    }
+
+    public async Task TrackStartupPhaseAsync(string phaseName)
+    {
+        // Track startup phase timing
+        await _performanceService.RecordMetricAsync(new Models.Performance.PerformanceMetric
+        {
+            Type = Models.Performance.PerformanceMetricType.AppStartupTime,
+            Value = _startupStopwatch.ElapsedMilliseconds,
+            Unit = "ms",
+            Properties = new Dictionary<string, object> { { "phase", phaseName } }
+        });
     }
 }

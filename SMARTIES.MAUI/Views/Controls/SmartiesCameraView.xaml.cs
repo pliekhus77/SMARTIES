@@ -28,7 +28,7 @@ public partial class SmartiesCameraView : ContentView
     {
         if (_barcodeService is BarcodeService barcodeService)
         {
-            barcodeService.OnBarcodeDetected(e.Result.First().Value, e.Result.First().Format);
+            barcodeService.OnBarcodeDetected(e.Barcode, e.Format);
         }
     }
 }

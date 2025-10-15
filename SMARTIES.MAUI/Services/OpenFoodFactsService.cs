@@ -82,6 +82,21 @@ public class OpenFoodFactsService : IOpenFoodFactsService
         }
     }
 
+    public async Task<List<Product>> SearchProductsAsync(string searchTerm, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // For now, return empty list - full search implementation would require different API endpoint
+            _logger.LogInformation("Search not yet implemented for term: {SearchTerm}", searchTerm);
+            return new List<Product>();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error searching products for term: {SearchTerm}", searchTerm);
+            return new List<Product>();
+        }
+    }
+
     private static string NormalizeBarcode(string barcode)
     {
         // Remove any non-numeric characters

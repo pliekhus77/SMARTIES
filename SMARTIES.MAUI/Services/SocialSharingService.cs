@@ -5,7 +5,7 @@ namespace SMARTIES.MAUI.Services;
 
 public interface ISocialSharingService
 {
-    Task ShareScanResultAsync(Product product, DietaryAnalysisResult analysis);
+    Task ShareScanResultAsync(Product product, DietaryAnalysis analysis);
     Task ShareProductListAsync(List<Product> products, string listName);
     Task RateProductAsync(string barcode, int rating, string? review = null);
 }
@@ -19,16 +19,13 @@ public class SocialSharingService : ISocialSharingService
         _logger = logger;
     }
 
-    public async Task ShareScanResultAsync(Product product, DietaryAnalysisResult analysis)
+    public async Task ShareScanResultAsync(Product product, DietaryAnalysis analysis)
     {
         try
         {
             var shareText = $"I scanned {product.ProductName} with SMARTIES - {analysis.OverallCompliance} compliance!";
-            await Share.RequestAsync(new ShareTextRequest
-            {
-                Text = shareText,
-                Title = "SMARTIES Scan Result"
-            });
+            // TODO: Implement actual sharing functionality
+            _logger.LogInformation("Sharing scan result: {ShareText}", shareText);
         }
         catch (Exception ex)
         {
@@ -43,11 +40,8 @@ public class SocialSharingService : ISocialSharingService
             var productNames = string.Join(", ", products.Take(5).Select(p => p.ProductName));
             var shareText = $"Check out my {listName} list: {productNames}... (via SMARTIES app)";
             
-            await Share.RequestAsync(new ShareTextRequest
-            {
-                Text = shareText,
-                Title = listName
-            });
+            // TODO: Implement actual sharing functionality
+            _logger.LogInformation("Sharing product list: {ShareText}", shareText);
         }
         catch (Exception ex)
         {

@@ -2,16 +2,33 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <!-- Import all style resources -->
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Colors.xaml" />
-        <ResourceDictionary Source="Typography.xaml" />
-        <ResourceDictionary Source="Layout.xaml" />
-        <ResourceDictionary Source="Buttons.xaml" />
-        <ResourceDictionary Source="Cards.xaml" />
-        <ResourceDictionary Source="Inputs.xaml" />
-        <ResourceDictionary Source="Animations.xaml" />
-    </ResourceDictionary.MergedDictionaries>
+    <!-- Define fonts directly to avoid loading issues -->
+    <OnPlatform x:Key="RegularFont" x:TypeArguments="x:String">
+        <On Platform="Android" Value="sans-serif" />
+        <On Platform="WinUI" Value="Segoe UI" />
+    </OnPlatform>
+    
+    <OnPlatform x:Key="MediumFont" x:TypeArguments="x:String">
+        <On Platform="Android" Value="sans-serif-medium" />
+        <On Platform="WinUI" Value="Segoe UI Semibold" />
+    </OnPlatform>
+    
+    <OnPlatform x:Key="BoldFont" x:TypeArguments="x:String">
+        <On Platform="Android" Value="sans-serif-black" />
+        <On Platform="WinUI" Value="Segoe UI Bold" />
+    </OnPlatform>
+
+    <!-- Basic Button Style without external references -->
+    <Style x:Key="BaseButton" TargetType="Button">
+        <Setter Property="FontFamily" Value="{StaticResource MediumFont}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumWidthRequest" Value="44" />
+        <Setter Property="Padding" Value="16,12" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="TextColor" Value="{StaticResource White}" />
+    </Style>
 
     <!-- Global Application Styles -->
     <Style TargetType="ContentPage" ApplyToDerivedTypes="True">

@@ -3,11 +3,6 @@ using SMARTIES.MAUI.Models;
 
 namespace SMARTIES.MAUI.Services;
 
-public interface IDietaryAnalysisService
-{
-    Task<DietaryAnalysis> AnalyzeProductAsync(string productName, List<string> ingredients, List<DietaryRestrictionType> restrictions);
-}
-
 public class DietaryAnalysisService : IDietaryAnalysisService
 {
     private readonly IOpenAIService _openAIService;
@@ -27,13 +22,13 @@ public class DietaryAnalysisService : IDietaryAnalysisService
         _logger = logger;
     }
 
-    public async Task<DietaryAnalysis> AnalyzeProductAsync(string productName, List<string> ingredients, List<DietaryRestrictionType> restrictions)
+    public async Task<DietaryAnalysis> AnalyzeProductAsync(Product product, UserProfile userProfile, CancellationToken cancellationToken = default)
     {
         var request = new AIAnalysisRequest
         {
-            ProductName = productName,
-            Ingredients = ingredients,
-            Restrictions = restrictions
+            ProductName = product.ProductName,
+            Ingredients = product.IngredientsText?.Split(',').ToList() ?? new List<string>(),
+            Restrictions = userProfile.GetAllRestrictions()
         };
 
         // Try AI analysis first (OpenAI, then Anthropic)
@@ -45,6 +40,19 @@ public class DietaryAnalysisService : IDietaryAnalysisService
 
         // Fallback to rule-based analysis
         _logger.LogInformation("AI analysis failed, falling back to rule-based analysis");
+        return await _ruleBasedService.AnalyzeProductAsync(request);
+    }
+
+    public async Task<DietaryAnalysis> AnalyzeProductOfflineAsync(Product product, UserProfile userProfile)
+    {
+        var request = new AIAnalysisRequest
+        {
+            ProductName = product.ProductName,
+            Ingredients = product.IngredientsText?.Split(',').ToList() ?? new List<string>(),
+            Restrictions = userProfile.GetAllRestrictions()
+        };
+
+        // Use only rule-based analysis for offline mode
         return await _ruleBasedService.AnalyzeProductAsync(request);
     }
 

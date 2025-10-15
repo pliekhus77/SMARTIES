@@ -101,20 +101,20 @@ public partial class SafetyIndicator : ContentView
 
     private void UpdateConfidence()
     {
-        ConfidenceScore.Text = $"{ConfidenceScore:P0}";
+        ConfidenceScoreLabel.Text = $"{ConfidenceScore:P0}";
         
         // Color code confidence score
         if (ConfidenceScore >= 0.8)
         {
-            ConfidenceScore.TextColor = Color.FromArgb("#28a745");
+            ConfidenceScoreLabel.TextColor = Color.FromArgb("#28a745");
         }
         else if (ConfidenceScore >= 0.6)
         {
-            ConfidenceScore.TextColor = Color.FromArgb("#ffc107");
+            ConfidenceScoreLabel.TextColor = Color.FromArgb("#ffc107");
         }
         else
         {
-            ConfidenceScore.TextColor = Color.FromArgb("#dc3545");
+            ConfidenceScoreLabel.TextColor = Color.FromArgb("#dc3545");
         }
     }
 

@@ -24,6 +24,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
+[C:/git/SMARTIES/SMARTIES.MAUI/Resources/Styles/Buttons.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.Resources.Styles.Buttons.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Buttons.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Buttons.xaml
+
 [C:/git/SMARTIES/SMARTIES.MAUI/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.Resources.Styles.Colors.xaml
@@ -36,11 +42,29 @@ build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.Resources.St
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
 
+[C:/git/SMARTIES/SMARTIES.MAUI/Resources/Styles/Typography.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.Resources.Styles.Typography.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Typography.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Typography.xaml
+
 [C:/git/SMARTIES/SMARTIES.MAUI/Views/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.Views.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\AppShell.xaml
+
+[C:/git/SMARTIES/SMARTIES.MAUI/Views/Controls/SafetyIndicator.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.Views.Controls.SafetyIndicator.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Controls\SafetyIndicator.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Controls\SafetyIndicator.xaml
+
+[C:/git/SMARTIES/SMARTIES.MAUI/Views/Dialogs/ManualBarcodeEntryDialog.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.Views.Dialogs.ManualBarcodeEntryDialog.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Dialogs\ManualBarcodeEntryDialog.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Dialogs\ManualBarcodeEntryDialog.xaml
 
 [C:/git/SMARTIES/SMARTIES.MAUI/Views/HistoryPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
@@ -59,9 +83,3 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.Views.ProfilePage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\ProfilePage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\ProfilePage.xaml
-
-[C:/git/SMARTIES/SMARTIES.MAUI/Views/ScannerPage.xaml]
-build_metadata.AdditionalFiles.GenKind = Xaml
-build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.Views.ScannerPage.xaml
-build_metadata.AdditionalFiles.TargetPath = Views\ScannerPage.xaml
-build_metadata.AdditionalFiles.RelativePath = Views\ScannerPage.xaml

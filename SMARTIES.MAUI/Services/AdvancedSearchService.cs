@@ -17,14 +17,14 @@ public class AdvancedSearchService : IAdvancedSearchService
     private readonly IOpenFoodFactsService _openFoodFacts;
     private readonly IProductCacheService _productCache;
     private readonly IDietaryAnalysisService _dietaryAnalysis;
-    private readonly IFamilyProfileService _profileService;
+    private readonly IUserProfileService _profileService;
     private readonly ILogger<AdvancedSearchService> _logger;
 
     public AdvancedSearchService(
         IOpenFoodFactsService openFoodFacts,
         IProductCacheService productCache,
         IDietaryAnalysisService dietaryAnalysis,
-        IFamilyProfileService profileService,
+        IUserProfileService profileService,
         ILogger<AdvancedSearchService> logger)
     {
         _openFoodFacts = openFoodFacts;
@@ -67,7 +67,7 @@ public class AdvancedSearchService : IAdvancedSearchService
                     var filteredProducts = new List<Product>();
                     foreach (var product in allProducts)
                     {
-                        var analysis = await _dietaryAnalysis.AnalyzeProductAsync(product, activeProfile.Id);
+                        var analysis = await _dietaryAnalysis.AnalyzeProductAsync(product, activeProfile);
                         if (analysis.OverallCompliance != ComplianceLevel.Violation)
                         {
                             filteredProducts.Add(product);
@@ -82,7 +82,7 @@ public class AdvancedSearchService : IAdvancedSearchService
             {
                 Product = p,
                 RelevanceScore = CalculateRelevanceScore(p, criteria),
-                ComplianceLevel = ComplianceLevel.Compliant, // Simplified
+                ComplianceLevel = ComplianceLevel.Safe, // Simplified
                 MatchedCriteria = GetMatchedCriteria(p, criteria)
             }).OrderByDescending(r => r.RelevanceScore).ToList();
 

@@ -57,12 +57,12 @@ public class SplashScreenService : ISplashScreenService
             _logger.LogInformation("Showing splash screen");
             
             // Coordinate with startup performance tracking
-            await _startupPerformance.TrackStartupPhaseAsync("SplashScreen", async () =>
-            {
-                // Ensure minimum display time
-                var minimumTask = Task.Delay(_configuration.MinimumDisplayTime);
-                
-                // Wait for app initialization with timeout protection
+            await _startupPerformance.TrackStartupPhaseAsync("SplashScreen");
+            
+            // Ensure minimum display time
+            var minimumTask = Task.Delay(_configuration.MinimumDisplayTime);
+            
+            // Wait for app initialization with timeout protection
                 var initializationTask = WaitForAppInitializationAsync();
                 var timeoutTask = Task.Delay(_configuration.MaximumDisplayTime);
                 
@@ -71,12 +71,11 @@ public class SplashScreenService : ISplashScreenService
                     timeoutTask
                 );
 
-                // Handle timeout scenario
-                if (completedTask == timeoutTask)
-                {
-                    _logger.LogWarning("Splash screen timed out after {MaxTime}ms", _configuration.MaximumDisplayTime.TotalMilliseconds);
-                }
-            });
+            // Handle timeout scenario
+            if (completedTask == timeoutTask)
+            {
+                _logger.LogWarning("Splash screen timed out after {MaxTime}ms", _configuration.MaximumDisplayTime.TotalMilliseconds);
+            }
 
             var displayDuration = DateTime.UtcNow - _splashStartTime;
             var timedOut = displayDuration >= _configuration.MaximumDisplayTime;

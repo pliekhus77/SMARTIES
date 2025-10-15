@@ -17,9 +17,9 @@ public class AndroidBarcodeService : BarcodeService
     {
         try
         {
-            var status = await Microsoft.Maui.Essentials.Permissions.RequestAsync<Microsoft.Maui.Essentials.Permissions.Camera>();
+            var status = await Permissions.RequestAsync<Permissions.Camera>();
             
-            if (status == Microsoft.Maui.Essentials.PermissionStatus.Granted)
+            if (status == PermissionStatus.Granted)
             {
                 _logger.LogInformation("Camera permission granted on Android");
                 return true;

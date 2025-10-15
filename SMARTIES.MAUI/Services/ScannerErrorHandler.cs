@@ -24,18 +24,22 @@ public class ScannerErrorHandler : IScannerErrorHandler
     {
         _logger.LogWarning("Camera permission denied by user");
         
-        var result = await Application.Current?.MainPage?.DisplayAlert(
-            "Camera Permission Required",
-            "SMARTIES needs camera access to scan barcodes. You can grant permission in your device settings or use manual entry instead.",
-            "Open Settings",
-            "Use Manual Entry") ?? false;
+        var result = false;
+        if (Application.Current?.MainPage != null)
+        {
+            result = await Application.Current.MainPage.DisplayAlert(
+                "Camera Permission Required",
+                "SMARTIES needs camera access to scan barcodes. You can grant permission in your device settings or use manual entry instead.",
+                "Open Settings",
+                "Use Manual Entry");
+        }
 
         if (result)
         {
             // Open device settings
             try
             {
-                await AppInfo.ShowSettingsUI();
+                AppInfo.ShowSettingsUI();
                 return true;
             }
             catch (Exception ex)
@@ -60,11 +64,15 @@ public class ScannerErrorHandler : IScannerErrorHandler
             _ => "Camera failed to initialize. Please try restarting the app."
         };
 
-        var result = await Application.Current?.MainPage?.DisplayAlert(
-            "Camera Error",
-            $"{message}\n\nWould you like to try manual barcode entry instead?",
-            "Manual Entry",
-            "Cancel") ?? false;
+        var result = false;
+        if (Application.Current?.MainPage != null)
+        {
+            result = await Application.Current.MainPage.DisplayAlert(
+                "Camera Error",
+                $"{message}\n\nWould you like to try manual barcode entry instead?",
+                "Manual Entry",
+                "Cancel");
+        }
 
         return result;
     }

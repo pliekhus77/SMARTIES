@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SMARTIES.MAUI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+fe999058f29fe250f7c1286dfe31433f61010d7f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+c387b803ffd9cd7a3c0fed50fecf9556bb481940")]
 [assembly: System.Reflection.AssemblyProductAttribute("SMARTIES.MAUI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SMARTIES.MAUI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

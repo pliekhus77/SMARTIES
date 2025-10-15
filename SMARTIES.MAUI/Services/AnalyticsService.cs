@@ -67,7 +67,7 @@ public class AnalyticsService : IAnalyticsService
                 PeriodStart = startDate,
                 PeriodEnd = endDate,
                 TotalScans = scanEvents.Count,
-                CompliantScans = scanEvents.Count(e => e.ComplianceLevel == ComplianceLevel.Compliant),
+                CompliantScans = scanEvents.Count(e => e.ComplianceLevel == ComplianceLevel.Safe),
                 ViolationScans = scanEvents.Count(e => e.ComplianceLevel == ComplianceLevel.Violation)
             };
 

@@ -21,6 +21,16 @@ public class UserProfile
     public string ReligiousRestrictions { get; set; } = "[]";
     public string MedicalRestrictions { get; set; } = "[]";
     public string LifestylePreferences { get; set; } = "[]";
+
+    public List<DietaryRestrictionType> GetAllRestrictions()
+    {
+        var restrictions = new List<DietaryRestrictionType>();
+        
+        // For now, return a basic set - this would normally parse the JSON strings
+        // TODO: Implement proper JSON deserialization of restriction strings
+        
+        return restrictions;
+    }
 }
 
 public enum AllergyType

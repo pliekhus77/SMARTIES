@@ -7,20 +7,19 @@
        Title="SMARTIES">
 
     <TabBar>
-        <ShellContent Title="Scanner"
-                      Icon="camera.png"
-                      Route="scanner"
-                      ContentTemplate="{DataTemplate local:ScannerPage}" />
-
         <ShellContent Title="Profile"
-                      Icon="person.png"
-                      Route="profile"
-                      ContentTemplate="{DataTemplate local:ProfilePage}" />
-
-        <ShellContent Title="History"
-                      Icon="history.png"
-                      Route="history"
-                      ContentTemplate="{DataTemplate local:HistoryPage}" />
+                      Route="profile">
+            <ContentPage Title="Profile">
+                <StackLayout Padding="20" VerticalOptions="Center">
+                    <Label Text="SMARTIES Profile" 
+                           FontSize="24" 
+                           HorizontalOptions="Center" />
+                    <Label Text="App is running successfully!" 
+                           FontSize="16" 
+                           HorizontalOptions="Center" />
+                </StackLayout>
+            </ContentPage>
+        </ShellContent>
     </TabBar>
 
 </Shell>

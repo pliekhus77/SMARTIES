@@ -41,7 +41,7 @@
                        Text="Confidence"
                        HorizontalTextAlignment="Center" />
                 
-                <Label x:Name="ConfidenceScore"
+                <Label x:Name="ConfidenceScoreLabel"
                        Style="{StaticResource LabelMedium}"
                        HorizontalTextAlignment="Center" />
             </StackLayout>

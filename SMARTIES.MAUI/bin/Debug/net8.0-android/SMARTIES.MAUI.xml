@@ -4,7 +4,45 @@
         <name>SMARTIES.MAUI</name>
     </assembly>
     <members>
+        <member name="T:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.Profiles">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.profiles"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.IsLoading">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.isLoading"/>
+        </member>
+        <member name="F:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.loadProfilesCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.LoadProfilesCommand"/>.</summary>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.LoadProfilesCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.LoadProfilesAsync"/>.</summary>
+        </member>
+        <member name="F:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.addProfileCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.AddProfileCommand"/>.</summary>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.AddProfileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.AddProfileAsync"/>.</summary>
+        </member>
+        <member name="F:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.switchProfileCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.SwitchProfileCommand"/>.</summary>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.SwitchProfileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.SwitchProfileAsync(System.Int32)"/>.</summary>
+        </member>
+        <member name="F:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.editProfileCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.EditProfileCommand"/>.</summary>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.EditProfileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.EditProfileAsync(SMARTIES.MAUI.Models.FamilyProfile)"/>.</summary>
+        </member>
         <member name="T:SMARTIES.MAUI.ViewModels.ScannerViewModel">
+            <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
@@ -15,8 +53,14 @@
         <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.IsScanning">
             <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.isScanning"/>
         </member>
-        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.IsAnalyzing">
-            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.isAnalyzing"/>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.IsProcessing">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.isProcessing"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.ScanningInstructions">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.scanningInstructions"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.IsFlashlightOn">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.isFlashlightOn"/>
         </member>
         <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.StatusMessage">
             <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.statusMessage"/>
@@ -30,17 +74,29 @@
         <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.ActiveProfile">
             <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.activeProfile"/>
         </member>
-        <member name="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.scanBarcodeCommand">
-            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.ScanBarcodeCommand"/>.</summary>
+        <member name="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.startScanningCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.StartScanningCommand"/>.</summary>
         </member>
-        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.ScanBarcodeCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.ScannerViewModel.ScanBarcodeAsync"/>.</summary>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.StartScanningCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.ScannerViewModel.StartScanningAsync"/>.</summary>
         </member>
-        <member name="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.processBarcodeCommand">
-            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.ProcessBarcodeCommand"/>.</summary>
+        <member name="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.stopScanningCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.StopScanningCommand"/>.</summary>
         </member>
-        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.ProcessBarcodeCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.ScannerViewModel.ProcessBarcodeAsync(System.String)"/>.</summary>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.StopScanningCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.ScannerViewModel.StopScanningAsync"/>.</summary>
+        </member>
+        <member name="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.manualEntryCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.ManualEntryCommand"/>.</summary>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.ManualEntryCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.ScannerViewModel.ManualEntryAsync"/>.</summary>
+        </member>
+        <member name="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.toggleFlashlightCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.ToggleFlashlightCommand"/>.</summary>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.ToggleFlashlightCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.ScannerViewModel.ToggleFlashlightAsync"/>.</summary>
         </member>
         <member name="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.loadRecentProductsCommand">
             <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.LoadRecentProductsCommand"/>.</summary>
@@ -54,23 +110,29 @@
         <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.SelectRecentProductCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.ScannerViewModel.SelectRecentProductAsync(SMARTIES.MAUI.Models.Product)"/>.</summary>
         </member>
-        <member name="F:SMARTIES.MAUI.ViewModels.ScannerViewModel.refreshActiveProfileCommand">
-            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.RefreshActiveProfileCommand"/>.</summary>
-        </member>
-        <member name="P:SMARTIES.MAUI.ViewModels.ScannerViewModel.RefreshActiveProfileCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.ScannerViewModel.RefreshActiveProfileAsync"/>.</summary>
-        </member>
         <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs">
             <summary>
             A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instances
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Profiles">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Profiles" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsLoading">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsLoading" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsScanning">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsScanning" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsAnalyzing">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsAnalyzing" generated properties.</summary>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsProcessing">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsProcessing" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ScanningInstructions">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ScanningInstructions" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsFlashlightOn">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsFlashlightOn" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.StatusMessage">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "StatusMessage" generated properties.</summary>
@@ -90,11 +152,23 @@
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Profiles">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Profiles" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsLoading">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsLoading" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsScanning">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsScanning" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsAnalyzing">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsAnalyzing" generated properties.</summary>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsProcessing">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsProcessing" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ScanningInstructions">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ScanningInstructions" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsFlashlightOn">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsFlashlightOn" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.StatusMessage">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "StatusMessage" generated properties.</summary>

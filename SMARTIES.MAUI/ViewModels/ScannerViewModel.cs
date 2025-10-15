@@ -229,9 +229,7 @@ public partial class ScannerViewModel : ObservableObject
                     {
                         ComplianceLevel.Safe => "✅ Safe to consume",
                         ComplianceLevel.Caution => "⚠️ Minor concerns",
-                        ComplianceLevel.Warning => "⚠️ Significant warnings",
                         ComplianceLevel.Violation => "🚫 Dietary violations found",
-                        ComplianceLevel.Critical => "🚫 CRITICAL: Do not consume",
                         _ => "Analysis complete"
                     };
                 }
@@ -301,9 +299,7 @@ public partial class ScannerViewModel : ObservableObject
                 {
                     ComplianceLevel.Safe => "✅ Safe to consume",
                     ComplianceLevel.Caution => "⚠️ Minor concerns",
-                    ComplianceLevel.Warning => "⚠️ Significant warnings",
                     ComplianceLevel.Violation => "🚫 Dietary violations found",
-                    ComplianceLevel.Critical => "🚫 CRITICAL: Do not consume",
                     _ => "Analysis complete"
                 };
             }
