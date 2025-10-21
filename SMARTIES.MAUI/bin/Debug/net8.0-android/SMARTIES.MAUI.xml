@@ -41,6 +41,73 @@
         <member name="P:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.EditProfileCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.FamilyProfilesViewModel.EditProfileAsync(SMARTIES.MAUI.Models.FamilyProfile)"/>.</summary>
         </member>
+        <member name="T:SMARTIES.MAUI.ViewModels.HomeViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.HomeViewModel.RecentScans">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.HomeViewModel.recentScans"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.HomeViewModel.StatusSummary">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.HomeViewModel.statusSummary"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.HomeViewModel.StatusDetail">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.HomeViewModel.statusDetail"/>
+        </member>
+        <member name="F:SMARTIES.MAUI.ViewModels.HomeViewModel.scanBarcodeCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.HomeViewModel.ScanBarcodeCommand"/>.</summary>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.HomeViewModel.ScanBarcodeCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.HomeViewModel.ScanBarcode"/>.</summary>
+        </member>
+        <member name="F:SMARTIES.MAUI.ViewModels.HomeViewModel.navigateToHistoryCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.HomeViewModel.NavigateToHistoryCommand"/>.</summary>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.HomeViewModel.NavigateToHistoryCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.HomeViewModel.NavigateToHistory"/>.</summary>
+        </member>
+        <member name="F:SMARTIES.MAUI.ViewModels.HomeViewModel.navigateToProfileCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.HomeViewModel.NavigateToProfileCommand"/>.</summary>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.HomeViewModel.NavigateToProfileCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.HomeViewModel.NavigateToProfile"/>.</summary>
+        </member>
+        <member name="F:SMARTIES.MAUI.ViewModels.HomeViewModel.navigateToSettingsCommand">
+            <summary>The backing field for <see cref="P:SMARTIES.MAUI.ViewModels.HomeViewModel.NavigateToSettingsCommand"/>.</summary>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.HomeViewModel.NavigateToSettingsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SMARTIES.MAUI.ViewModels.HomeViewModel.NavigateToSettings"/>.</summary>
+        </member>
+        <member name="T:SMARTIES.MAUI.ViewModels.RecentScanItem">
+            <inheritdoc/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.RecentScanItem.ProductName">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.RecentScanItem.productName"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.RecentScanItem.Icon">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.RecentScanItem.icon"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.RecentScanItem.IconBackgroundColor">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.RecentScanItem.iconBackgroundColor"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.RecentScanItem.HasWarning">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.RecentScanItem.hasWarning"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.RecentScanItem.WarningIcon">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.RecentScanItem.warningIcon"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.RecentScanItem.WarningBackgroundColor">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.RecentScanItem.warningBackgroundColor"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.RecentScanItem.StatusIcon">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.RecentScanItem.statusIcon"/>
+        </member>
+        <member name="P:SMARTIES.MAUI.ViewModels.RecentScanItem.StatusBackgroundColor">
+            <inheritdoc cref="F:SMARTIES.MAUI.ViewModels.RecentScanItem.statusBackgroundColor"/>
+        </member>
         <member name="T:SMARTIES.MAUI.ViewModels.ScannerViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -122,6 +189,39 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsLoading">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsLoading" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.RecentScans">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "RecentScans" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.StatusSummary">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "StatusSummary" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.StatusDetail">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "StatusDetail" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ProductName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ProductName" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Icon">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Icon" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IconBackgroundColor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IconBackgroundColor" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.HasWarning">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "HasWarning" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.WarningIcon">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "WarningIcon" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.WarningBackgroundColor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "WarningBackgroundColor" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.StatusIcon">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "StatusIcon" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.StatusBackgroundColor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "StatusBackgroundColor" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsScanning">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsScanning" generated properties.</summary>
         </member>
@@ -157,6 +257,39 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsLoading">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsLoading" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.RecentScans">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "RecentScans" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.StatusSummary">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "StatusSummary" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.StatusDetail">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "StatusDetail" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ProductName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ProductName" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Icon">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Icon" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IconBackgroundColor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IconBackgroundColor" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.HasWarning">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "HasWarning" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.WarningIcon">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "WarningIcon" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.WarningBackgroundColor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "WarningBackgroundColor" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.StatusIcon">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "StatusIcon" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.StatusBackgroundColor">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "StatusBackgroundColor" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsScanning">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsScanning" generated properties.</summary>

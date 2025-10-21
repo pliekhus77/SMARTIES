@@ -1,8 +1,6 @@
 using Microsoft.Extensions.Logging;
-using SMARTIES.MAUI.Services;
-using SMARTIES.MAUI.Services.Performance;
 using SMARTIES.MAUI.ViewModels;
-using SMARTIES.MAUI.Data;
+using SMARTIES.MAUI.Views;
 
 namespace SMARTIES.MAUI;
 
@@ -22,8 +20,14 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
-        // Minimal services for testing
-        builder.Services.AddTransient<App>();
+        // Register ViewModels
+        builder.Services.AddTransient<HomeViewModel>();
+        
+        // Register Views
+        builder.Services.AddTransient<HomePage>();
+        builder.Services.AddTransient<HistoryPage>();
+        builder.Services.AddTransient<ProfilePage>();
+        builder.Services.AddTransient<SettingsPage>();
 
         return builder.Build();
     }

@@ -28,6 +28,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
+[C:/git/SMARTIES/SMARTIES.MAUI/AppShell.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.AppShell.xaml
+build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
+build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
+
 [C:/git/SMARTIES/SMARTIES.MAUI/Resources/Styles/Buttons.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.Resources.Styles.Buttons.xaml
@@ -76,6 +82,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.Views.Histor
 build_metadata.AdditionalFiles.TargetPath = Views\HistoryPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\HistoryPage.xaml
 
+[C:/git/SMARTIES/SMARTIES.MAUI/Views/HomePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.Views.HomePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\HomePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\HomePage.xaml
+
 [C:/git/SMARTIES/SMARTIES.MAUI/Views/ProductDetailPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.Views.ProductDetailPage.xaml
@@ -87,3 +99,9 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.Views.ProfilePage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\ProfilePage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\ProfilePage.xaml
+
+[C:/git/SMARTIES/SMARTIES.MAUI/Views/SettingsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SMARTIES.MAUI.Views.SettingsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\SettingsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\SettingsPage.xaml

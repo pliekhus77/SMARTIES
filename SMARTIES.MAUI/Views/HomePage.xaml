@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    x:Class="SMARTIES.MAUI.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:SMARTIES.MAUI.ViewModels"
+    x:DataType="viewmodels:HomeViewModel"
+    Shell.NavBarIsVisible="False">
+
+    <Grid>
+        <!-- Background Gradient -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#1E88E5" Offset="0.0" />
+                <GradientStop Color="#0D47A1" Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Main Content -->
+        <ScrollView Grid.Row="0" Padding="20,60,20,20">
+            <StackLayout Spacing="30">
+                
+                <!-- Logo -->
+                <Image 
+                    Source="smarties_main_logo.png"
+                    WidthRequest="200"
+                    HeightRequest="100"
+                    Aspect="AspectFit"
+                    HorizontalOptions="Center"
+                    Margin="0,20,0,0" />
+
+                <!-- Scan Barcode Button -->
+                <Button
+                    Text="📷 Scan Barcode"
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    BackgroundColor="#00BCD4"
+                    TextColor="White"
+                    CornerRadius="25"
+                    HeightRequest="60"
+                    Margin="0,20,0,0"
+                    Command="{Binding ScanBarcodeCommand}" />
+
+                <!-- Recent Scans Section -->
+                <StackLayout Spacing="15">
+                    <Label 
+                        Text="Recent Scans"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="White" />
+                    
+                    <!-- Recent Scans List -->
+                    <Border 
+                        BackgroundColor="#4FC3F7"
+                        StrokeThickness="0"
+                        Padding="15"
+                        Opacity="0.9">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15" />
+                        </Border.StrokeShape>
+                        
+                        <CollectionView ItemsSource="{Binding RecentScans}" BackgroundColor="Transparent">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="viewmodels:RecentScanItem">
+                                    <Grid ColumnDefinitions="50,*,Auto,Auto" ColumnSpacing="15" Padding="0,7.5">
+                                        <!-- Product Icon -->
+                                        <Border 
+                                            Grid.Column="0"
+                                            BackgroundColor="{Binding IconBackgroundColor}"
+                                            WidthRequest="40"
+                                            HeightRequest="40"
+                                            VerticalOptions="Center">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="8" />
+                                            </Border.StrokeShape>
+                                            <Label 
+                                                Text="{Binding Icon}"
+                                                FontSize="20"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center" />
+                                        </Border>
+                                        
+                                        <!-- Product Name -->
+                                        <Label 
+                                            Grid.Column="1"
+                                            Text="{Binding ProductName}"
+                                            FontSize="16"
+                                            FontAttributes="Bold"
+                                            TextColor="#1A237E"
+                                            VerticalOptions="Center" />
+                                        
+                                        <!-- Warning Icon -->
+                                        <Border 
+                                            Grid.Column="2"
+                                            BackgroundColor="{Binding WarningBackgroundColor}"
+                                            WidthRequest="30"
+                                            HeightRequest="30"
+                                            VerticalOptions="Center"
+                                            IsVisible="{Binding HasWarning}">
+                                            <Border.StrokeShape>
+                                                <Ellipse />
+                                            </Border.StrokeShape>
+                                            <Label 
+                                                Text="{Binding WarningIcon}"
+                                                FontSize="14"
+                                                FontAttributes="Bold"
+                                                TextColor="White"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center" />
+                                        </Border>
+                                        
+                                        <!-- Status Icon -->
+                                        <Border 
+                                            Grid.Column="3"
+                                            BackgroundColor="{Binding StatusBackgroundColor}"
+                                            WidthRequest="30"
+                                            HeightRequest="30"
+                                            VerticalOptions="Center">
+                                            <Border.StrokeShape>
+                                                <Ellipse />
+                                            </Border.StrokeShape>
+                                            <Label 
+                                                Text="{Binding StatusIcon}"
+                                                FontSize="14"
+                                                FontAttributes="Bold"
+                                                TextColor="White"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center" />
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Border>
+                </StackLayout>
+
+                <!-- Status Summary -->
+                <Border 
+                    BackgroundColor="#FFF3C4"
+                    StrokeThickness="0"
+                    Padding="15">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15" />
+                    </Border.StrokeShape>
+                    
+                    <StackLayout Spacing="5">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Label 
+                                Grid.Column="0"
+                                Text="⚠️"
+                                FontSize="16"
+                                VerticalOptions="Center" />
+                            <Label 
+                                Grid.Column="1"
+                                Text="{Binding StatusSummary}"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                TextColor="#E65100"
+                                VerticalOptions="Center" />
+                        </Grid>
+                        <Label 
+                            Text="{Binding StatusDetail}"
+                            FontSize="14"
+                            FontAttributes="Bold"
+                            TextColor="#2E7D32" />
+                    </StackLayout>
+                </Border>
+
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Bottom Tab Bar -->
+        <Border 
+            Grid.Row="1"
+            BackgroundColor="White"
+            StrokeThickness="0"
+            Padding="10,15">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="25,25,0,0" />
+            </Border.StrokeShape>
+            
+            <Grid ColumnDefinitions="*,*,*,*">
+                <!-- Home Tab -->
+                <StackLayout 
+                    Grid.Column="0" 
+                    Spacing="5" 
+                    HorizontalOptions="Center">
+                    <Label 
+                        Text="🏠"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        TextColor="#1976D2" />
+                    <Label 
+                        Text="Home"
+                        FontSize="12"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        TextColor="#1976D2" />
+                </StackLayout>
+                
+                <!-- History Tab -->
+                <Button 
+                    Grid.Column="1" 
+                    Text="🕒&#10;History"
+                    FontSize="12"
+                    BackgroundColor="Transparent"
+                    TextColor="#757575"
+                    Command="{Binding NavigateToHistoryCommand}" />
+                
+                <!-- Profile Tab -->
+                <Button 
+                    Grid.Column="2" 
+                    Text="👤&#10;Profile"
+                    FontSize="12"
+                    BackgroundColor="Transparent"
+                    TextColor="#757575"
+                    Command="{Binding NavigateToProfileCommand}" />
+                
+                <!-- Settings Tab -->
+                <Button 
+                    Grid.Column="3" 
+                    Text="⚙️&#10;Settings"
+                    FontSize="12"
+                    BackgroundColor="Transparent"
+                    TextColor="#757575"
+                    Command="{Binding NavigateToSettingsCommand}" />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

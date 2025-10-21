@@ -1,3 +1,11 @@
+C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI.runtimeconfig.json
+C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI.dll
+C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI.pdb
+C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI.apk
+C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI.aab
+C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI-Signed.aab
+C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI-Signed.apk
+C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI-Signed.apk.idsig
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\.NETCoreApp,Version=v8.0.AssemblyAttributes.cs
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\build.props
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\adb.props
@@ -114,14 +122,6 @@ C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\SMARTIES.MAUI.AssemblyInf
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\SMARTIES.MAUI.AssemblyInfo.cs
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\SMARTIES.MAUI.csproj.CoreCompileInputs.cache
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\SMARTIES.MAUI.sourcelink.json
-C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI.runtimeconfig.json
-C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI.dll
-C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI.pdb
-C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI.apk
-C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI.aab
-C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI-Signed.aab
-C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI-Signed.apk
-C:\git\SMARTIES\SMARTIES.MAUI\bin\Debug\net8.0-android\SMARTIES.MAUI-Signed.apk.idsig
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\XamlC.stamp
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\SMARTIES.MAUI.dll
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\SMARTIES.MAUI.pdb
@@ -134,8 +134,6 @@ C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\bin\SMARTIES.MAUI
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\res\values\colors.xml
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\uploadflags.txt
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\resolvedassemblies.hash
-C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\arm64-v8a\System.Private.CoreLib.dll
-C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\armeabi-v7a\System.Private.CoreLib.dll
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\ar\Microsoft.Maui.Controls.resources.dll
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\ca\Microsoft.Maui.Controls.resources.dll
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\CommunityToolkit.Mvvm.dll
@@ -294,6 +292,7 @@ C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\System.Net
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\System.Numerics.dll
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\System.Numerics.Vectors.dll
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\System.ObjectModel.dll
+C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\System.Private.CoreLib.dll
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\System.Private.DataContractSerialization.dll
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\System.Private.Uri.dll
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\System.Private.Xml.dll
@@ -378,8 +377,6 @@ C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\tr\Microso
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\uk\Microsoft.Maui.Controls.resources.dll
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\vi\Microsoft.Maui.Controls.resources.dll
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\WindowsBase.dll
-C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\x86\System.Private.CoreLib.dll
-C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\x86_64\System.Private.CoreLib.dll
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\Xamarin.Android.Glide.Annotations.dll
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\Xamarin.Android.Glide.DiskLruCache.dll
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\Xamarin.Android.Glide.dll
@@ -1081,4 +1078,4 @@ C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\stamp\_ConvertResourcesCa
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\stamp\_GenerateJavaStubs.stamp
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\stamp\_GeneratePackageManagerJava.stamp
 C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\stamp\_ResolveLibraryProjectImports.stamp
-C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\android\assets\System.Private.CoreLib.dll
+C:\git\SMARTIES\SMARTIES.MAUI\obj\Debug\net8.0-android\resizetizer\r\drawable\smarties_main_logo.png

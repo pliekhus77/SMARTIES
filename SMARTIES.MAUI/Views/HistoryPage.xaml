@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage x:Class="SMARTIES.MAUI.Views.HistoryPage"
-             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Title="History">
-    <ScrollView>
-        <StackLayout Padding="20" Spacing="20">
-            <Label Text="Scan History" 
-                   FontSize="24" 
-                   FontAttributes="Bold" 
-                   HorizontalOptions="Center" />
-            
-            <Label Text="View your previously scanned products and analysis results." 
-                   FontSize="16" 
-                   HorizontalOptions="Center"
-                   TextColor="{DynamicResource Gray600}" />
-            
-            <!-- Coming Soon Message -->
-            <Frame BackgroundColor="{DynamicResource Gray100}" 
-                   Padding="20" 
-                   CornerRadius="10">
-                <StackLayout Spacing="10">
-                    <Label Text="🚧 Coming Soon" 
-                           FontSize="18" 
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center" />
-                    
-                    <Label Text="History tracking features will be available in the next update." 
-                           FontSize="14" 
-                           HorizontalOptions="Center"
-                           TextColor="{DynamicResource Gray600}" />
-                </StackLayout>
-            </Frame>
+<ContentPage 
+    x:Class="SMARTIES.MAUI.Views.HistoryPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="History"
+    Shell.NavBarIsVisible="False">
+
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#1E88E5" Offset="0.0" />
+                <GradientStop Color="#0D47A1" Offset="1.0" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="20">
+            <Label 
+                Text="📋"
+                FontSize="60"
+                HorizontalOptions="Center"
+                TextColor="White" />
+            <Label 
+                Text="Scan History"
+                FontSize="24"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                TextColor="White" />
+            <Label 
+                Text="Your recent scans will appear here"
+                FontSize="16"
+                HorizontalOptions="Center"
+                TextColor="White"
+                Opacity="0.8" />
         </StackLayout>
-    </ScrollView>
+    </Grid>
 </ContentPage>

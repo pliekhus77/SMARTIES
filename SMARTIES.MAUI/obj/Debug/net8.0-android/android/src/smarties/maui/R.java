@@ -11621,9 +11621,10 @@ public final class R {
     public static final int notification_tile_bg=0x7f0700df;
     public static final int notify_panel_notification_icon_bg=0x7f0700e0;
     public static final int smarties_logo=0x7f0700e1;
-    public static final int test_level_drawable=0x7f0700e2;
-    public static final int tooltip_frame_dark=0x7f0700e3;
-    public static final int tooltip_frame_light=0x7f0700e4;
+    public static final int smarties_main_logo=0x7f0700e2;
+    public static final int test_level_drawable=0x7f0700e3;
+    public static final int tooltip_frame_dark=0x7f0700e4;
+    public static final int tooltip_frame_light=0x7f0700e5;
   }
   public static final class id {
     public static final int ALT=0x7f080000;
