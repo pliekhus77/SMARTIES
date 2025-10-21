@@ -1,0 +1,10 @@
+{
+  "frameworks": [
+    {
+      "id": "aws-strategy",
+      "version": "1.0.0",
+      "installedAt": "2025-10-16T13:25:24.714Z",
+      "customized": false
+    }
+  ]
+}

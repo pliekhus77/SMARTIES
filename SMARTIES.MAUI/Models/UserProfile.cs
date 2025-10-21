@@ -16,6 +16,14 @@ public class UserProfile
 
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
+    public DateTime LastUsedAt { get; set; } = DateTime.UtcNow;
+
+    public int UsageCount { get; set; } = 0;
+
+    public string AvatarEmoji { get; set; } = "👤";
+
+    public bool IsTemporary { get; set; } = false;
+
     // Serialized as JSON strings in SQLite
     public string Allergies { get; set; } = "[]";
     public string ReligiousRestrictions { get; set; } = "[]";

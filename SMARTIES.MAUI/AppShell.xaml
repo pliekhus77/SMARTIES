@@ -8,8 +8,13 @@
     Shell.NavBarIsVisible="False">
 
     <ShellContent
-        Title="Home"
+        Title="Profile Selection"
+        ContentTemplate="{DataTemplate views:ProfileSelectionPage}"
+        Route="profiles" />
+
+    <ShellContent
+        Title="Scanner"
         ContentTemplate="{DataTemplate views:HomePage}"
-        Route="Home" />
+        Route="scanner" />
 
 </Shell>

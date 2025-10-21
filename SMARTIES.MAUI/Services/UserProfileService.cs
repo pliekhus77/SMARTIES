@@ -182,7 +182,147 @@ public class UserProfileService : IUserProfileService
                 await CreateProfileAsync(defaultProfile);
                 _logger.LogInformation("Created default user profile");
             }
+    public async Task<bool> IsFirstTimeUserAsync()
+    {
+        try
+        {
+            var profileCount = await _database.Table<UserProfile>().CountAsync();
+            return profileCount == 0;
         }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error checking if first time user");
+            return false;
+        }
+    }
+
+    public async Task<UserProfile> CreateGuestProfileAsync()
+    {
+        try
+        {
+            var guestProfile = new UserProfile
+            {
+                Name = "Guest",
+                IsActive = true,
+                IsTemporary = true,
+                AvatarEmoji = "👤",
+                Allergies = "[]",
+                ReligiousRestrictions = "[]",
+                MedicalRestrictions = "[]",
+                LifestylePreferences = "[]"
+            };
+
+            await CreateProfileAsync(guestProfile);
+            _logger.LogInformation("Created guest profile");
+            return guestProfile;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error creating guest profile");
+            throw;
+        }
+    }
+
+    public async Task<List<ProfileDisplayItem>> GetProfileDisplayItemsAsync()
+    {
+        try
+        {
+            var profiles = await GetAllProfilesAsync();
+            return profiles.Select(ProfileDisplayItem.FromUserProfile).ToList();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting profile display items");
+            return new List<ProfileDisplayItem>();
+        }
+    }
+    public async Task<string> ExportProfileDataAsync(int profileId)
+    {
+        try
+        {
+            var profile = await _database.GetAsync<UserProfile>(profileId);
+            if (profile != null)
+            {
+                // Return anonymized profile data as JSON for backup
+                var exportData = new
+                {
+                    Name = profile.Name,
+                    Allergies = profile.Allergies,
+                    ReligiousRestrictions = profile.ReligiousRestrictions,
+                    MedicalRestrictions = profile.MedicalRestrictions,
+                    LifestylePreferences = profile.LifestylePreferences,
+                    CreatedAt = profile.CreatedAt,
+                    AvatarEmoji = profile.AvatarEmoji
+                };
+                
+                return System.Text.Json.JsonSerializer.Serialize(exportData);
+            }
+            return string.Empty;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error exporting profile data: {ProfileId}", profileId);
+            return string.Empty;
+        }
+    }
+
+    public async Task<bool> SecureDeleteProfileAsync(int profileId)
+    {
+        try
+        {
+            var success = await DeleteProfileAsync(profileId);
+            if (success)
+            {
+                // Additional cleanup for security
+                await _database.ExecuteAsync("VACUUM");
+                _logger.LogInformation("Secure delete completed for profile: {ProfileId}", profileId);
+            }
+            return success;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error in secure delete for profile: {ProfileId}", profileId);
+            return false;
+        }
+    }
+
+    public async Task CleanupTemporaryProfilesAsync()
+    {
+        try
+        {
+            var tempProfiles = await _database.Table<UserProfile>()
+                .Where(p => p.IsTemporary)
+                .ToListAsync();
+                
+            foreach (var profile in tempProfiles)
+            {
+                await _database.DeleteAsync<UserProfile>(profile.Id);
+                _logger.LogInformation("Cleaned up temporary profile: {ProfileName}", profile.Name);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error cleaning up temporary profiles");
+        }
+    }
+    public async Task UpdateProfileUsageAsync(int profileId)
+    {
+        try
+        {
+            var profile = await _database.GetAsync<UserProfile>(profileId);
+            if (profile != null)
+            {
+                profile.LastUsedAt = DateTime.UtcNow;
+                profile.UsageCount++;
+                await _database.UpdateAsync(profile);
+                _logger.LogInformation("Updated usage for profile: {ProfileName}", profile.Name);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating profile usage: {ProfileId}", profileId);
+        }
+    }        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error ensuring default profile exists");

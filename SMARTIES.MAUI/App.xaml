@@ -2,13 +2,19 @@
 <Application x:Class="SMARTIES.MAUI.App"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:SMARTIES.MAUI">
+             xmlns:local="clr-namespace:SMARTIES.MAUI"
+             xmlns:converters="clr-namespace:SMARTIES.MAUI.Converters">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <!-- Converters -->
+            <converters:BoolToWelcomeTextConverter x:Key="BoolToWelcomeTextConverter" />
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <converters:StringToBoolConverter x:Key="StringToBoolConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
