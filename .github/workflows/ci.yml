@@ -31,8 +31,8 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Install MAUI workload
-      run: dotnet workload install maui
+    - name: Install MAUI Android workload
+      run: dotnet workload install maui-android
     
     - name: Restore dependencies
       run: dotnet restore SMARTIES.sln
@@ -71,8 +71,8 @@ jobs:
       with:
         dotnet-version: 8.0.x
     
-    - name: Install MAUI workload
-      run: dotnet workload install maui
+    - name: Install MAUI Android workload
+      run: dotnet workload install maui-android
     
     - name: Restore dependencies
       run: dotnet restore SMARTIES.MAUI/SMARTIES.MAUI.csproj
@@ -107,8 +107,8 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Install MAUI workload
-      run: dotnet workload install maui
+    - name: Install MAUI Android workload
+      run: dotnet workload install maui-android
 
     - name: Restore dependencies
       run: dotnet restore SMARTIES.MAUI/SMARTIES.MAUI.csproj
