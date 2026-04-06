@@ -94,9 +94,7 @@ public class ScanningWorkflowTests
         };
         var testAnalysis = new DietaryAnalysis
         {
-            OverallCompliance = ComplianceLevel.Safe,
-            Summary = "Safe to consume",
-            Recommendation = "No issues found"
+            OverallCompliance = ComplianceLevel.Safe
         };
 
         _mockUserProfileService.Setup(x => x.GetActiveProfileAsync()).ReturnsAsync(testProfile);
