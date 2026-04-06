@@ -53,7 +53,7 @@ public class OpenFoodFactsServiceTests
         result.Should().NotBeNull();
         result!.Barcode.Should().Be(barcode);
         result.ProductName.Should().Be("Nutella");
-        result.Ingredients.Should().Contain("Sugar");
+        result.IngredientsText.Should().Contain("Sugar");
         result.Allergens.Should().Contain("nuts");
     }
 

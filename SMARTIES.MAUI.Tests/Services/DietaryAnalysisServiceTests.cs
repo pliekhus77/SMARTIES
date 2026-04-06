@@ -29,10 +29,11 @@ public class DietaryAnalysisServiceTests
         _mockOpenAI.Setup(x => x.AnalyzeProductAsync(It.IsAny<AIAnalysisRequest>()))
             .ReturnsAsync(new AIAnalysisResponse { Success = true, Analysis = analysis });
 
-        // Act
-        var result = await _service.AnalyzeProductAsync("Test Product", new List<string> { "milk" }, new List<DietaryRestrictionType> { DietaryRestrictionType.Milk });
+        var product = ProductBuilder.Create().WithBarcode("1").WithName("Test Product").WithIngredients("milk").Build();
+        var profile = UserProfileBuilder.Create().WithName("User").WithRestrictions(DietaryRestrictionType.Milk).Build();
 
-        // Assert
+        var result = await _service.AnalyzeProductAsync(product, profile);
+
         result.Should().NotBeNull();
         result.OverallCompliance.Should().Be(ComplianceLevel.Safe);
         _mockOpenAI.Verify(x => x.AnalyzeProductAsync(It.IsAny<AIAnalysisRequest>()), Times.Once);
@@ -49,10 +50,11 @@ public class DietaryAnalysisServiceTests
         _mockAnthropic.Setup(x => x.AnalyzeProductAsync(It.IsAny<AIAnalysisRequest>()))
             .ReturnsAsync(new AIAnalysisResponse { Success = true, Analysis = analysis });
 
-        // Act
-        var result = await _service.AnalyzeProductAsync("Test Product", new List<string> { "milk" }, new List<DietaryRestrictionType> { DietaryRestrictionType.Milk });
+        var product = ProductBuilder.Create().WithBarcode("1").WithName("Test Product").WithIngredients("milk").Build();
+        var profile = UserProfileBuilder.Create().WithName("User").WithRestrictions(DietaryRestrictionType.Milk).Build();
 
-        // Assert
+        var result = await _service.AnalyzeProductAsync(product, profile);
+
         result.Should().NotBeNull();
         result.OverallCompliance.Should().Be(ComplianceLevel.Caution);
         _mockOpenAI.Verify(x => x.AnalyzeProductAsync(It.IsAny<AIAnalysisRequest>()), Times.Once);
@@ -71,10 +73,11 @@ public class DietaryAnalysisServiceTests
         _mockRuleBased.Setup(x => x.AnalyzeProductAsync(It.IsAny<AIAnalysisRequest>()))
             .ReturnsAsync(analysis);
 
-        // Act
-        var result = await _service.AnalyzeProductAsync("Test Product", new List<string> { "milk" }, new List<DietaryRestrictionType> { DietaryRestrictionType.Milk });
+        var product = ProductBuilder.Create().WithBarcode("1").WithName("Test Product").WithIngredients("milk").Build();
+        var profile = UserProfileBuilder.Create().WithName("User").WithRestrictions(DietaryRestrictionType.Milk).Build();
 
-        // Assert
+        var result = await _service.AnalyzeProductAsync(product, profile);
+
         result.Should().NotBeNull();
         result.OverallCompliance.Should().Be(ComplianceLevel.Violation);
         _mockRuleBased.Verify(x => x.AnalyzeProductAsync(It.IsAny<AIAnalysisRequest>()), Times.Once);
@@ -94,10 +97,11 @@ public class DietaryAnalysisServiceTests
         _mockOpenAI.Setup(x => x.AnalyzeProductAsync(It.IsAny<AIAnalysisRequest>()))
             .ReturnsAsync(new AIAnalysisResponse { Success = true, Analysis = analysis });
 
-        // Act
-        var result = await _service.AnalyzeProductAsync("Test Product", new List<string> { ingredient }, new List<DietaryRestrictionType> { restriction });
+        var product = ProductBuilder.Create().WithBarcode("1").WithName("Test Product").WithIngredients(ingredient).Build();
+        var profile = UserProfileBuilder.Create().WithName("User").WithRestrictions(restriction).Build();
 
-        // Assert
+        var result = await _service.AnalyzeProductAsync(product, profile);
+
         result.Should().NotBeNull();
         result.OverallCompliance.Should().Be(ComplianceLevel.Violation);
         result.Violations.Should().HaveCount(1);
