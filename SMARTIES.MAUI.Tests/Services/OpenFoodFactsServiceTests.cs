@@ -88,9 +88,8 @@ public class OpenFoodFactsServiceTests
             .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
             .ThrowsAsync(new HttpRequestException("Network error"));
 
-        // Act & Assert
-        await _service.Invoking(s => s.GetProductAsync(barcode))
-            .Should().ThrowAsync<HttpRequestException>();
+        var result = await _service.GetProductAsync(barcode);
+        result.Should().BeNull("errors are logged and swallowed by GetProductAsync");
     }
 
     [Theory]

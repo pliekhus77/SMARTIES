@@ -16,8 +16,7 @@ public class OpenFoodFactsService : IOpenFoodFactsService
         _httpClient = httpClient;
         _logger = logger;
         
-        // Configure HTTP client
-        _httpClient.DefaultRequestHeaders.Add("User-Agent", UserAgent);
+        _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", UserAgent);
         _httpClient.Timeout = TimeSpan.FromSeconds(10);
     }
 

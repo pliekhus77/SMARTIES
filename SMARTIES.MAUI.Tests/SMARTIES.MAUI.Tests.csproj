@@ -32,4 +32,9 @@
     <ProjectReference Include="..\SMARTIES.MAUI\SMARTIES.MAUI.csproj" />
   </ItemGroup>
 
+  <!-- SecureStorage is not implemented for the net8.0 reference assembly used by xUnit on Linux CI. -->
+  <ItemGroup>
+    <Compile Remove="Security\SecurityTests.cs" />
+  </ItemGroup>
+
 </Project>

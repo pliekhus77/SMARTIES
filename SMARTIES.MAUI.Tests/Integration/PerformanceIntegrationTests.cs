@@ -21,6 +21,7 @@ public class PerformanceIntegrationTests
         services.AddSingleton<IAdaptiveNetworkService, AdaptiveNetworkService>();
         services.AddSingleton<IPerformanceTelemetryService, PerformanceTelemetryService>();
         services.AddSingleton<IPerformanceAlertingService, PerformanceAlertingService>();
+        services.AddSingleton<IPerformanceBaselineService, PerformanceBaselineService>();
         services.AddSingleton<IAutomatedPerformanceTestingService, AutomatedPerformanceTestingService>();
         
         _serviceProvider = services.BuildServiceProvider();
