@@ -1,10 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0-android</TargetFrameworks>
+    <TargetFrameworks>net8.0;net8.0-android</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 
-    <OutputType>Exe</OutputType>
+    <!-- net8.0 is for unit test project references; mobile TFMs stay Exe (see Learn: MAUI unit testing). -->
+    <OutputType Condition="'$(TargetFramework)' != 'net8.0'">Exe</OutputType>
     <RootNamespace>SMARTIES.MAUI</RootNamespace>
     <UseMaui>true</UseMaui>
     <SingleProject>true</SingleProject>
