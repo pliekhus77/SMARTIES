@@ -189,34 +189,6 @@ jobs:
         if-no-files-found: error
         retention-days: 90
 
-  build-ios:
-    runs-on: macos-latest
-    needs: test
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-    
-    - name: Install MAUI workload
-      run: dotnet workload install maui
-    
-    - name: Restore dependencies
-      run: dotnet restore SMARTIES.MAUI/SMARTIES.MAUI.csproj
-    
-    - name: Build iOS (unsigned)
-      run: dotnet build SMARTIES.MAUI/SMARTIES.MAUI.csproj -f net8.0-ios --configuration Release --no-restore
-    
-    - name: Upload iOS build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: ios-build
-        path: SMARTIES.MAUI/bin/Release/net8.0-ios/
-        retention-days: 7
-
   build-windows:
     runs-on: windows-latest
     needs: test
@@ -247,14 +219,14 @@ jobs:
 
   notify:
     runs-on: ubuntu-latest
-    needs: [test, build-android, build-ios, build-windows]
+    needs: [test, build-android, build-windows]
     if: always()
     
     steps:
     - name: Determine overall status
       id: status
       run: |
-        if [[ "${{ needs.test.result }}" == "success" && "${{ needs.build-android.result }}" == "success" && "${{ needs.build-ios.result }}" == "success" && "${{ needs.build-windows.result }}" == "success" ]]; then
+        if [[ "${{ needs.test.result }}" == "success" && "${{ needs.build-android.result }}" == "success" && "${{ needs.build-windows.result }}" == "success" ]]; then
           echo "status=success" >> $GITHUB_OUTPUT
           echo "message=✅ All tests and builds completed successfully!" >> $GITHUB_OUTPUT
         else
@@ -269,14 +241,13 @@ jobs:
         echo "|----------|--------|" >> $GITHUB_STEP_SUMMARY
         echo "| Unit Tests | ${{ needs.test.result == 'success' && '✅ Passed' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
         echo "| Android | ${{ needs.build-android.result == 'success' && '✅ Built' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
-        echo "| iOS | ${{ needs.build-ios.result == 'success' && '✅ Built' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
         echo "| Windows | ${{ needs.build-windows.result == 'success' && '✅ Built' || '❌ Failed' }} |" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "**Overall Status:** ${{ steps.status.outputs.message }}" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### 📱 Platform Support" >> $GITHUB_STEP_SUMMARY
         echo "- **Android**: Cross-platform barcode scanning and dietary analysis" >> $GITHUB_STEP_SUMMARY
-        echo "- **iOS**: Build validation (requires Apple Developer account for device testing)" >> $GITHUB_STEP_SUMMARY
+        echo "- **iOS**: Not in CI matrix (project does not target net8.0-ios; add TFM + macOS job when ready)" >> $GITHUB_STEP_SUMMARY
         echo "- **Windows**: Desktop version for development and testing" >> $GITHUB_STEP_SUMMARY
     
     - name: Comment on PR with build results
@@ -286,7 +257,6 @@ jobs:
         script: |
           const testStatus = '${{ needs.test.result }}';
           const androidStatus = '${{ needs.build-android.result }}';
-          const iosStatus = '${{ needs.build-ios.result }}';
           const windowsStatus = '${{ needs.build-windows.result }}';
           
           const getStatusEmoji = (status) => status === 'success' ? '✅' : '❌';
@@ -297,17 +267,13 @@ jobs:
           |----------|--------|--------|
           | Unit Tests | ${getStatusEmoji(testStatus)} | ${testStatus.toUpperCase()} |
           | Android | ${getStatusEmoji(androidStatus)} | ${androidStatus.toUpperCase()} |
-          | iOS | ${getStatusEmoji(iosStatus)} | ${iosStatus.toUpperCase()} |
           | Windows | ${getStatusEmoji(windowsStatus)} | ${windowsStatus.toUpperCase()} |
           
-          ${testStatus === 'success' && androidStatus === 'success' && iosStatus === 'success' && windowsStatus === 'success'
-            ? '🎉 All platforms built successfully! SMARTIES is ready for cross-platform deployment.' 
+          ${testStatus === 'success' && androidStatus === 'success' && windowsStatus === 'success'
+            ? '🎉 Tests and configured platform builds succeeded.' 
             : '⚠️ Some builds failed. Please check the platform-specific logs above.'}
           
           ### 📋 Next Steps
-          ${iosStatus === 'success' 
-            ? '- ✅ iOS build validated - ready for Apple Developer account setup'
-            : '- ❌ iOS build needs attention before device testing'}
           - 📦 Build artifacts are available for download in the Actions tab
           `;
           
