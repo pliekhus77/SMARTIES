@@ -182,6 +182,13 @@ public class UserProfileService : IUserProfileService
                 await CreateProfileAsync(defaultProfile);
                 _logger.LogInformation("Created default user profile");
             }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error ensuring default profile exists");
+        }
+    }
+
     public async Task<bool> IsFirstTimeUserAsync()
     {
         try
@@ -321,11 +328,6 @@ public class UserProfileService : IUserProfileService
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error updating profile usage: {ProfileId}", profileId);
-        }
-    }        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error ensuring default profile exists");
         }
     }
 }
