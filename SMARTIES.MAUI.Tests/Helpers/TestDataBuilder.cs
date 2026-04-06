@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Text.Json;
 using SMARTIES.MAUI.Models;
 
 namespace SMARTIES.MAUI.Tests.Helpers;
@@ -22,13 +24,13 @@ public class ProductBuilder
 
     public ProductBuilder WithIngredients(params string[] ingredients)
     {
-        _product.Ingredients = ingredients.ToList();
+        _product.IngredientsText = string.Join(", ", ingredients);
         return this;
     }
 
     public ProductBuilder WithAllergens(params string[] allergens)
     {
-        _product.Allergens = allergens.ToList();
+        _product.Allergens = string.Join(", ", allergens);
         return this;
     }
 
@@ -49,7 +51,7 @@ public class UserProfileBuilder
 
     public UserProfileBuilder WithRestrictions(params DietaryRestrictionType[] restrictions)
     {
-        _profile.DietaryRestrictions = restrictions.ToList();
+        _profile.Allergies = JsonSerializer.Serialize(restrictions.Select(r => r.ToString()).ToList());
         return this;
     }
 

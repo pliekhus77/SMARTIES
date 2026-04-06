@@ -1,7 +1,9 @@
 using Microsoft.Extensions.Logging;
 using Moq;
 using SMARTIES.MAUI.Models;
+using SMARTIES.MAUI.Models.Performance;
 using SMARTIES.MAUI.Services;
+using SMARTIES.MAUI.Services.Performance;
 using SMARTIES.MAUI.ViewModels;
 using Xunit;
 
@@ -16,7 +18,9 @@ public class ScanningWorkflowTests
     private readonly Mock<IProductCacheService> _mockProductCacheService;
     private readonly Mock<IScannerErrorHandler> _mockErrorHandler;
     private readonly Mock<ILogger<ScannerViewModel>> _mockLogger;
-    private readonly ScannerViewModel _viewModel;
+    private readonly Mock<IScanPerformanceService> _mockScanPerformance;
+    private readonly Mock<IPerformanceAlertingService> _mockPerformanceAlerting;
+    private readonly Mock<IScanResultTrackingService> _mockScanResultTracking;
 
     public ScanningWorkflowTests()
     {
@@ -27,21 +31,55 @@ public class ScanningWorkflowTests
         _mockProductCacheService = new Mock<IProductCacheService>();
         _mockErrorHandler = new Mock<IScannerErrorHandler>();
         _mockLogger = new Mock<ILogger<ScannerViewModel>>();
+        _mockScanPerformance = new Mock<IScanPerformanceService>();
+        _mockPerformanceAlerting = new Mock<IPerformanceAlertingService>();
+        _mockScanResultTracking = new Mock<IScanResultTrackingService>();
 
-        _viewModel = new ScannerViewModel(
+        _mockPerformanceAlerting.SetupAdd(x => x.AlertGenerated += It.IsAny<EventHandler<PerformanceAlert>>());
+
+        _mockScanPerformance.Setup(x => x.OptimizeCameraSettingsAsync()).Returns(Task.CompletedTask);
+        _mockScanPerformance.Setup(x => x.PreloadCriticalResourcesAsync()).Returns(Task.CompletedTask);
+        _mockScanPerformance.Setup(x => x.ValidatePerformanceThresholdAsync(It.IsAny<TimeSpan>())).ReturnsAsync(true);
+        _mockScanPerformance
+            .Setup(x => x.MeasureScanWorkflowAsync(It.IsAny<Func<Task>>()))
+            .Returns<Func<Task>>(async f =>
+            {
+                await f();
+                return TimeSpan.FromMilliseconds(10);
+            });
+
+        _mockScanResultTracking
+            .Setup(x => x.TrackApiResponseAsync(It.IsAny<Func<Task>>()))
+            .Returns<Func<Task>>(async f =>
+            {
+                await f();
+                return new PerformanceMetric { Type = PerformanceMetricType.ApiResponseTime, Value = 0 };
+            });
+
+        _mockUserProfileService
+            .Setup(x => x.GetActiveProfileAsync())
+            .ReturnsAsync(new UserProfile { Name = "Default", Allergies = "[]" });
+
+        _mockProductCacheService.Setup(x => x.GetRecentProductsAsync(It.IsAny<int>()))
+            .ReturnsAsync(new List<Product>());
+    }
+
+    private ScannerViewModel CreateViewModel() =>
+        new ScannerViewModel(
             _mockBarcodeService.Object,
             _mockOpenFoodFactsService.Object,
             _mockDietaryAnalysisService.Object,
             _mockUserProfileService.Object,
             _mockProductCacheService.Object,
             _mockErrorHandler.Object,
-            _mockLogger.Object);
-    }
+            _mockLogger.Object,
+            _mockScanPerformance.Object,
+            _mockPerformanceAlerting.Object,
+            _mockScanResultTracking.Object);
 
     [Fact]
     public async Task CompleteWorkflow_ScanToAnalysis_ShouldSucceed()
     {
-        // Arrange
         var testBarcode = "1234567890123";
         var testProduct = new Product
         {
@@ -52,7 +90,7 @@ public class ScanningWorkflowTests
         var testProfile = new UserProfile
         {
             Name = "Test User",
-            Allergies = new List<string> { "Peanuts" }
+            Allergies = "[\"Peanuts\"]"
         };
         var testAnalysis = new DietaryAnalysis
         {
@@ -61,92 +99,83 @@ public class ScanningWorkflowTests
             Recommendation = "No issues found"
         };
 
+        _mockUserProfileService.Setup(x => x.GetActiveProfileAsync()).ReturnsAsync(testProfile);
+
         _mockBarcodeService.Setup(x => x.RequestCameraPermissionAsync())
             .ReturnsAsync(true);
-        
-        _mockUserProfileService.Setup(x => x.GetActiveProfileAsync())
-            .ReturnsAsync(testProfile);
-        
+
         _mockProductCacheService.Setup(x => x.GetCachedProductAsync(testBarcode))
             .ReturnsAsync((Product?)null);
-        
-        _mockOpenFoodFactsService.Setup(x => x.GetProductAsync(testBarcode))
+
+        _mockOpenFoodFactsService.Setup(x => x.GetProductAsync(testBarcode, It.IsAny<CancellationToken>()))
             .ReturnsAsync(testProduct);
-        
+
         _mockProductCacheService.Setup(x => x.CacheProductAsync(testProduct))
             .Returns(Task.CompletedTask);
-        
-        _mockDietaryAnalysisService.Setup(x => x.AnalyzeProductAsync(testProduct, testProfile))
-            .ReturnsAsync(testAnalysis);
-        
-        _mockProductCacheService.Setup(x => x.GetRecentProductsAsync(It.IsAny<int>()))
-            .ReturnsAsync(new List<Product>());
 
-        // Act
-        await _viewModel.StartScanningCommand.ExecuteAsync(null);
-        
-        // Simulate barcode detection
-        _mockBarcodeService.Raise(x => x.BarcodeDetected += null, 
+        _mockDietaryAnalysisService
+            .Setup(x => x.AnalyzeProductAsync(testProduct, testProfile, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(testAnalysis);
+
+        var viewModel = CreateViewModel();
+
+        await viewModel.StartScanningCommand.ExecuteAsync(null);
+
+        _mockBarcodeService.Raise(x => x.BarcodeDetected += null,
             new BarcodeDetectedEventArgs(testBarcode, ZXing.Net.Maui.BarcodeFormat.Ean13));
 
-        // Wait for processing to complete
-        await Task.Delay(100);
+        await Task.Delay(200);
 
-        // Assert
-        Assert.True(_viewModel.IsScanning);
-        Assert.NotNull(_viewModel.CurrentProduct);
-        Assert.Equal(testProduct.ProductName, _viewModel.CurrentProduct.ProductName);
-        Assert.NotNull(_viewModel.CurrentAnalysis);
-        Assert.Equal(ComplianceLevel.Safe, _viewModel.CurrentAnalysis.OverallCompliance);
-        Assert.Contains("Safe to consume", _viewModel.StatusMessage);
+        Assert.True(viewModel.IsScanning);
+        Assert.NotNull(viewModel.CurrentProduct);
+        Assert.Equal(testProduct.ProductName, viewModel.CurrentProduct.ProductName);
+        Assert.NotNull(viewModel.CurrentAnalysis);
+        Assert.Equal(ComplianceLevel.Safe, viewModel.CurrentAnalysis.OverallCompliance);
+        Assert.Contains("Safe to consume", viewModel.StatusMessage);
     }
 
     [Fact]
     public async Task ScanningWorkflow_ProductNotFound_ShouldShowError()
     {
-        // Arrange
         var testBarcode = "9999999999999";
-        
+
         _mockBarcodeService.Setup(x => x.RequestCameraPermissionAsync())
             .ReturnsAsync(true);
-        
+
         _mockProductCacheService.Setup(x => x.GetCachedProductAsync(testBarcode))
             .ReturnsAsync((Product?)null);
-        
-        _mockOpenFoodFactsService.Setup(x => x.GetProductAsync(testBarcode))
+
+        _mockOpenFoodFactsService.Setup(x => x.GetProductAsync(testBarcode, It.IsAny<CancellationToken>()))
             .ReturnsAsync((Product?)null);
 
-        // Act
-        await _viewModel.StartScanningCommand.ExecuteAsync(null);
-        
-        // Simulate barcode detection
-        _mockBarcodeService.Raise(x => x.BarcodeDetected += null, 
+        var viewModel = CreateViewModel();
+
+        await viewModel.StartScanningCommand.ExecuteAsync(null);
+
+        _mockBarcodeService.Raise(x => x.BarcodeDetected += null,
             new BarcodeDetectedEventArgs(testBarcode, ZXing.Net.Maui.BarcodeFormat.Ean13));
 
-        // Wait for processing to complete
-        await Task.Delay(100);
+        await Task.Delay(200);
 
-        // Assert
-        Assert.Contains("Product not found", _viewModel.StatusMessage);
-        Assert.Null(_viewModel.CurrentProduct);
-        Assert.Null(_viewModel.CurrentAnalysis);
+        Assert.Contains("Product not found", viewModel.StatusMessage);
+        Assert.Null(viewModel.CurrentProduct);
+        Assert.Null(viewModel.CurrentAnalysis);
     }
 
     [Fact]
     public async Task ScanningWorkflow_CameraPermissionDenied_ShouldHandleGracefully()
     {
-        // Arrange
         _mockBarcodeService.Setup(x => x.RequestCameraPermissionAsync())
             .ReturnsAsync(false);
-        
+
         _mockErrorHandler.Setup(x => x.HandleCameraPermissionDeniedAsync())
             .ReturnsAsync(false);
 
-        // Act
-        await _viewModel.StartScanningCommand.ExecuteAsync(null);
+        var viewModel = CreateViewModel();
 
-        // Assert
-        Assert.False(_viewModel.IsScanning);
+        await viewModel.StartScanningCommand.ExecuteAsync(null);
+
+        Assert.False(viewModel.IsScanning);
         _mockErrorHandler.Verify(x => x.HandleCameraPermissionDeniedAsync(), Times.Once);
     }
 }

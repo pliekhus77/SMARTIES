@@ -1,3 +1,4 @@
+using System.Threading;
 using Moq;
 using SMARTIES.MAUI.Services;
 using SMARTIES.MAUI.Models;
@@ -10,7 +11,7 @@ public static class MockServiceFactory
     {
         var mock = new Mock<IOpenFoodFactsService>();
         
-        mock.Setup(x => x.GetProductAsync(It.IsAny<string>()))
+        mock.Setup(x => x.GetProductAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(ProductBuilder.Create()
                 .WithBarcode("123456789")
                 .WithName("Test Product")
@@ -24,7 +25,7 @@ public static class MockServiceFactory
     {
         var mock = new Mock<IDietaryAnalysisService>();
         
-        mock.Setup(x => x.AnalyzeProductAsync(It.IsAny<string>(), It.IsAny<List<string>>(), It.IsAny<List<DietaryRestrictionType>>()))
+        mock.Setup(x => x.AnalyzeProductAsync(It.IsAny<Product>(), It.IsAny<UserProfile>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(DietaryAnalysisBuilder.Create()
                 .WithCompliance(ComplianceLevel.Safe)
                 .Build());
@@ -36,7 +37,7 @@ public static class MockServiceFactory
     {
         var mock = new Mock<IUserProfileService>();
         
-        mock.Setup(x => x.GetCurrentProfileAsync())
+        mock.Setup(x => x.GetActiveProfileAsync())
             .ReturnsAsync(UserProfileBuilder.Create()
                 .WithName("Test User")
                 .WithRestrictions(DietaryRestrictionType.Milk)

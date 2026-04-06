@@ -1,5 +1,6 @@
 using FluentAssertions;
 using System.Diagnostics;
+using System.Threading;
 using SMARTIES.MAUI.Services;
 using SMARTIES.MAUI.Models;
 using SMARTIES.MAUI.Tests.Helpers;
@@ -28,12 +29,12 @@ public class ScanPerformanceTests
         var stopwatch = Stopwatch.StartNew();
 
         // Act
-        var product = await _mockOpenFoodFacts.Object.GetProductAsync(barcode);
-        var profile = await _mockUserProfile.Object.GetCurrentProfileAsync();
+        var product = await _mockOpenFoodFacts.Object.GetProductAsync(barcode, CancellationToken.None);
+        var profile = await _mockUserProfile.Object.GetActiveProfileAsync();
         var analysis = await _mockDietaryAnalysis.Object.AnalyzeProductAsync(
-            product!.ProductName, 
-            product.Ingredients, 
-            profile!.DietaryRestrictions);
+            product!,
+            profile!,
+            CancellationToken.None);
 
         stopwatch.Stop();
 
@@ -51,7 +52,7 @@ public class ScanPerformanceTests
         var stopwatch = Stopwatch.StartNew();
 
         // Act
-        var product = await _mockOpenFoodFacts.Object.GetProductAsync(barcode);
+        var product = await _mockOpenFoodFacts.Object.GetProductAsync(barcode, CancellationToken.None);
         stopwatch.Stop();
 
         // Assert
@@ -63,12 +64,19 @@ public class ScanPerformanceTests
     public async Task DietaryAnalysis_CompletesWithinOneSecond()
     {
         // Arrange
-        var ingredients = new List<string> { "milk", "sugar", "flour" };
-        var restrictions = new List<DietaryRestrictionType> { DietaryRestrictionType.Milk };
+        var product = ProductBuilder.Create()
+            .WithBarcode("b")
+            .WithName("Test Product")
+            .WithIngredients("milk", "sugar", "flour")
+            .Build();
+        var profile = UserProfileBuilder.Create()
+            .WithName("Tester")
+            .WithRestrictions(DietaryRestrictionType.Milk)
+            .Build();
         var stopwatch = Stopwatch.StartNew();
 
         // Act
-        var analysis = await _mockDietaryAnalysis.Object.AnalyzeProductAsync("Test Product", ingredients, restrictions);
+        var analysis = await _mockDietaryAnalysis.Object.AnalyzeProductAsync(product, profile, CancellationToken.None);
         stopwatch.Stop();
 
         // Assert
@@ -103,15 +111,15 @@ public class ScanPerformanceTests
 
     private async Task SimulateScanWorkflow(string barcode)
     {
-        var product = await _mockOpenFoodFacts.Object.GetProductAsync(barcode);
-        var profile = await _mockUserProfile.Object.GetCurrentProfileAsync();
-        
+        var product = await _mockOpenFoodFacts.Object.GetProductAsync(barcode, CancellationToken.None);
+        var profile = await _mockUserProfile.Object.GetActiveProfileAsync();
+
         if (product != null && profile != null)
         {
             await _mockDietaryAnalysis.Object.AnalyzeProductAsync(
-                product.ProductName, 
-                product.Ingredients, 
-                profile.DietaryRestrictions);
+                product,
+                profile,
+                CancellationToken.None);
         }
     }
 }
